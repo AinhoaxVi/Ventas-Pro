@@ -1,0 +1,3704 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#080b10">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Ventas SPH">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Ventas SPH</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <style>
+    :root{
+      --bg:#080b10;
+      --bg2:#0b1018;
+      --panel:#171d27;
+      --panel2:#202734;
+      --panel3:#2b3343;
+      --text:#f8fafc;
+      --muted:#aeb8ca;
+      --line:rgba(255,255,255,.13);
+      --soft:rgba(255,255,255,.06);
+      --turq:#25d8c7;
+      --turq2:#65fff0;
+      --pink:#ff4daa;
+      --lila:#a855f7;
+      --blue:#38bdf8;
+      --green:#22c55e;
+      --amber:#f59e0b;
+      --red:#ef4444;
+      --shadow:0 18px 44px rgba(0,0,0,.34);
+      --radius:18px;
+    }
+
+    *{box-sizing:border-box}
+    html{
+      scroll-behavior:smooth;
+      background:#080b10;
+      min-height:100%;
+      overscroll-behavior-y:none;
+    }
+    body{
+      margin:0;
+      min-height:100vh;
+      min-height:100dvh;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 12% 0%,rgba(37,216,199,.18),transparent 20rem),
+        radial-gradient(circle at 100% 0%,rgba(255,77,170,.16),transparent 18rem),
+        radial-gradient(circle at 70% 8%,rgba(168,85,247,.12),transparent 20rem),
+        linear-gradient(180deg,var(--bg),var(--bg2));
+      padding:0 0 env(safe-area-inset-bottom);
+      overscroll-behavior-y:none;
+    }
+
+    input,button,textarea,select{font:inherit}
+    button{-webkit-tap-highlight-color:transparent}
+
+    .app{
+      width:min(1080px,100%);
+      margin:0 auto;
+      padding:12px;
+      padding-top:calc(var(--headerH, 178px) + 12px);
+    }
+
+    @supports(padding:max(0px)){
+      .app{
+        padding-left:max(12px, env(safe-area-inset-left));
+        padding-right:max(12px, env(safe-area-inset-right));
+      }
+    }
+
+    header{
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      width:100%;
+      z-index:30;
+      margin:0;
+      padding:calc(env(safe-area-inset-top) + 10px) 12px 10px;
+      background:
+        linear-gradient(180deg,rgba(8,11,16,.98),rgba(8,11,16,.92));
+      backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
+      border-bottom:1px solid rgba(255,255,255,.07);
+      box-shadow:0 8px 28px rgba(0,0,0,.20);
+      transform:translateY(0);
+      transition:transform .22s ease, box-shadow .22s ease;
+      will-change:transform;
+      backface-visibility:hidden;
+      -webkit-transform:translateZ(0);
+    }
+
+    header:after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:-18px;
+      height:18px;
+      pointer-events:none;
+      background:linear-gradient(180deg,rgba(8,11,16,.24),rgba(8,11,16,0));
+    }
+
+    header.headerHidden{
+      transform:translate3d(0,-100%,0);
+    }
+
+    header.headerRaised{
+      box-shadow:0 18px 44px rgba(0,0,0,.35);
+    }
+
+    .brandLine{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .appLogo{
+      width:34px;
+      height:34px;
+      border-radius:12px;
+      flex:0 0 auto;
+      background:
+        radial-gradient(circle at 28% 20%,rgba(255,255,255,.42),transparent 20%),
+        conic-gradient(from 145deg,var(--turq),var(--blue),var(--lila),var(--pink),var(--turq));
+      box-shadow:0 0 0 1px rgba(255,255,255,.16), 0 10px 26px rgba(37,216,199,.16);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .appLogo:before{
+      content:"";
+      position:absolute;
+      inset:7px;
+      border-radius:9px;
+      background:linear-gradient(145deg,#0b1018,#151c27);
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.10);
+    }
+
+    .appLogo:after{
+      content:"";
+      position:absolute;
+      left:10px;
+      top:9px;
+      width:14px;
+      height:14px;
+      border-right:3px solid rgba(255,255,255,.92);
+      border-bottom:3px solid rgba(255,255,255,.92);
+      transform:rotate(-35deg);
+      border-radius:2px;
+      filter:drop-shadow(0 0 6px rgba(37,216,199,.45));
+    }
+
+    .day-card.clickable{
+      cursor:pointer;
+      transition:transform .14s ease,border-color .14s ease,background .14s ease;
+    }
+
+    .day-card.clickable:active{
+      transform:scale(.992);
+    }
+
+    .day-card.clickable:hover{
+      border-color:rgba(37,216,199,.42);
+      background:linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.045));
+    }
+
+    .detailOverlay{
+      position:fixed;
+      inset:0;
+      z-index:200;
+      background:rgba(0,0,0,.72);
+      display:none;
+      align-items:flex-end;
+      padding:14px;
+      backdrop-filter:blur(10px);
+    }
+
+    .detailOverlay.show{
+      display:flex;
+    }
+
+    .detailSheet{
+      width:min(720px,100%);
+      max-height:88vh;
+      overflow:auto;
+      margin:0 auto;
+      border:1px solid var(--line);
+      border-radius:22px;
+      background:
+        radial-gradient(circle at 10% 0%,rgba(37,216,199,.12),transparent 18rem),
+        radial-gradient(circle at 100% 0%,rgba(255,77,170,.10),transparent 18rem),
+        linear-gradient(180deg,#151b25,#0d121a);
+      box-shadow:0 24px 80px rgba(0,0,0,.55);
+      padding:14px;
+    }
+
+    @media(min-width:760px){
+      .detailOverlay{align-items:center}
+    }
+
+    .top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+    }
+
+    h1{
+      margin:0;
+      font-size:1.22rem;
+      line-height:1.08;
+      letter-spacing:-.03em;
+    }
+
+    .subtitle{
+      color:var(--muted);
+      font-size:.79rem;
+      line-height:1.28;
+      margin-top:4px;
+    }
+
+    .pill{
+      border:1px solid var(--line);
+      background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.05));
+      color:white;
+      border-radius:999px;
+      padding:7px 10px;
+      font-weight:950;
+      font-size:.72rem;
+      white-space:nowrap;
+    }
+
+    .tabs{
+      margin-top:10px;
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:6px;
+      overflow:visible;
+      padding-bottom:0;
+      scrollbar-width:none;
+    }
+
+    .tabs::-webkit-scrollbar{display:none}
+
+    .tab{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.055);
+      color:var(--muted);
+      border-radius:13px;
+      padding:8px 4px;
+      font-weight:950;
+      font-size:.70rem;
+      min-width:0;
+      width:100%;
+      cursor:pointer;
+      text-align:center;
+      white-space:nowrap;
+      line-height:1.05;
+    }
+
+    @media(max-width:380px){
+      .tab{font-size:.66rem;padding:8px 2px;border-radius:12px}
+    }
+
+    @media(max-width:380px){
+      .tab{font-size:.66rem;padding:8px 2px;border-radius:12px}
+    }
+
+    .tab.active{
+      color:white;
+      border-color:rgba(255,255,255,.18);
+      background:
+        linear-gradient(110deg,rgba(255,255,255,.28),transparent 22%,rgba(255,255,255,.22) 44%,transparent 66%),
+        linear-gradient(135deg,var(--turq),var(--blue) 34%,var(--lila) 62%,var(--pink));
+      box-shadow:0 10px 26px rgba(37,216,199,.17),0 10px 24px rgba(255,77,170,.12);
+    }
+
+    .mainContent{
+      position:relative;
+      padding-top:8px;
+    }
+
+    .mainContent section.active > .panel:first-child,
+    .mainContent section.active > .card:first-child,
+    .mainContent section.active > .day-card:first-child{
+      margin-top:4px;
+    }
+
+    main section{display:none}
+    main section.active{display:grid;gap:12px}
+
+    .panel,.card,.day-card,.sale-box{
+      background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.04));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+
+    .panel{padding:13px}
+    .card{padding:13px;min-height:88px}
+
+    h2{
+      margin:0 0 11px;
+      font-size:1rem;
+      letter-spacing:-.018em;
+    }
+
+    h3{
+      margin:0 0 8px;
+      font-size:.92rem;
+      letter-spacing:-.01em;
+    }
+
+    .grid{display:grid;gap:12px}
+    .row{display:grid;gap:10px}
+    .cards{display:grid;grid-template-columns:1fr;gap:10px}
+    .two{display:grid;gap:10px}
+
+    @media(min-width:560px){
+      .cards{grid-template-columns:repeat(2,1fr)}
+      .row.cols2,.two{grid-template-columns:1fr 1fr}
+    }
+
+    @media(min-width:850px){
+      .cards.five{grid-template-columns:repeat(5,1fr)}
+      .cards.four{grid-template-columns:repeat(4,1fr)}
+      .row.cols3{grid-template-columns:repeat(3,1fr)}
+      .row.cols4{grid-template-columns:repeat(4,1fr)}
+    }
+
+    label.field{
+      display:grid;
+      gap:6px;
+      color:var(--muted);
+      font-size:.78rem;
+      font-weight:900;
+    }
+
+    input,select,textarea{
+      width:100%;
+      min-height:45px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(0,0,0,.24);
+      color:var(--text);
+      border-radius:14px;
+      padding:11px 12px;
+      outline:none;
+      font-size:16px;
+    }
+
+    input[type="month"],input[type="date"]{
+      color-scheme:dark;
+      -webkit-appearance:none;
+      appearance:none;
+    }
+
+    textarea{resize:vertical;min-height:76px;line-height:1.35}
+
+    input:focus,select:focus,textarea:focus{
+      border-color:rgba(37,216,199,.82);
+      box-shadow:0 0 0 4px rgba(37,216,199,.12);
+    }
+
+    button{
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.085);
+      color:white;
+      border-radius:14px;
+      padding:11px 13px;
+      font-weight:950;
+      cursor:pointer;
+    }
+
+    .btn-main{
+      border-color:rgba(255,255,255,.18);
+      background:
+        linear-gradient(110deg,rgba(255,255,255,.24),transparent 24%,rgba(255,255,255,.16) 44%,transparent 66%),
+        linear-gradient(135deg,var(--turq),var(--blue) 32%,var(--lila) 62%,var(--pink));
+      color:white;
+    }
+
+    .btn-turq{
+      background:linear-gradient(135deg,#14b8a6,#25d8c7);
+      border-color:transparent;
+    }
+
+    .btn-danger{
+      background:rgba(239,68,68,.18);
+      border-color:rgba(239,68,68,.36);
+      color:#fecaca;
+    }
+
+    .btn-small{
+      padding:8px 10px;
+      border-radius:12px;
+      font-size:.78rem;
+    }
+
+    .actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+
+    .label{
+      color:var(--muted);
+      font-size:.75rem;
+      font-weight:900;
+      margin-bottom:6px;
+    }
+
+    .value{
+      font-size:1.38rem;
+      font-weight:950;
+      line-height:1.05;
+      letter-spacing:-.04em;
+    }
+
+    .small{
+      color:var(--muted);
+      font-size:.78rem;
+      line-height:1.35;
+      margin-top:7px;
+    }
+
+    .sphStatus{
+      display:inline-flex;
+      align-items:center;
+      width:max-content;
+      max-width:100%;
+      padding:6px 9px;
+      border-radius:999px;
+      font-size:.74rem;
+      font-weight:950;
+      line-height:1.15;
+      margin-top:8px;
+      border:1px solid transparent;
+    }
+
+    .sphStatus.good{
+      color:#bbf7d0!important;
+      background:rgba(34,197,94,.17)!important;
+      border-color:rgba(34,197,94,.30)!important;
+    }
+
+    .sphStatus.warn{
+      color:#fde68a!important;
+      background:rgba(245,158,11,.18)!important;
+      border-color:rgba(245,158,11,.32)!important;
+    }
+
+    .sphStatus.bad{
+      color:#fecaca!important;
+      background:rgba(239,68,68,.18)!important;
+      border-color:rgba(239,68,68,.32)!important;
+    }
+
+    .sphStatus.gray{
+      color:var(--muted)!important;
+      background:rgba(255,255,255,.08)!important;
+      border-color:rgba(255,255,255,.12)!important;
+    }
+
+    .sphValueGood{color:#bbf7d0}
+    .sphValueWarn{color:#fde68a}
+    .sphValueBad{color:#fecaca}
+    .sphValueGray{color:var(--text)}
+
+    .hint{
+      border:1px solid var(--line);
+      border-radius:15px;
+      background:rgba(255,255,255,.05);
+      padding:11px;
+      color:var(--muted);
+      line-height:1.38;
+      font-size:.84rem;
+    }
+
+    .goalbar{
+      height:13px;
+      width:100%;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:999px;
+      overflow:hidden;
+    }
+
+    .goalbar div{
+      height:100%;
+      width:0%;
+      background:linear-gradient(90deg,var(--turq),var(--blue),var(--lila),var(--pink));
+      transition:width .18s ease;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:5px 8px;
+      border-radius:999px;
+      font-size:.72rem;
+      font-weight:950;
+      white-space:nowrap;
+      background:rgba(255,255,255,.09);
+      color:var(--muted);
+    }
+
+    .good{background:rgba(34,197,94,.17)!important;color:#bbf7d0!important}
+    .warn{background:rgba(245,158,11,.18)!important;color:#fde68a!important}
+    .bad{background:rgba(239,68,68,.18)!important;color:#fecaca!important}
+    .turq{background:rgba(37,216,199,.15)!important;color:#bffff8!important}
+    .pink{background:rgba(255,77,170,.16)!important;color:#fbcfe8!important}
+    .gray{background:rgba(255,255,255,.08)!important;color:var(--muted)!important}
+
+    .day-card,.sale-box{
+      padding:12px;
+      display:grid;
+      gap:9px;
+    }
+
+    .day-head,.sale-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:10px;
+    }
+
+    .day-title,.sale-title{
+      font-weight:950;
+      font-size:.98rem;
+      line-height:1.2;
+    }
+
+    .day-sub,.sale-sub{
+      color:var(--muted);
+      font-size:.78rem;
+      margin-top:4px;
+      line-height:1.32;
+    }
+
+    .mini-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:8px;
+    }
+
+    @media(min-width:620px){
+      .mini-grid{grid-template-columns:repeat(4,1fr)}
+    }
+
+    .mini{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.045);
+      border-radius:13px;
+      padding:9px;
+    }
+
+    .mini span{
+      display:block;
+      color:var(--muted);
+      font-size:.68rem;
+      font-weight:900;
+      margin-bottom:4px;
+    }
+
+    .mini b{font-size:.96rem}
+
+    .chips{display:flex;gap:6px;flex-wrap:wrap}
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:4px;
+      padding:6px 8px;
+      border-radius:999px;
+      background:rgba(255,255,255,.08);
+      color:#dbeafe;
+      font-size:.73rem;
+      font-weight:900;
+      line-height:1.2;
+    }
+
+    .empty{
+      border:1px dashed rgba(255,255,255,.18);
+      border-radius:16px;
+      background:rgba(255,255,255,.035);
+      color:var(--muted);
+      text-align:center;
+      padding:20px 12px;
+      line-height:1.35;
+      font-size:.86rem;
+    }
+
+    .divider{
+      height:1px;
+      background:var(--line);
+      margin:4px 0;
+    }
+
+    .calc-line{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      padding:8px 0;
+      border-bottom:1px solid var(--line);
+      color:var(--muted);
+      font-size:.86rem;
+    }
+
+    .calc-line:last-child{border-bottom:0}
+    .calc-line b{color:white}
+
+    .rate-card{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.045);
+      border-radius:16px;
+      padding:12px;
+      display:grid;
+      gap:8px;
+    }
+
+    .rate-top{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:flex-start;
+    }
+
+    .rate-title{
+      font-weight:950;
+      line-height:1.2;
+    }
+
+    .rate-meta{
+      color:var(--muted);
+      font-size:.78rem;
+      line-height:1.3;
+      margin-top:4px;
+    }
+
+    .doc-card{
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:rgba(255,255,255,.045);
+      padding:12px;
+      display:grid;
+      gap:8px;
+    }
+
+    ul{
+      margin:4px 0 0;
+      padding-left:18px;
+      color:var(--muted);
+      line-height:1.4;
+      font-size:.86rem;
+    }
+
+    .toast{
+      position:fixed;
+      left:12px;
+      right:12px;
+      bottom:calc(14px + env(safe-area-inset-bottom));
+      z-index:100;
+      display:none;
+      background:rgba(17,24,39,.97);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+      color:white;
+      border-radius:16px;
+      padding:12px 14px;
+      text-align:center;
+      font-weight:950;
+    }
+
+    .footer{
+      text-align:center;
+      padding:18px 0 6px;
+      color:rgba(255,255,255,.40);
+      font-size:.74rem;
+    }
+
+
+    .rateGroupBlock{grid-column:1/-1;margin:4px 0 16px}
+    .rateGroupBlock>h3{margin:6px 0 10px;font-size:1rem;color:var(--text);font-weight:950;letter-spacing:-.02em}
+    .rateGroupBlock>.grid{display:grid;gap:12px}
+
+    .hidden{display:none!important}
+    .calcHidden{display:none!important}
+
+    .calc-tabbar{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+    .calc-tabbar button{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:var(--text);border-radius:16px;padding:12px 10px;font-weight:900;cursor:pointer}
+    .calc-tabbar button.active{background:#14b8a6;color:#052522;border-color:#14b8a6}
+    .dhFieldsTitle{margin:4px 0 0;font-size:.82rem;color:var(--muted);font-weight:800}
+
+    select{
+      appearance:none;
+      -webkit-appearance:none;
+      padding-right:42px!important;
+      background-color:rgba(0,0,0,.24)!important;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%2325d8c7' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")!important;
+      background-repeat:no-repeat!important;
+      background-position:right 12px center!important;
+      background-size:18px!important;
+    }
+
+    select:disabled,
+    select.lockedSelect{
+      opacity:1;
+      color:#fecaca!important;
+      border-color:rgba(239,68,68,.45)!important;
+      background-color:rgba(239,68,68,.12)!important;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23ef4444' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")!important;
+    }
+
+    .weekBlock{
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:rgba(255,255,255,.04);
+      padding:10px;
+      display:grid;
+      gap:8px;
+      overflow:hidden;
+    }
+
+    .weekTitle{
+      color:var(--muted);
+      font-size:.78rem;
+      font-weight:950;
+      padding:0 2px;
+    }
+
+    .weekList{
+      display:grid;
+      gap:7px;
+      width:100%;
+    }
+
+    .calBar{
+      width:100%;
+      min-width:0;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:14px;
+      background:rgba(255,255,255,.045);
+      padding:9px 10px;
+      display:grid;
+      grid-template-columns:auto minmax(0,1fr) auto;
+      align-items:center;
+      gap:9px;
+      cursor:pointer;
+    }
+
+    .calBar.pending{
+      border-color:rgba(245,158,11,.28);
+      background:rgba(245,158,11,.08);
+    }
+
+    .calBar.registered{
+      border-color:rgba(37,216,199,.34);
+      background:rgba(37,216,199,.08);
+    }
+
+    .calBar.special{
+      border-color:rgba(255,77,170,.35);
+      background:rgba(255,77,170,.08);
+    }
+
+    .calDateBadge{
+      width:42px;
+      height:42px;
+      border-radius:13px;
+      display:grid;
+      place-items:center;
+      background:rgba(0,0,0,.20);
+      border:1px solid rgba(255,255,255,.08);
+      font-weight:950;
+      line-height:1;
+      flex-shrink:0;
+    }
+
+    .calText{
+      min-width:0;
+      display:grid;
+      gap:3px;
+    }
+
+    .calTitle{
+      font-weight:950;
+      font-size:.86rem;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .calMeta{
+      color:var(--muted);
+      font-size:.72rem;
+      line-height:1.2;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .calRight{
+      color:rgba(255,255,255,.82);
+      font-size:.72rem;
+      font-weight:950;
+      white-space:nowrap;
+      text-align:right;
+    }
+
+    @media(max-width:380px){
+      .calBar{
+        grid-template-columns:auto minmax(0,1fr);
+        gap:8px;
+      }
+      .calRight{
+        grid-column:2;
+        text-align:left;
+      }
+      .calDateBadge{
+        width:38px;
+        height:38px;
+      }
+    }
+
+    .salesDayCard{
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:rgba(255,255,255,.045);
+      padding:12px;
+      display:grid;
+      gap:8px;
+      cursor:pointer;
+    }
+
+
+    /* Navegación superior estable */
+    .tabs,
+    .tabs.compactTabs{
+      margin-top:9px!important;
+      display:flex!important;
+      gap:7px!important;
+      overflow-x:auto!important;
+      overflow-y:hidden!important;
+      padding-bottom:2px!important;
+      scrollbar-width:none!important;
+      -webkit-overflow-scrolling:touch!important;
+    }
+
+    .tabs::-webkit-scrollbar{display:none!important}
+
+    .tab{
+      border:1px solid var(--line)!important;
+      background:rgba(255,255,255,.055)!important;
+      color:var(--muted)!important;
+      border-radius:14px!important;
+      padding:9px 13px!important;
+      font-weight:950!important;
+      font-size:.74rem!important;
+      min-width:max-content!important;
+      width:auto!important;
+      cursor:pointer!important;
+      white-space:nowrap!important;
+      line-height:1.05!important;
+      touch-action:manipulation!important;
+    }
+
+    .tab.active,
+    #moreMenuBtn.active,
+    #moreMenuBtn.menuOpen{
+      color:white!important;
+      border-color:rgba(255,255,255,.18)!important;
+      background:
+        linear-gradient(110deg,rgba(255,255,255,.28),transparent 22%,rgba(255,255,255,.22) 44%,transparent 66%),
+        linear-gradient(135deg,var(--turq),var(--blue) 34%,var(--lila) 62%,var(--pink))!important;
+      box-shadow:0 10px 26px rgba(37,216,199,.17),0 10px 24px rgba(255,77,170,.12)!important;
+    }
+
+    main{
+      padding-bottom:0!important;
+    }
+
+    .bottomNav{
+      display:none!important;
+    }
+
+
+
+    /* Interfaz limpia: solo título actual + menú */
+    html{
+      background:#080b10!important;
+      min-height:100%;
+      overscroll-behavior-y:none;
+    }
+
+    body{
+      background:
+        radial-gradient(circle at top left,rgba(37,216,199,.16),transparent 18rem),
+        radial-gradient(circle at top right,rgba(255,77,170,.12),transparent 18rem),
+        linear-gradient(180deg,#080b10 0%,#0b111b 100%)!important;
+      padding:0 0 env(safe-area-inset-bottom)!important;
+      overscroll-behavior-y:none;
+    }
+
+    .tabs,
+    .bottomNav{
+      display:none!important;
+    }
+
+    header{
+      padding:calc(env(safe-area-inset-top) + 8px) 12px 8px!important;
+      background:linear-gradient(180deg,rgba(8,11,16,.98),rgba(8,11,16,.90))!important;
+      border-bottom:1px solid rgba(255,255,255,.07)!important;
+      box-shadow:0 8px 28px rgba(0,0,0,.18)!important;
+    }
+
+    .cleanTop{
+      gap:10px;
+      align-items:center;
+    }
+
+    .cleanBrand{
+      min-width:0;
+    }
+
+    #headerTitle{
+      margin:0;
+      font-size:1.10rem;
+      letter-spacing:-.04em;
+      line-height:1;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width:48vw;
+    }
+
+    .topActions{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      min-width:0;
+      flex-shrink:0;
+    }
+
+    .hamburgerBtn{
+      width:42px!important;
+      height:38px!important;
+      border-radius:14px!important;
+      padding:0!important;
+      display:grid!important;
+      place-items:center!important;
+      background:rgba(255,255,255,.075)!important;
+      border:1px solid rgba(255,255,255,.12)!important;
+      color:white!important;
+      flex-shrink:0!important;
+      touch-action:manipulation!important;
+      box-shadow:none!important;
+    }
+
+    .hamburgerBtn svg{
+      width:23px;
+      height:23px;
+      fill:none;
+      stroke:currentColor;
+      stroke-width:2.35;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+
+    .hamburgerBtn.active{
+      background:#14b8a6!important;
+      border-color:#14b8a6!important;
+      color:white!important;
+      box-shadow:0 10px 22px rgba(20,184,166,.20)!important;
+    }
+
+    .app{
+      padding-top:calc(var(--headerH, 76px) + 12px)!important;
+    }
+
+    main{
+      padding-bottom:0!important;
+    }
+
+    .footer{
+      display:none!important;
+    }
+
+    .mainMenuOverlay{
+      position:fixed!important;
+      inset:0!important;
+      z-index:500!important;
+      display:none!important;
+      align-items:flex-start!important;
+      justify-content:flex-end!important;
+      padding:calc(env(safe-area-inset-top) + 62px) 12px 12px!important;
+      background:rgba(0,0,0,.48)!important;
+      backdrop-filter:blur(10px)!important;
+      -webkit-backdrop-filter:blur(10px)!important;
+    }
+
+    .mainMenuOverlay.show{
+      display:flex!important;
+    }
+
+    .mainMenuPanel{
+      width:min(360px,100%)!important;
+      max-height:calc(100dvh - env(safe-area-inset-top) - 88px)!important;
+      overflow:auto!important;
+      border-radius:22px!important;
+      border:1px solid rgba(255,255,255,.12)!important;
+      background:
+        radial-gradient(circle at 10% 0%,rgba(37,216,199,.12),transparent 16rem),
+        linear-gradient(180deg,#151b25,#0d121a)!important;
+      box-shadow:0 24px 70px rgba(0,0,0,.52)!important;
+      padding:12px!important;
+    }
+
+    .menuPanelTop{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:10px;
+    }
+
+    .menuPanelTop h2{
+      margin:0;
+      font-size:1.05rem;
+    }
+
+    .menuEyebrow{
+      color:var(--muted);
+      font-size:.72rem;
+      font-weight:950;
+      margin-bottom:3px;
+    }
+
+    .closeMenuBtn{
+      width:36px;
+      height:36px;
+      border-radius:13px;
+      padding:0;
+      display:grid;
+      place-items:center;
+      font-size:1.45rem;
+      line-height:1;
+      background:rgba(255,255,255,.075);
+      border:1px solid rgba(255,255,255,.12);
+      color:white;
+    }
+
+    .mainMenuGrid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:8px;
+    }
+
+    .mainMenuItem{
+      min-height:48px;
+      border-radius:15px!important;
+      background:rgba(255,255,255,.075)!important;
+      border:1px solid rgba(255,255,255,.12)!important;
+      color:white!important;
+      font-weight:950;
+      box-shadow:none!important;
+      touch-action:manipulation;
+    }
+
+    .mainMenuItem.active{
+      background:#14b8a6!important;
+      border-color:#14b8a6!important;
+      color:white!important;
+      box-shadow:0 10px 22px rgba(20,184,166,.18)!important;
+    }
+
+    /* botones seleccionados, sin borde raro ni gradientes agresivos */
+    .btn-main,
+    .btn-turq,
+    .chip.active,
+    .badge.active{
+      background:#14b8a6!important;
+      border-color:#14b8a6!important;
+      color:white!important;
+      box-shadow:0 10px 22px rgba(20,184,166,.18)!important;
+    }
+
+
+
+    /* Fix móvil: evita que Inicio se meta debajo del header fijo */
+    :root{
+      --headerGap:22px;
+    }
+
+    .app{
+      padding-top:calc(var(--headerH, 86px) + var(--headerGap))!important;
+    }
+
+    main{
+      scroll-margin-top:calc(var(--headerH, 86px) + var(--headerGap))!important;
+    }
+
+    section{
+      scroll-margin-top:calc(var(--headerH, 86px) + var(--headerGap))!important;
+    }
+
+    @media(max-width:520px){
+      :root{
+        --headerGap:26px;
+      }
+
+      .app{
+        padding-top:calc(var(--headerH, 92px) + var(--headerGap))!important;
+      }
+
+      header{
+        min-height:auto!important;
+      }
+
+      #inicio .controls,
+      #inicio .panel:first-child,
+      #inicio .grid:first-child{
+        margin-top:2px!important;
+      }
+    }
+
+
+
+    .compactPanel{padding:12px}
+    .total-line{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--line);padding-top:12px;margin-top:8px;font-size:1.08rem;font-weight:950}
+    .result-row{display:flex;justify-content:space-between;gap:12px;border:1px solid var(--line);background:rgba(255,255,255,.045);padding:10px;border-radius:14px;align-items:flex-start}
+    .result-row span{display:grid;gap:2px;color:var(--text);font-weight:850}.result-row small{color:var(--muted);font-size:.72rem;font-weight:750}
+    .bad{color:#fecaca!important}
+    .dualSaleBox h3{margin:8px 0 4px;color:var(--muted);font-size:.85rem;text-transform:uppercase;letter-spacing:.03em}
+    .channelHours{min-width:100%}
+
+    .fileInput{display:none}
+  </style>
+</head>
+
+<body>
+<div class="app">
+  <header>
+    <div class="top cleanTop">
+      <div class="brandLine cleanBrand">
+        <span class="appLogo" aria-hidden="true"></span>
+        <h1 id="headerTitle">Inicio</h1>
+      </div>
+      <div class="topActions">
+        <div class="pill" id="monthPill">Mes</div>
+        <button id="hamburgerBtn" class="hamburgerBtn" type="button" aria-label="Abrir menú" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 7h14M5 12h14M5 17h14"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="mainContent">
+    <section id="inicio" class="active">
+      <div class="panel">
+        <div class="row cols3">
+          <label class="field">Mes
+            <input id="monthFilter" type="month">
+          </label>
+          <label class="field">Acumulado hasta
+            <input id="cutoffDate" type="date">
+          </label>
+          <label class="field">Vista
+            <select id="homeMode">
+              <option value="real">Horas reales registradas</option>
+              <option value="estimado">Horas estimadas del mes</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <div class="cards five">
+        <div class="card">
+          <div class="label">Ventas</div>
+          <div class="value" id="kpiSales">0</div>
+          <div class="small">Hasta la fecha marcada.</div>
+        </div>
+        <div class="card">
+          <div class="label">Horas reales</div>
+          <div class="value" id="kpiHours">0h</div>
+          <div class="small">Las que sí cuentan para SPH.</div>
+        </div>
+        <div class="card">
+          <div class="label">SPH acumulado</div>
+          <div class="value" id="kpiSph">0,000</div>
+          <div class="small" id="sphMessage">Sin datos.</div>
+        </div>
+        <div class="card">
+          <div class="label">Horas regalo</div>
+          <div class="value" id="kpiGift">0h</div>
+          <div class="small">No cuentan para SPH.</div>
+        </div>
+
+      </div>
+
+      <div class="panel compactPanel">
+        <h2>Resumen ventas</h2>
+        <div id="v9HomeBreakdown" class="grid"></div>
+      </div>
+
+      <div class="panel compactPanel">
+        <h2>SPH por canal</h2>
+        <div id="v9ChannelSph" class="grid"></div>
+      </div>
+
+      <div class="panel">
+        <h2>Objetivos automáticos</h2>
+        <div id="objectiveCards" class="grid"></div>
+      </div>
+
+      <div class="panel">
+        <h2>Ritmo del mes</h2>
+        <div id="paceBox" class="grid"></div>
+      </div>
+
+    </section>
+
+    <section id="venta">
+      <div class="panel">
+        <h2>Añadir / configurar día</h2>
+        <form id="dayForm" class="grid">
+          <div class="row cols3">
+            <label class="field">Fecha
+              <input id="dayDate" type="date" required>
+            </label>
+            <label class="field">Horas trabajadas
+              <select id="dayHours" required></select>
+            </label>
+            <label class="field">Horas regalo
+              <select id="dayGiftHours"></select>
+            </label>
+          </div>
+
+          <div class="row cols2">
+            <label class="field">Tipo de día
+              <select id="dayMode">
+                <option value="normal">Día normal</option>
+                <option value="especial">Día especial</option>
+              </select>
+            </label>
+
+            <label id="specialTypeField" class="field hidden">Especial
+              <select id="specialType">
+                <option value="personalizado">Personalizado</option>
+                <option value="libre">Libre día entero</option>
+                <option value="vacaciones">Vacaciones día entero</option>
+                <option value="medico">Horas médicas</option>
+                <option value="incidencia">Incidencia</option>
+                <option value="curso">Cursos</option>
+                <option value="recuperacion">Recuperación</option>
+              </select>
+            </label>
+          </div>
+
+          <div id="specialHoursBox" class="panel hidden" style="box-shadow:none;margin:0;padding:11px;background:rgba(255,255,255,.04)">
+            <h3>Configuración especial</h3>
+            <div class="row cols3">
+              <label id="freeHoursField" class="field hidden">Libre
+                <select id="freeHours"></select>
+              </label>
+              <label id="vacationHoursField" class="field hidden">Vacaciones
+                <select id="vacationHours"></select>
+              </label>
+              <label id="medicalHoursField" class="field hidden">Horas médicas
+                <select id="medicalHours"></select>
+              </label>
+              <label id="incidentHoursField" class="field hidden">Incidencia
+                <select id="incidentHours"></select>
+              </label>
+              <label id="courseHoursField" class="field hidden">Cursos
+                <select id="courseHours"></select>
+              </label>
+              <label id="recoveryHoursField" class="field hidden">Recuperación
+                <select id="recoveryHours"></select>
+              </label>
+              <label id="customNoSphHoursField" class="field hidden">Horas que no cuentan SPH
+                <select id="customNoSphHours"></select>
+              </label>
+            </div>
+            <div class="small">Libre y vacaciones son día entero. Personalizado solo guarda horas que no cuentan para SPH. Recuperación sí cuenta para SPH.</div>
+          </div>
+
+          <div id="channelPanel" class="panel" style="box-shadow:none;margin:0;padding:11px;background:rgba(255,255,255,.04)">
+            <h3>Canal y SPH</h3>
+            <div class="row cols2">
+              <label class="field">Modo de canal
+                <select id="dayChannelMode">
+                  <option value="fixed">Canal fijo</option>
+                  <option value="mixed">Canales combinados</option>
+                </select>
+              </label>
+              <label class="field">Canal principal
+                <select id="dayFixedChannel"></select>
+              </label>
+            </div>
+            <div id="channelAllocBox" class="grid hidden"></div>
+            <div id="channelTotalInfo" class="small">Si no cambias nada, el día completo se asigna al canal fijo.</div>
+          </div>
+
+          <div class="hint">
+            Al elegir fecha se cargan las horas habituales. Puedes guardar el día sin ventas o añadirlas debajo.
+          </div>
+
+          <div id="salesEditor" class="grid"></div>
+
+          <div class="actions">
+            <button type="button" id="addSaleBtn" class="btn-turq">+ Añadir venta</button>
+            <button type="button" id="clearSalesBtn">Vaciar ventas</button>
+          </div>
+
+          <div class="actions">
+            <button type="submit" class="btn-main">Guardar día</button>
+            <button type="button" id="saveAnotherBtn">Guardar y añadir otro</button>
+            <button type="button" id="clearFormBtn">Limpiar</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section id="ventas">
+      <div class="panel">
+        <h2>Ventas del mes</h2>
+        <div id="salesMonthSummary" class="grid"></div>
+      </div>
+
+      <div class="panel">
+        <h2>Media de tarifas</h2>
+        <div id="tariffAverageBox" class="grid"></div>
+      </div>
+
+      <div class="panel">
+        <h2>Ventas por día</h2>
+        <div id="salesByDayBox" class="grid"></div>
+      </div>
+    </section>
+
+    <section id="calendario">
+      <div class="panel">
+        <h2>Calendario</h2>
+        <div class="row cols2">
+          <label class="field">Mes
+            <input id="calendarMonth" type="month">
+          </label>
+          <label class="field">Vista
+            <select id="calendarView">
+              <option value="all">Todos los días</option>
+              <option value="registered">Solo registrados</option>
+            </select>
+          </label>
+        </div>
+        <div class="small">Vista semanal con una barra horizontal por día. Los fines de semana no salen como pendientes.</div>
+      </div>
+
+      <div class="panel">
+        <h2>Semanas del mes</h2>
+        <div id="calendarWeeks" class="grid"></div>
+      </div>
+    </section>
+
+    <section id="tarifas">
+      <div class="panel">
+        <h2>Catálogo de tarifas</h2>
+        <label class="field">Buscar tarifa
+          <input id="rateSearch" type="search" placeholder="Ej. V33, gas, RL1, TAP, Smart, Solar...">
+        </label>
+        <div class="small">Los precios son los cargados desde tu tabla. Si un precio de potencia sale una vez, se usa igual para P1 y P2, cuando el precio sea el mismo para ambos periodos.</div>
+      </div>
+
+      <div class="panel">
+        <h2>Tarifas</h2>
+        <div id="ratesList" class="grid"></div>
+      </div>
+
+      <div class="panel">
+        <h2>SVA / Asistentes</h2>
+        <div id="servicesList" class="grid"></div>
+      </div>
+    </section>
+
+    <section id="calc">
+      <div class="panel">
+        <h2>Calculadora normal</h2>
+        <div class="hint">Como la v8: luz, gas, solar y batería virtual en una calculadora limpia. La 3.0TD va en su propia pestaña del menú.</div>
+      </div>
+
+      <div class="panel">
+        <h2>Calculadora de factura</h2>
+        <div class="hint">Misma idea que v8: eliges tarifa, metes consumo/potencia y abajo sale el resumen con impuestos separados.</div>
+        <div class="row cols2">
+          <label class="field">Tarifa
+            <select id="calcTariff"></select>
+          </label>
+          <label class="field">Días factura
+            <input id="calcDays" type="number" min="1" step="1" value="30">
+          </label>
+        </div>
+
+        <div class="row cols3">
+          <label id="calcKwhField" class="field">Consumo kWh
+            <input id="calcKwh" type="number" min="0" step="0.01" value="0">
+          </label>
+          <label id="calcExcessField" class="field">Excedentes kWh solar
+            <input id="calcExcess" type="number" min="0" step="0.01" value="0">
+          </label>
+          <label id="calcP1Field" class="field">Potencia P1 kW
+            <input id="calcP1" type="number" min="0" step="0.01" value="0">
+          </label>
+          <label id="calcP2Field" class="field">Potencia P2 kW
+            <input id="calcP2" type="number" min="0" step="0.01" value="0">
+          </label>
+        </div>
+
+        <div id="calcDhFields" class="calcHidden">
+          <div class="dhFieldsTitle">Consumo por tramos</div>
+          <div class="row cols3">
+            <label class="field">Punta kWh<input id="calcKwhP1" type="number" min="0" step="0.01" value="0"></label>
+            <label class="field">Llano kWh<input id="calcKwhP2" type="number" min="0" step="0.01" value="0"></label>
+            <label class="field">Valle kWh<input id="calcKwhP3" type="number" min="0" step="0.01" value="0"></label>
+          </div>
+        </div>
+
+        <div class="row cols2">
+          <label class="field">Añadir SVA
+            <select id="calcService"></select>
+          </label>
+          <label class="field">Impuestos y cargos
+            <select id="calcTaxes">
+              <option value="0">Sin impuestos ni cargos</option>
+              <option value="1">Añadir conceptos que aplican</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="actions">
+          <button id="calcBtn" type="button" class="btn-main">Calcular</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Resultado</h2>
+        <div id="calcResult" class="grid">
+          <div class="empty">Pon consumo, potencia y tarifa. Introduce los datos para calcular el total estimado.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="calc30">
+      <div class="panel">
+        <h2>Calculadora 3.0TD</h2>
+        <div class="hint">Pestaña separada. Potencias P1-P6, consumo único o consumo por periodos si la tarifa es con discriminación.</div>
+      </div>
+
+      <div class="panel">
+        <h2>Calculadora 3.0TD</h2>
+        <div class="hint">Calculadora separada. Potencias P1-P6 y consumo único o por periodos si la tarifa es con discriminación.</div>
+        <div class="row cols2">
+          <label class="field">Tarifa 3.0TD
+            <select id="calc30Tariff"></select>
+          </label>
+          <label class="field">Días factura
+            <input id="calc30Days" type="number" min="1" step="1" value="30">
+          </label>
+        </div>
+        <div class="row cols2">
+          <label id="calc30KwhField" class="field">Consumo mensual kWh
+            <input id="calc30Kwh" type="number" min="0" step="0.01" value="0">
+          </label>
+          <label class="field">Impuestos y cargos
+            <select id="calc30Taxes">
+              <option value="0">Sin impuestos ni cargos</option>
+              <option value="1">Añadir conceptos que aplican</option>
+            </select>
+          </label>
+        </div>
+        <div id="calc30DhFields" class="calcHidden">
+          <div class="dhFieldsTitle">Consumo 3.0TD por periodos</div>
+          <div class="row cols3">
+            <label class="field">P1 kWh<input id="calc30KwhP1" type="number" min="0" step="0.01" value="0"></label>
+            <label class="field">P2 kWh<input id="calc30KwhP2" type="number" min="0" step="0.01" value="0"></label>
+            <label class="field">P3 kWh<input id="calc30KwhP3" type="number" min="0" step="0.01" value="0"></label>
+            <label class="field">P4 kWh<input id="calc30KwhP4" type="number" min="0" step="0.01" value="0"></label>
+            <label class="field">P5 kWh<input id="calc30KwhP5" type="number" min="0" step="0.01" value="0"></label>
+            <label class="field">P6 kWh<input id="calc30KwhP6" type="number" min="0" step="0.01" value="0"></label>
+          </div>
+        </div>
+        <div class="row cols3">
+          <label class="field">Potencia P1 kW<input id="calc30P1" type="number" min="0" step="0.01" value="0"></label>
+          <label class="field">Potencia P2 kW<input id="calc30P2" type="number" min="0" step="0.01" value="0"></label>
+          <label class="field">Potencia P3 kW<input id="calc30P3" type="number" min="0" step="0.01" value="0"></label>
+          <label class="field">Potencia P4 kW<input id="calc30P4" type="number" min="0" step="0.01" value="0"></label>
+          <label class="field">Potencia P5 kW<input id="calc30P5" type="number" min="0" step="0.01" value="0"></label>
+          <label class="field">Potencia P6 kW<input id="calc30P6" type="number" min="0" step="0.01" value="0"></label>
+        </div>
+        <div class="actions"><button id="calc30Btn" type="button" class="btn-main">Calcular 3.0TD</button></div>
+      </div>
+
+      <div class="panel">
+        <h2>Resultado 3.0TD</h2>
+        <div id="calc30Result" class="grid"><div class="empty">Selecciona tarifa 3.0TD, consumo y potencias.</div></div>
+      </div>
+    </section>
+
+    <section id="doc">
+      <div class="panel">
+        <h2>Documentación rápida</h2>
+        <label class="field">Buscar
+          <input id="docSearch" type="search" placeholder="Ej. alta, alquiler, compraventa, defunción, empresa...">
+        </label>
+      </div>
+
+      <div class="panel">
+        <h2>Altas</h2>
+        <div id="altaDocs" class="grid"></div>
+      </div>
+
+      <div class="panel">
+        <h2>Cambios de TT</h2>
+        <div id="ttDocs" class="grid"></div>
+      </div>
+    </section>
+
+    <section id="ajustes">
+      <div class="panel">
+        <h2>Jornada y canales</h2>
+        <div class="row cols2">
+          <label class="field">Tipo de jornada
+            <select id="journeyType">
+              <option value="30">Parcial 30h · 6h/día</option>
+              <option value="35">Parcial 35h · 7h/día</option>
+              <option value="39">Completa 39h · L-J 8h / V 7h</option>
+              <option value="40">Completa 40h · 8h/día</option>
+              <option value="custom">Personalizada</option>
+            </select>
+          </label>
+          <label class="field">Canal fijo por defecto
+            <select id="defaultChannel"></select>
+          </label>
+        </div>
+        <div class="row cols2">
+          <label class="field">Modo de canales por defecto
+            <select id="defaultChannelMode">
+              <option value="fixed">Canal fijo</option>
+              <option value="mixed">Canales combinados por día</option>
+            </select>
+          </label>
+          <label class="field">SPH mínimo Waylet
+            <input id="wayletMinSph" type="number" min="0" step="0.001" value="0.120">
+          </label>
+        </div>
+        <div class="row cols4" id="customHoursBox">
+          <label class="field">Lunes<input id="h1" type="number" min="0" step="0.25"></label>
+          <label class="field">Martes<input id="h2" type="number" min="0" step="0.25"></label>
+          <label class="field">Miércoles<input id="h3" type="number" min="0" step="0.25"></label>
+          <label class="field">Jueves<input id="h4" type="number" min="0" step="0.25"></label>
+          <label class="field">Viernes<input id="h5" type="number" min="0" step="0.25"></label>
+          <label class="field">Sábado<input id="h6" type="number" min="0" step="0.25"></label>
+          <label class="field">Domingo<input id="h0" type="number" min="0" step="0.25"></label>
+        </div>
+        <div class="hint">Si usas canal fijo, las horas se asignan solas. En combinados puedes poner bloques de 15 minutos y la app asigna lo que falte al canal fijo.</div>
+        <br>
+        <button id="saveHoursBtn" type="button" class="btn-main">Guardar ajustes</button>
+      </div>
+
+      <div class="panel">
+        <h2>Impuestos y cargos de calculadora</h2>
+        <div class="row cols3">
+          <label class="field">IVA<input id="taxIva" type="number" min="0" step="0.0001"></label>
+          <label class="field">IEE<input id="taxIee" type="number" min="0" step="0.0001"></label>
+          <label class="field">Hidrocarburos gas €/kWh<input id="taxHydro" type="number" min="0" step="0.000001"></label>
+          <label class="field">Alquiler equipo €/día<input id="taxMeter" type="number" min="0" step="0.00001"></label>
+          <label class="field">Financiación bono social €/día<input id="taxBono" type="number" min="0" step="0.00001"></label>
+        </div>
+        <div class="small">Valores editables por si cambian. Se aplican solo cuando toca: IEE/luz, hidrocarburos/gas, alquiler y bono social en electricidad.</div>
+      </div>
+
+      <div class="panel">
+        <h2>Copias de seguridad</h2>
+        <div class="hint">Exporta JSON de vez en cuando para guardar una copia de seguridad.</div>
+        <br>
+        <div class="actions">
+          <button id="exportJsonBtn" type="button" class="btn-main">Exportar JSON</button>
+          <button id="importJsonBtn" type="button">Importar JSON</button>
+          <button id="exportCsvBtn" type="button">Exportar CSV</button>
+          <button id="monthPdfBtn" type="button" class="btn-turq">PDF mes</button>
+          <input id="importFile" class="fileInput" type="file" accept="application/json,.json">
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Borrar datos</h2>
+        <div class="actions">
+          <button id="clearMonthBtn" type="button" class="btn-danger">Borrar mes visible</button>
+          <button id="clearAllBtn" type="button" class="btn-danger">Borrar todo</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="footer">v9 · final</div>
+</div>
+</div>
+
+<div id="mainMenuOverlay" class="mainMenuOverlay" aria-hidden="true">
+  <div class="mainMenuPanel" role="dialog" aria-label="Menú de apartados">
+    <div class="menuPanelTop">
+      <div>
+        <div class="menuEyebrow">Ventas SPH</div>
+        <h2>Menú</h2>
+      </div>
+      <button type="button" id="closeMenuBtn" class="closeMenuBtn" aria-label="Cerrar menú">×</button>
+    </div>
+    <div class="mainMenuGrid">
+      <button type="button" class="mainMenuItem" data-tab="inicio">Inicio</button>
+      <button type="button" class="mainMenuItem" data-tab="venta">Añadir día</button>
+      <button type="button" class="mainMenuItem" data-tab="ventas">Ventas</button>
+      <button type="button" class="mainMenuItem" data-tab="calendario">Calendario</button>
+      <button type="button" class="mainMenuItem" data-tab="tarifas">Tarifas</button>
+      <button type="button" class="mainMenuItem" data-tab="calc">Calculadora</button>
+      <button type="button" class="mainMenuItem" data-tab="calc30">Calc 3.0TD</button>
+      <button type="button" class="mainMenuItem" data-tab="doc">Documentación</button>
+      <button type="button" class="mainMenuItem" data-tab="ajustes">Ajustes</button>
+    </div>
+  </div>
+</div>
+
+<div id="dayDetailOverlay" class="detailOverlay" role="dialog" aria-modal="true">
+  <div class="detailSheet">
+    <div id="dayDetailContent"></div>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  var STORE_KEY = "ainhoa_ventas_sph_pro_v3";
+  var OLD_KEYS = ["ainhoa_ventas_sph_simple_v4","ainhoa_ventas_sph_webapp_v5","ainhoa_ventas_sph_por_dia_v3"];
+
+  var THRESHOLDS = [
+    {value:0.120, label:"0,120 mínimo", cls:"warn"},
+    {value:0.140, label:"0,140 bueno", cls:"good"},
+    {value:0.160, label:"0,160 alto", cls:"good"},
+    {value:0.180, label:"0,180 top", cls:"good"}
+  ];
+
+
+  var CHANNELS = [
+    {id:"waylet", name:"Waylet", min:0.120},
+    {id:"digital", name:"Digital", min:0.120},
+    {id:"marca_blanca", name:"Marca blanca", min:0.120},
+    {id:"nurturing", name:"Nurturing", min:0.120},
+    {id:"foto_factura", name:"Foto factura", min:0.120},
+    {id:"colectivos", name:"Colectivos", min:0.120},
+    {id:"otro", name:"Otro", min:0.120}
+  ];
+
+  var TAX_DEFAULTS = {
+    iva:0.21,
+    iee:0.0511269632,
+    hydrocarbons:0.00234,
+    meterRentDay:0.02663,
+    bonoSocialDay:0.006282
+  };
+
+  var JOURNEYS = {
+    "30":{label:"Parcial 30h", hours:{0:0,1:6,2:6,3:6,4:6,5:6,6:0}},
+    "35":{label:"Parcial 35h", hours:{0:0,1:7,2:7,3:7,4:7,5:7,6:0}},
+    "39":{label:"Completa 39h", hours:{0:0,1:8,2:8,3:8,4:8,5:7,6:0}},
+    "40":{label:"Completa 40h", hours:{0:0,1:8,2:8,3:8,4:8,5:8,6:0}}
+  };
+
+  var SERVICES = [
+    {id:"none", name:"Sin SVA", basePrice:0, price:0, promo:""},
+    {id:"ta24", name:"TA24H", basePrice:4.12, price:4.12, promo:"Para todos"},
+    {id:"ta24plus", name:"TA24H Plus", basePrice:5.78, price:5.78, promo:"Para todos"},
+    {id:"ta24pyme20", name:"TA24H Pyme 2.0", basePrice:8.26, price:8.26, promo:"Para todos"},
+    {id:"ta24pyme30", name:"TA24H Pyme 3.0", basePrice:10.73, price:10.73, promo:"Para todos"},
+    {id:"sihconfort", name:"SIHConfort", basePrice:8.26, price:8.26, promo:"Para todos"},
+    {id:"sig", name:"SIG", basePrice:11.15, price:11.15, promo:"Para todos"},
+    {id:"tag", name:"TAG", basePrice:9.08, price:9.08, promo:"Para todos"}
+  ];
+
+  var TARIFFS = [{"id":"ta24hplus-v3-10","name":"Precio fijo V35","group":"Precio fijo","type":"luz","maxPower":10,"p1":0.090137,"p2":0.090137,"energy":0.0999,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 10 kW. V35 con SVA según reglas de la app.","exc":0,"isBvSolar":false,"energyIva":0.120879,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Precio fijo V35"},{"id":"tranquilisima-10","name":"Tranquilísima","group":"Precio fijo","type":"luz","maxPower":10,"p1":0.081918,"p2":0.081918,"energy":0.1399,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 10 kW.","exc":0,"isBvSolar":false,"energyIva":0.169279,"p1Iva":0.099121,"p2Iva":0.099121,"shortName":"Tranquilísima"},{"id":"ahorro-renovable-10","name":"Ahorro Renovable","group":"Precio fijo","type":"luz","maxPower":10,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 10 kW.","exc":0,"isBvSolar":false,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Ahorro Renovable"},{"id":"ahorro-potencia-v32-10","name":"TAP V32","group":"TAP","type":"luz","maxPower":10,"p1":0.084431,"p2":0.001987,"energy":0.1699,"svaMandatory":false,"permissionSva":true,"svaLabel":"Sin SVA con permiso","cashbackEligible":true,"notes":"Potencia permitida: hasta 10 kW. Puede ir sin SVA con permiso.","exc":0,"isBvSolar":false,"energyIva":0.205579,"p1Iva":0.102162,"p2Iva":0.002404,"shortName":"TAP V32"},{"id":"ahorro-potencia-hogar-v34-10","name":"TAP Hogar V34","group":"TAP","type":"luz","maxPower":10,"p1":0.084431,"p2":0.001987,"energy":0.1649,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 10 kW.","exc":0,"isBvSolar":false,"energyIva":0.199529,"p1Iva":0.102162,"p2Iva":0.002404,"shortName":"TAP Hogar V34"},{"id":"sinhorarios-v30-15","name":"Precio fijo V30","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1599,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.193479,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Precio fijo V30"},{"id":"sinhorarios-v31-15","name":"Precio fijo V31","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1499,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.181379,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Precio fijo V31"},{"id":"sinhorarios-v32-15","name":"Precio fijo V32","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":true,"svaLabel":"Sin SVA con permiso","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. Puede ir sin SVA con permiso.","exc":0,"isBvSolar":false,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Precio fijo V32"},{"id":"sinhorarios-v33-15","name":"Precio fijo V33","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1199,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.145079,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Precio fijo V33"},{"id":"ta24hplus-v3-15","name":"Precio fijo V35","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1099,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW. V35 con SVA según reglas de la app.","exc":0,"isBvSolar":false,"energyIva":0.132979,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Precio fijo V35"},{"id":"pyme-v30-15","name":"Precio fijo Pyme V30","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1599,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.193479,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Precio fijo Pyme V30"},{"id":"pyme-v31-15","name":"Precio fijo Pyme V31","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1499,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.181379,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Precio fijo Pyme V31"},{"id":"pyme-v32-15","name":"Precio fijo Pyme V32","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":true,"svaLabel":"Sin SVA con permiso","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. Puede ir sin SVA con permiso.","exc":0,"isBvSolar":false,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Precio fijo Pyme V32"},{"id":"pyme-v33-15","name":"Precio fijo Pyme V33","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1199,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.145079,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Precio fijo Pyme V33"},{"id":"pyme-v3-15","name":"Precio fijo Pyme Ahorro V35","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1099,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.132979,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Precio fijo Pyme Ahorro V35"},{"id":"solar-v30-15","name":"Solar V30","group":"Solar","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1399,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. Solar como en v8, con excedentes conservados.","exc":0.06,"isBvSolar":false,"energyIva":0.169279,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Solar V30"},{"id":"solar-v26bv","name":"Batería Virtual V26","group":"Batería Virtual","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. BV como en v8, con excedentes conservados.","exc":0.06,"isBvSolar":true,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Batería Virtual V26"},{"id":"dh-v33-15","name":"Discriminación Horaria V33","group":"Discriminación horaria","type":"luz","maxPower":15,"p1":0.120274,"p2":0.06,"energy":0.1659,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW. En calculadora permite consumo punta, llano y valle.","exc":0,"isBvSolar":false,"energyIva":0.200739,"p1Iva":0.145532,"p2Iva":0.0726,"shortName":"Discriminación Horaria V33","isDh":true,"energyPeriods":[0.1659,0.1159,0.0969]},{"id":"10h-desc-v3-15","name":"Tarifa Smart","group":"Smart","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1699,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.205579,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Tarifa Smart"},{"id":"luz-mplus-v31-15","name":"Luz M+ V31","group":"Luz M+","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Luz M+ V31"},{"id":"empresa30-l2","name":"Empresa 3.0 L2","group":"3.0TD","type":"luz30","energy":0.1549,"energyPeriods":[0.1549,0.1549,0.1549,0.1549,0.1549,0.1549],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":false,"notes":"Calculadora 3.0TD aparte.","energyIva":0.187429,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Empresa 3.0 L2"},{"id":"empresa30-l4","name":"Empresa 3.0 L4","group":"3.0TD","type":"luz30","energy":0.1449,"energyPeriods":[0.1449,0.1449,0.1449,0.1449,0.1449,0.1449],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":false,"notes":"Calculadora 3.0TD aparte.","energyIva":0.175329,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Empresa 3.0 L4"},{"id":"empresa30-l8","name":"Empresa 3.0 L8","group":"3.0TD DH","type":"luz30","energy":0.1649,"energyPeriods":[0.1649,0.1609,0.1569,0.1549,0.1259,0.1159],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":false,"notes":"3.0TD con consumo por periodos P1-P6.","energyIva":0.199529,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Empresa 3.0 L8","isDh30":true},{"id":"dh30-l4","name":"Discriminación Horaria 3.0 L4","group":"3.0TD DH","type":"luz30","energy":0.1699,"energyPeriods":[0.1699,0.1659,0.1619,0.1599,0.1309,0.1209],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":false,"notes":"3.0TD con consumo por periodos P1-P6.","energyIva":0.205579,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Discriminación Horaria 3.0 L4","isDh30":true},{"id":"comercio30-l4","name":"Comercio 3.0 L4","group":"3.0TD DH","type":"luz30","energy":0.11495,"energyPeriods":[0.11495,0.11495,0.11495,0.11495,0.11495,0.2299],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":false,"notes":"3.0TD con consumo por periodos P1-P6.","energyIva":0.13909,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Comercio 3.0 L4","isDh30":true},{"id":"gas-rl1-v10","name":"Gas RL1 V10","group":"Gas","type":"gas","gasFixed":6.9,"energy":0.0899,"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":false,"notes":"RL1. Fijo mensual y energía.","energyIva":0.108779,"gasFixedIva":8.349,"shortName":"Gas RL1 V10"},{"id":"gas-rl1-v11","name":"Gas RL1 V11","group":"Gas","type":"gas","gasFixed":6.9,"energy":0.0799,"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":false,"notes":"RL1. Fijo mensual y energía.","energyIva":0.096679,"gasFixedIva":8.349,"shortName":"Gas RL1 V11"},{"id":"gas-rl1-v12","name":"Gas Ahorro RL1 V12","group":"Gas","type":"gas","gasFixed":6.9,"energy":0.0699,"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":false,"notes":"RL1 ahorro. Fijo mensual y energía.","energyIva":0.084579,"gasFixedIva":8.349,"shortName":"Gas Ahorro RL1 V12"},{"id":"gas-rl2-v10","name":"Gas RL2 V10","group":"Gas","type":"gas","gasFixed":13.9,"energy":0.0899,"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":false,"notes":"RL2. Fijo mensual y energía.","energyIva":0.108779,"gasFixedIva":16.819,"shortName":"Gas RL2 V10"},{"id":"gas-rl2-v11","name":"Gas RL2 V11","group":"Gas","type":"gas","gasFixed":13.9,"energy":0.0799,"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":false,"notes":"RL2. Fijo mensual y energía.","energyIva":0.096679,"gasFixedIva":16.819,"shortName":"Gas RL2 V11"},{"id":"gas-rl2-v12","name":"Gas Ahorro RL2 V12","group":"Gas","type":"gas","gasFixed":13.9,"energy":0.0699,"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":false,"notes":"RL2 ahorro. Fijo mensual y energía.","energyIva":0.084579,"gasFixedIva":16.819,"shortName":"Gas Ahorro RL2 V12"},{"id":"gas-rl3-v10","name":"Gas RL3 V10","group":"Gas","type":"gas","gasFixed":22.9,"energy":0.0899,"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":false,"notes":"RL3. Fijo mensual y energía.","energyIva":0.108779,"gasFixedIva":27.709,"shortName":"Gas RL3 V10"},{"id":"gas-rl3-v11","name":"Gas RL3 V11","group":"Gas","type":"gas","gasFixed":22.9,"energy":0.0799,"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":false,"notes":"RL3. Fijo mensual y energía.","energyIva":0.096679,"gasFixedIva":27.709,"shortName":"Gas RL3 V11"},{"id":"gas-rl3-v12","name":"Gas Ahorro RL3 V12","group":"Gas","type":"gas","gasFixed":22.9,"energy":0.0699,"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":false,"notes":"RL3 ahorro. Fijo mensual y energía.","energyIva":0.084579,"gasFixedIva":27.709,"shortName":"Gas Ahorro RL3 V12"}];
+
+  var DOCS_ALTAS = [
+    {title:"Alta 1ª ocupación", email:"doc.altas@repsolluzygas.com", when:["Suministro que nunca ha tenido luz/gas.","Suministro con mucha antigüedad que necesita nuevo boletín eléctrico.","Gas con más de 3 años de antigüedad."], docs:["DNI.","Escritura de propiedad hasta apartado exponen o contrato de alquiler.","Boletín eléctrico/gas."], note:"Documentación antes de hacer la venta en portal."},
+    {title:"Alta 2ª ocupación", email:"doc.altas@repsolluzygas.com", when:["Suministro que ha tenido luz/gas antes o gas hace menos de 3 años."], docs:["DNI.","Escritura hasta apartado exponen o contrato de alquiler."], note:"Documentación antes de hacer la venta en portal."},
+    {title:"Mercado regulado con potencia menor de 3,0 kW", email:"area.digital@repsolluzygas.com", when:["Solo si viene de mercado regulado y la potencia es menor de 3,0 kW."], docs:["Factura."], note:"No aplica como caso general: solo <3,0 kW."}
+  ];
+
+  var DOCS_TT = [
+    {title:"Compraventa", email:"No enviar doc manualmente", docs:["Escritura.","DNI."], note:"Al cliente le llega correo para adjuntar documentación."},
+    {title:"Alquiler / arrendatario", email:"No enviar doc manualmente", docs:["Contrato de alquiler.","DNI."], note:"Al cliente le llega correo para adjuntar documentación."},
+    {title:"Defunción", email:"area.digital@repsolluzygas.com", docs:["Certificado de defunción.","Declaración de herederos."], note:"Enviar a la atención del agente."},
+    {title:"Entre cónyuges", email:"area.digital@repsolluzygas.com", docs:["Libro de familia.","DNI."], note:"Enviar a la atención del agente."},
+    {title:"Pareja de hecho", email:"area.digital@repsolluzygas.com", docs:["Documento del registro de pareja de hecho."], note:"Enviar a la atención del agente."},
+    {title:"Particular a empresa", email:"area.digital@repsolluzygas.com", docs:["DNI obligatorio.","Poderes obligatorios."], note:"No finalizar si falta documentación: guardar oportunidad, acción comercial y CUPS; avisar a superior."}
+  ];
+
+
+  var state = loadState();
+  var editingDate = null;
+
+  function $(id){ return document.getElementById(id); }
+
+  function todayISO(){
+    var d = new Date();
+    d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+    return d.toISOString().slice(0,10);
+  }
+
+  function currentMonth(){
+    return todayISO().slice(0,7);
+  }
+
+  function uid(){
+    return String(Date.now()) + "_" + Math.random().toString(16).slice(2);
+  }
+
+  function fmtDate(iso){
+    if(!iso) return "";
+    var p = iso.split("-");
+    return p.length === 3 ? p[2] + "/" + p[1] + "/" + p[0] : iso;
+  }
+
+  function monthLabel(ym){
+    if(!ym) return "Mes";
+    var p = ym.split("-");
+    return new Date(Number(p[0]), Number(p[1])-1, 1).toLocaleDateString("es-ES", {month:"long", year:"numeric"});
+  }
+
+  function fmtNum(n,d){
+    return Number(n || 0).toLocaleString("es-ES", {minimumFractionDigits:d, maximumFractionDigits:d});
+  }
+
+  function fmtSph(n){ return fmtNum(n,3); }
+  function fmtEuro(n){ return fmtNum(n,2) + "€"; }
+  function fmtHours(n){
+    var v = Number(n || 0);
+    return fmtNum(v, v % 1 === 0 ? 0 : 2) + "h";
+  }
+
+  function escapeHtml(v){
+    return String(v == null ? "" : v)
+      .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+  }
+
+  function defaultState(){
+    return {
+      version:9,
+      records:[],
+      settings:{
+        month:currentMonth(),
+        cutoff:todayISO(),
+        journeyType:"39",
+        workHours:{0:0,1:8,2:8,3:8,4:8,5:7,6:0},
+        defaultChannel:"waylet",
+        defaultChannelMode:"fixed",
+        channelThresholds:{waylet:0.120,digital:0.120,marca_blanca:0.120,nurturing:0.120,foto_factura:0.120,colectivos:0.120,otro:0.120},
+        taxes:Object.assign({}, TAX_DEFAULTS)
+      }
+    };
+  }
+
+  function loadState(){
+    var fresh = defaultState();
+    try{
+      var raw = localStorage.getItem(STORE_KEY);
+      if(raw){
+        return normalizeState(JSON.parse(raw));
+      }
+    }catch(e){}
+
+    for(var i=0;i<OLD_KEYS.length;i++){
+      try{
+        var oldRaw = localStorage.getItem(OLD_KEYS[i]);
+        if(oldRaw){
+          var migrated = migrateOld(JSON.parse(oldRaw));
+          if(migrated.records.length){
+            localStorage.setItem(STORE_KEY, JSON.stringify(migrated));
+            return migrated;
+          }
+        }
+      }catch(e2){}
+    }
+
+    return fresh;
+  }
+
+  function normalizeState(s){
+    var base = defaultState();
+    s = s || {};
+    s.version = 9;
+    s.records = Array.isArray(s.records) ? s.records : [];
+    s.settings = Object.assign({}, base.settings, s.settings || {});
+    s.settings.workHours = Object.assign({}, base.settings.workHours, s.settings.workHours || {});
+    s.settings.taxes = Object.assign({}, base.settings.taxes, s.settings.taxes || {});
+    s.settings.channelThresholds = Object.assign({}, base.settings.channelThresholds, s.settings.channelThresholds || {});
+    if(!s.settings.defaultChannel) s.settings.defaultChannel = "waylet";
+    if(!s.settings.defaultChannelMode) s.settings.defaultChannelMode = "fixed";
+    if(!s.settings.journeyType) s.settings.journeyType = "39";
+    s.records.forEach(function(r){
+      r.sales = Array.isArray(r.sales) ? r.sales : [];
+      r.channelMode = r.channelMode || s.settings.defaultChannelMode || "fixed";
+      r.fixedChannel = r.fixedChannel || s.settings.defaultChannel || "waylet";
+      if(!r.channelHours) r.channelHours = null;
+      r.sales.forEach(function(v){
+        if(!v.saleType) v.saleType = v.dual ? "luzgas" : (v.type || "luz");
+        if(v.saleType === "luzgas") v.dual = true;
+        if(!v.channel) v.channel = r.fixedChannel || s.settings.defaultChannel || "waylet";
+      });
+    });
+    return s;
+  }
+
+  function migrateOld(old){
+    var s = defaultState();
+    if(!old || !Array.isArray(old.records)) return s;
+
+    s.settings = Object.assign(s.settings, old.settings || {});
+
+    s.records = old.records.map(function(r){
+      var sales = [];
+      function addFromText(text, type){
+        if(!text) return;
+        String(text).split(/[,\n\r\t; ]+/).filter(Boolean).forEach(function(id){
+          sales.push({
+            localId:uid(),
+            tariffId:"",
+            tariffName:type,
+            saleType:type === "Gas" ? "gas" : "luz",
+            sva:false,
+            id:id,
+            client:r.cliente || "",
+            cashback:0
+          });
+        });
+      }
+
+      if(Array.isArray(r.sales)){
+        sales = r.sales.map(function(v){
+          return {
+            localId:uid(),
+            tariffId:v.tariffId || "",
+            tariffName:v.tariffName || v.type || "Venta",
+            saleType:v.saleType || (v.type === "Gas" ? "gas" : "luz"),
+            sva:!!v.sva,
+            id:v.id || "",
+            client:v.client || v.cliente || "",
+            cashback:0
+          };
+        });
+      }else{
+        addFromText(r.idsLuz, "Luz");
+        addFromText(r.idsGas, "Gas");
+        addFromText(r.idsOtros, "Otro");
+        var sinId = Number(r.sinId || 0);
+        for(var i=0;i<sinId;i++){
+          sales.push({localId:uid(), tariffId:"", tariffName:"Sin ID", saleType:"luz", sva:false, id:"SIN ID", client:r.cliente || "", cashback:0});
+        }
+      }
+
+      return {
+        id:r.id || uid(),
+        date:r.date,
+        hours:Number(r.hours || 0),
+        giftHours:Number(r.giftHours || 0),
+        specialHours:Object.assign({free:0, vacation:0, medical:0, incident:0, course:0, customNoSph:0, recovery:0}, r.specialHours || {}),
+        sales:sales
+      };
+    });
+
+    return normalizeState(s);
+  }
+
+  function persist(){
+    localStorage.setItem(STORE_KEY, JSON.stringify(state));
+  }
+
+  function saveState(){
+    persist();
+    renderAll();
+    setTimeout(updateHeaderHeight, 80);
+  }
+
+  function toast(msg){
+    var t = $("toast");
+    t.textContent = msg;
+    t.style.display = "block";
+    clearTimeout(window.__toastTimer);
+    window.__toastTimer = setTimeout(function(){ t.style.display = "none"; }, 2300);
+  }
+
+  function getTariff(id){
+    return TARIFFS.find(function(t){ return t.id === id; }) || null;
+  }
+
+  function tariffsBy(kind){
+    return TARIFFS.filter(function(t){
+      if(kind === "luz") return t.type === "luz";
+      if(kind === "gas") return t.type === "gas";
+      if(kind === "luz30") return t.type === "luz30";
+      return true;
+    });
+  }
+
+  function tariffLabel(t){
+    if(!t) return "Tarifa";
+    if(t.type === "gas") return t.name;
+    if(t.type === "luz30") return t.name;
+    return t.name + (t.maxPower ? " · hasta " + t.maxPower + " kW" : "");
+  }
+
+  function tariffOptions(selected, kind){
+    var html = '<option value="">Sin tarifa / manual</option>';
+    tariffsBy(kind).forEach(function(t){
+      html += '<option value="' + t.id + '"' + (selected === t.id ? " selected" : "") + '>' + escapeHtml(tariffLabel(t)) + '</option>';
+    });
+    return html;
+  }
+
+  function serviceOptions(selected, includeNone){
+    var html = "";
+    SERVICES.forEach(function(s){
+      if(!includeNone && s.id === "none") return;
+      html += '<option value="' + s.id + '"' + (selected === s.id ? " selected" : "") + '>' + escapeHtml(s.name) + (s.basePrice ? " · " + fmtEuro(s.basePrice) + "/mes" : "") + '</option>';
+    });
+    return html;
+  }
+
+  function channelOptions(selected){
+    return CHANNELS.map(function(c){ return '<option value="' + c.id + '"' + (selected === c.id ? ' selected' : '') + '>' + escapeHtml(c.name) + '</option>'; }).join('');
+  }
+
+  function channelName(id){
+    var c = CHANNELS.find(function(x){ return x.id === id; });
+    return c ? c.name : (id || "-");
+  }
+
+  function saleTypeDefault(t){
+    if(!t) return "luz";
+    return t.type === "gas" ? "gas" : "luz";
+  }
+
+  function powerLimit(t){
+    return Number(t && t.maxPower ? t.maxPower : 0);
+  }
+
+  function cashbackFor(tariff, saleType, sva){
+    return 0;
+  }
+
+  function taxSettings(){
+    return Object.assign({}, TAX_DEFAULTS, (state && state.settings && state.settings.taxes) || {});
+  }
+
+  function applyJourneyHours(type){
+    if(type && JOURNEYS[type]){
+      state.settings.workHours = Object.assign({}, JOURNEYS[type].hours);
+    }
+  }
+
+
+  function specialHoursTotal(r){
+    var sp = r && r.specialHours ? r.specialHours : {};
+    return Number(sp.free || 0) + Number(sp.vacation || 0) + Number(sp.medical || 0) + Number(sp.incident || 0) + Number(sp.course || 0) + Number(sp.customNoSph || 0) + Number(sp.recovery || 0);
+  }
+
+  function nonWorkedSpecialHoursTotal(r){
+    var sp = r && r.specialHours ? r.specialHours : {};
+    return Number(sp.free || 0) + Number(sp.vacation || 0) + Number(sp.medical || 0) + Number(sp.incident || 0) + Number(sp.course || 0) + Number(sp.customNoSph || 0);
+  }
+
+  function recoveryHoursTotal(r){
+    var sp = r && r.specialHours ? r.specialHours : {};
+    return Number(sp.recovery || 0);
+  }
+
+  function workedHoursForRecord(r){
+    return Number(r.hours || 0) + recoveryHoursTotal(r);
+  }
+
+  function dayTypeLabel(r){
+    var sp = r && r.specialHours ? r.specialHours : {};
+    if(Number(sp.free || 0) > 0) return "Libre";
+    if(Number(sp.vacation || 0) > 0) return "Vacaciones";
+    if(Number(sp.medical || 0) > 0) return "Médico";
+    if(Number(sp.incident || 0) > 0) return "Incidencia";
+    if(Number(sp.course || 0) > 0) return "Curso";
+    if(Number(sp.customNoSph || 0) > 0) return "Personalizado";
+    if(Number(sp.recovery || 0) > 0) return "Recuperación";
+    return "Normal";
+  }
+
+  function specialHoursText(r){
+    var sp = r && r.specialHours ? r.specialHours : {};
+    var parts = [];
+    if(Number(sp.free || 0) > 0) parts.push("libre " + fmtHours(sp.free));
+    if(Number(sp.vacation || 0) > 0) parts.push("vacaciones " + fmtHours(sp.vacation));
+    if(Number(sp.medical || 0) > 0) parts.push("médicas " + fmtHours(sp.medical));
+    if(Number(sp.incident || 0) > 0) parts.push("incidencia " + fmtHours(sp.incident));
+    if(Number(sp.course || 0) > 0) parts.push("cursos " + fmtHours(sp.course));
+    if(Number(sp.customNoSph || 0) > 0) parts.push("no SPH " + fmtHours(sp.customNoSph));
+    if(Number(sp.recovery || 0) > 0) parts.push("recuperación " + fmtHours(sp.recovery));
+    return parts.join(" · ");
+  }
+
+  function saleCups(v){
+    if(!v) return 0;
+    return (v.saleType === "luzgas" || v.dual) ? 2 : 1;
+  }
+
+  function saleCount(r){
+    return Array.isArray(r.sales) ? r.sales.reduce(function(sum,v){ return sum + saleCups(v); },0) : 0;
+  }
+
+  function salesForRecords(records){
+    return records.reduce(function(sum,r){ return sum + saleCount(r); },0);
+  }
+
+  function saleBreakdown(records){
+    var out = {luz:0, gas:0, dual:0, sva:0, total:0, tariffs:{}};
+    records.forEach(function(r){
+      (r.sales || []).forEach(function(v){
+        var isDual = v.saleType === "luzgas" || v.dual;
+        if(isDual){
+          out.dual += 1; out.luz += 1; out.gas += 1;
+          if(v.light && v.light.sva) out.sva += 1;
+          if(v.gas && v.gas.sva) out.sva += 1;
+          if(v.light && v.light.tariffName) out.tariffs[v.light.tariffName] = (out.tariffs[v.light.tariffName] || 0) + 1;
+          if(v.gas && v.gas.tariffName) out.tariffs[v.gas.tariffName] = (out.tariffs[v.gas.tariffName] || 0) + 1;
+        }else if((v.saleType || "luz") === "gas"){
+          out.gas += 1; if(v.sva) out.sva += 1;
+          var kg = v.tariffName || "Gas"; out.tariffs[kg] = (out.tariffs[kg] || 0) + 1;
+        }else{
+          out.luz += 1; if(v.sva) out.sva += 1;
+          var kl = v.tariffName || "Luz"; out.tariffs[kl] = (out.tariffs[kl] || 0) + 1;
+        }
+      });
+    });
+    out.total = out.luz + out.gas;
+    return out;
+  }
+
+  function topTariffName(records){
+    var counts = saleBreakdown(records).tariffs;
+    var keys = Object.keys(counts).sort(function(a,b){ return counts[b] - counts[a]; });
+    return keys.length ? keys[0] + " (" + counts[keys[0]] + ")" : "-";
+  }
+
+  function recordChannelHours(r){
+    var h = workedHoursForRecord(r);
+    var fixed = r.fixedChannel || state.settings.defaultChannel || "waylet";
+    var out = {};
+    if(r.channelMode === "mixed" && r.channelHours){
+      Object.keys(r.channelHours).forEach(function(k){ out[k] = Number(r.channelHours[k] || 0); });
+      var used = Object.keys(out).reduce(function(s,k){ return s + Number(out[k] || 0); },0);
+      var rest = Math.max(0, h - used);
+      if(rest > 0) out[fixed] = Number(out[fixed] || 0) + rest;
+    }else{
+      out[fixed] = h;
+    }
+    return out;
+  }
+
+  function channelStats(records){
+    var out = {};
+    CHANNELS.forEach(function(c){ out[c.id] = {hours:0, sales:0}; });
+    records.forEach(function(r){
+      var ch = recordChannelHours(r);
+      Object.keys(ch).forEach(function(k){ if(!out[k]) out[k] = {hours:0,sales:0}; out[k].hours += Number(ch[k] || 0); });
+      (r.sales || []).forEach(function(v){
+        var cid = v.channel || r.fixedChannel || state.settings.defaultChannel || "waylet";
+        if(!out[cid]) out[cid] = {hours:0,sales:0};
+        out[cid].sales += saleCups(v);
+      });
+    });
+    return out;
+  }
+
+  function cashbackForRecords(records){
+    return records.reduce(function(sum,r){
+      return sum + (r.sales || []).reduce(function(s,v){ return s + Number(v.cashback || 0); },0);
+    },0);
+  }
+
+  function hoursForRecords(records){
+    return records.reduce(function(sum,r){ return sum + workedHoursForRecord(r); },0);
+  }
+
+  function giftForRecords(records){
+    return records.reduce(function(sum,r){ return sum + Number(r.giftHours || 0); },0);
+  }
+
+  function getMonth(){
+    return $("monthFilter").value || state.settings.month || currentMonth();
+  }
+
+  function getCutoff(){
+    var month = getMonth();
+    var raw = $("cutoffDate").value || state.settings.cutoff || todayISO();
+    if(raw.indexOf(month) !== 0){
+      var y = Number(month.slice(0,4));
+      var m = Number(month.slice(5,7));
+      var last = new Date(y, m, 0).getDate();
+      raw = month + "-" + String(last).padStart(2,"0");
+    }
+    return raw;
+  }
+
+  function monthRecords(){
+    var month = getMonth();
+    return state.records
+      .filter(function(r){ return r.date && r.date.indexOf(month) === 0; })
+      .sort(function(a,b){ return a.date.localeCompare(b.date); });
+  }
+
+  function cutoffRecords(){
+    var cutoff = getCutoff();
+    return monthRecords().filter(function(r){ return r.date <= cutoff; });
+  }
+
+  function calc(records){
+    var hours = hoursForRecords(records);
+    var sales = salesForRecords(records);
+    return {
+      hours:hours,
+      sales:sales,
+      sph:hours > 0 ? sales / hours : 0,
+      gift:giftForRecords(records),
+      cashback:cashbackForRecords(records),
+      saleDays:records.filter(function(r){ return saleCount(r) > 0; }).length
+    };
+  }
+
+  function sphClass(sph){
+    if(sph >= 0.140) return "good";
+    if(sph >= 0.120) return "warn";
+    if(sph > 0) return "bad";
+    return "gray";
+  }
+
+  function sphText(sph){
+    if(sph >= 0.180) return "Tramo top.";
+    if(sph >= 0.160) return "Tramo alto.";
+    if(sph >= 0.140) return "Vas bien.";
+    if(sph >= 0.120) return "Mínimo de variable.";
+    if(sph > 0) return "Por debajo de variable.";
+    return "Sin datos.";
+  }
+
+  function monthRange(ym){
+    var y = Number(ym.slice(0,4));
+    var m = Number(ym.slice(5,7));
+    var last = new Date(y,m,0).getDate();
+    return {year:y, month:m, last:last};
+  }
+
+  function estimatedHoursForMonth(ym, untilDate){
+    var r = monthRange(ym);
+    var lastDay = r.last;
+    if(untilDate && untilDate.indexOf(ym) === 0){
+      lastDay = Number(untilDate.slice(8,10));
+    }
+    var sum = 0;
+    for(var d=1; d<=lastDay; d++){
+      var date = new Date(r.year, r.month - 1, d);
+      var dow = date.getDay();
+      sum += Number(state.settings.workHours[dow] || 0);
+    }
+    return sum;
+  }
+
+  function workDaysRemaining(ym, cutoff){
+    var r = monthRange(ym);
+    var from = 1;
+    if(cutoff && cutoff.indexOf(ym) === 0) from = Number(cutoff.slice(8,10)) + 1;
+    var days = 0, hours = 0;
+    for(var d=from; d<=r.last; d++){
+      var date = new Date(r.year, r.month - 1, d);
+      var h = Number(state.settings.workHours[date.getDay()] || 0);
+      if(h > 0){ days++; hours += h; }
+    }
+    return {days:days, hours:hours};
+  }
+
+  function renderKpis(){
+    var records = cutoffRecords();
+    var totals = calc(records);
+    var cls = sphClass(totals.sph);
+    var bd = saleBreakdown(records);
+
+    $("kpiSales").textContent = totals.sales;
+    $("kpiHours").textContent = fmtHours(totals.hours);
+    $("kpiSph").textContent = fmtSph(totals.sph);
+    $("kpiSph").className = "value " + (cls === "good" ? "sphValueGood" : cls === "warn" ? "sphValueWarn" : cls === "bad" ? "sphValueBad" : "sphValueGray");
+    $("kpiGift").textContent = fmtHours(totals.gift);
+
+    var msg = $("sphMessage");
+    msg.textContent = sphText(totals.sph);
+    msg.className = "sphStatus " + cls;
+
+    if($("v9HomeBreakdown")){
+      $("v9HomeBreakdown").innerHTML = '<div class="mini-grid">' +
+        '<div class="mini"><span>Luz</span><b>' + bd.luz + '</b></div>' +
+        '<div class="mini"><span>Gas</span><b>' + bd.gas + '</b></div>' +
+        '<div class="mini"><span>Duales</span><b>' + bd.dual + '</b></div>' +
+        '<div class="mini"><span>SVAs</span><b>' + bd.sva + '</b></div>' +
+        '<div class="mini"><span>Tarifa top</span><b>' + escapeHtml(topTariffName(records)) + '</b></div>' +
+      '</div>';
+    }
+
+    if($("v9ChannelSph")){
+      var stats = channelStats(records);
+      var html = "";
+      CHANNELS.forEach(function(c){
+        var st = stats[c.id] || {hours:0,sales:0};
+        if(st.hours > 0){
+          var sph = st.sales / st.hours;
+          html += '<div class="rate-card"><div class="rate-top"><div><div class="rate-title">' + escapeHtml(c.name) + '</div><div class="rate-meta">' + st.sales + ' CUPS · ' + fmtHours(st.hours) + '</div></div><span class="badge ' + (sph >= (state.settings.channelThresholds[c.id] || c.min || .12) ? 'good' : 'warn') + '">' + fmtSph(sph) + '</span></div></div>';
+        }
+      });
+      $("v9ChannelSph").innerHTML = html || '<div class="empty">No hay horas por canal en este periodo.</div>';
+    }
+  }
+
+  function renderObjectives(){
+    var totals = calc(cutoffRecords());
+    var month = getMonth();
+    var cutoff = getCutoff();
+    var mode = $("homeMode").value || "real";
+    var hoursBase = mode === "estimado" ? estimatedHoursForMonth(month) : totals.hours;
+    var title = mode === "estimado" ? "Objetivo estimado del mes completo" : "Objetivo según horas reales";
+
+    var html = '<div class="hint">' + title + ': se calculan los CUPS necesarios para cada tramo.</div>';
+
+    THRESHOLDS.forEach(function(th){
+      var needed = Math.ceil(hoursBase * th.value);
+      var missing = Math.max(0, needed - totals.sales);
+      var pct = needed > 0 ? Math.min(100, totals.sales / needed * 100) : 0;
+      var cls = missing === 0 ? "good" : th.value < 0.14 ? "warn" : "gray";
+
+      html += '<div class="day-card">' +
+        '<div class="day-head">' +
+          '<div><div class="day-title">' + th.label + '</div>' +
+          '<div class="day-sub">Necesitas ' + needed + ' CUPS · llevas ' + totals.sales + '</div></div>' +
+          '<span class="badge ' + cls + '">' + (missing === 0 ? "Conseguido" : "Faltan " + missing) + '</span>' +
+        '</div>' +
+        '<div class="goalbar"><div style="width:' + pct + '%"></div></div>' +
+      '</div>';
+    });
+
+    $("objectiveCards").innerHTML = html;
+  }
+
+  function renderPace(){
+    var totals = calc(cutoffRecords());
+    var month = getMonth();
+    var cutoff = getCutoff();
+    var estMonth = estimatedHoursForMonth(month);
+    var remaining = workDaysRemaining(month, cutoff);
+    var target014 = Math.ceil(estMonth * 0.140);
+    var missing014 = Math.max(0, target014 - totals.sales);
+    var avgDay = remaining.days > 0 ? missing014 / remaining.days : 0;
+
+    $("paceBox").innerHTML =
+      '<div class="mini-grid">' +
+        '<div class="mini"><span>Horas estimadas mes</span><b>' + fmtHours(estMonth) + '</b></div>' +
+        '<div class="mini"><span>Objetivo 0,140 mes</span><b>' + target014 + ' CUPS</b></div>' +
+        '<div class="mini"><span>Faltan para 0,140</span><b>' + missing014 + '</b></div>' +
+        '<div class="mini"><span>Media necesaria</span><b>' + fmtNum(avgDay,2) + '/día</b></div>' +
+      '</div>' +
+      '<div class="small">Quedan ' + remaining.days + ' días laborables estimados y ' + fmtHours(remaining.hours) + '. Objetivo calculado según el horario base y las ventas registradas.</div>';
+  }
+
+  function renderSummary(){
+    var recs = monthRecords();
+    var box = $("summaryCards");
+    if(!box) return;
+
+    if(!recs.length){
+      box.innerHTML = '<div class="empty">No hay días guardados en este mes. Añade un día para empezar el resumen.</div>';
+      return;
+    }
+
+    var html = "";
+    var accH = 0;
+    var accS = 0;
+
+    recs.forEach(function(r){
+      var h = workedHoursForRecord(r);
+      var baseWorked = Number(r.hours || 0);
+      var recoveryWorked = recoveryHoursTotal(r);
+      var s = saleCount(r);
+      var daySph = h > 0 ? s / h : 0;
+      accH += h;
+      accS += s;
+      var accSph = accH > 0 ? accS / accH : 0;
+      var chips = "";
+
+      (r.sales || []).slice(0,3).forEach(function(v){
+        chips += '<span class="chip">' + escapeHtml(v.id || "SIN ID") + ' · ' + escapeHtml(v.tariffName || "Tarifa") + '</span>';
+      });
+
+      if((r.sales || []).length > 3){
+        chips += '<span class="chip">+' + ((r.sales || []).length - 3) + ' más</span>';
+      }
+
+      if(!chips) chips = '<span class="chip">Sin ventas</span>';
+      if(specialHoursTotal(r) > 0){
+        chips += '<span class="chip">Especial · ' + escapeHtml(specialHoursText(r)) + '</span>';
+      }
+
+      html += '<div class="day-card clickable openDayDetail" data-date="' + r.date + '">' +
+        '<div class="day-head">' +
+          '<div><div class="day-title">' + fmtDate(r.date) + '</div>' +
+          '<div class="day-sub">' + fmtHours(h) + ' trabajadas' + (recoveryWorked > 0 ? ' (incl. recuperación ' + fmtHours(recoveryWorked) + ')' : '') + ' · ' + s + ' venta' + (s === 1 ? "" : "s") + ' · regalo ' + fmtHours(r.giftHours || 0) + (specialHoursTotal(r) > 0 ? ' · especial ' + fmtHours(specialHoursTotal(r)) : '') + '</div></div>' +
+          '<span class="badge ' + sphClass(daySph) + '">SPH día ' + fmtSph(daySph) + '</span>' +
+        '</div>' +
+        '<div class="mini-grid">' +
+          '<div class="mini"><span>Ventas acum.</span><b>' + accS + '</b></div>' +
+          '<div class="mini"><span>Horas acum.</span><b>' + fmtHours(accH) + '</b></div>' +
+          '<div class="mini"><span>SPH acum.</span><b>' + fmtSph(accSph) + '</b></div>' +
+          '<div class="mini"><span>Horas especiales</span><b>' + fmtHours(specialHoursTotal(r)) + '</b></div>' +
+        '</div>' +
+        '<div class="chips">' + chips + '</div>' +
+        '<div class="small">Toca la tarjeta para ver el detalle completo.</div>' +
+      '</div>';
+    });
+
+    box.innerHTML = html;
+
+    document.querySelectorAll(".openDayDetail").forEach(function(card){
+      card.onclick = function(){ showDayDetail(card.dataset.date); };
+    });
+  }
+
+  function showDayDetail(date){
+    var r = state.records.find(function(x){ return x.date === date; });
+    if(!r) return;
+    var h = workedHoursForRecord(r);
+    var s = saleCount(r);
+    var daySph = h > 0 ? s / h : 0;
+    var ch = recordChannelHours(r);
+    var channelText = Object.keys(ch).filter(function(k){ return ch[k] > 0; }).map(function(k){ return channelName(k) + " " + fmtHours(ch[k]); }).join(" · ") || "-";
+    var salesHtml = (r.sales || []).length ? (r.sales || []).map(function(v,idx){
+      var isDual = v.saleType === "luzgas" || v.dual;
+      var body = isDual
+        ? '<div class="mini-grid"><div class="mini"><span>Luz</span><b>' + escapeHtml((v.light && v.light.tariffName) || "-") + '</b></div><div class="mini"><span>SVA luz</span><b>' + ((v.light && v.light.sva) ? "Sí" : "No") + '</b></div><div class="mini"><span>Gas</span><b>' + escapeHtml((v.gas && v.gas.tariffName) || "-") + '</b></div><div class="mini"><span>SVA gas</span><b>' + ((v.gas && v.gas.sva) ? "Sí" : "No") + '</b></div></div>'
+        : '<div class="mini-grid"><div class="mini"><span>Tarifa</span><b>' + escapeHtml(v.tariffName || "Sin tarifa") + '</b></div><div class="mini"><span>Tipo</span><b>' + escapeHtml((v.saleType || "luz").toUpperCase()) + '</b></div><div class="mini"><span>SVA</span><b>' + (v.sva ? "Sí" : "No") + '</b></div><div class="mini"><span>Motivo sin SVA</span><b>' + escapeHtml(v.noSvaReason || "-") + '</b></div></div>';
+      return '<div class="sale-box"><div class="sale-head"><div><div class="sale-title">Venta ' + (idx+1) + '</div><div class="sale-sub">' + escapeHtml(v.client || "Sin cliente") + ' · ' + escapeHtml(channelName(v.channel || r.fixedChannel)) + '</div></div><span class="badge ' + (isDual ? "pink" : "turq") + '">' + (isDual ? "Dual" : saleCups(v)+" CUPS") + '</span></div><div class="mini-grid"><div class="mini"><span>ID</span><b>' + escapeHtml(v.id || "SIN ID") + '</b></div><div class="mini"><span>CUPS</span><b>' + saleCups(v) + '</b></div></div>' + body + '</div>';
+    }).join("") : '<div class="empty">Este día no tiene ventas guardadas.</div>';
+    $("dayDetailContent").innerHTML = '<div class="day-head"><div><h2 style="margin:0">' + fmtDate(r.date) + '</h2><div class="small">Detalle del día</div></div><button type="button" id="closeDayDetail" class="btn-small">Cerrar</button></div><br>' +
+      '<div class="mini-grid"><div class="mini"><span>Horas SPH</span><b>' + fmtHours(h) + '</b></div><div class="mini"><span>Horas regalo</span><b>' + fmtHours(r.giftHours || 0) + '</b></div><div class="mini"><span>CUPS</span><b>' + s + '</b></div><div class="mini"><span>SPH día</span><b>' + fmtSph(daySph) + '</b></div><div class="mini"><span>Canales</span><b>' + escapeHtml(channelText) + '</b></div></div>' +
+      (specialHoursTotal(r) > 0 ? '<br><div class="hint"><b>Día especial:</b> ' + escapeHtml(specialHoursText(r)) + '</div>' : '') +
+      '<br><h3>Ventas</h3><div class="grid">' + salesHtml + '</div><br><div class="actions"><button class="btn-main" id="editDetailDay" type="button">Editar día</button><button class="btn-danger" id="deleteDetailDay" type="button">Borrar día</button></div>';
+    $("dayDetailOverlay").classList.add("show");
+    $("closeDayDetail").onclick = hideDayDetail;
+    $("editDetailDay").onclick = function(){ hideDayDetail(); editDay(date); };
+    $("deleteDetailDay").onclick = function(){ hideDayDetail(); deleteDay(date); };
+  }
+
+  function hideDayDetail(){
+    $("dayDetailOverlay").classList.remove("show");
+  }
+
+  function saleEditorCard(data){
+    data = data || {};
+    var id = data.localId || uid();
+    var isDual = data.saleType === "luzgas" || data.dual;
+    var div = document.createElement("div");
+    div.className = "sale-box saleEditorItem";
+    div.dataset.localId = id;
+    var light = data.light || (isDual ? {tariffId:data.tariffId || "", sva:!!data.sva, noSvaReason:data.noSvaReason || ""} : {});
+    var gas = data.gas || {};
+    var type = isDual ? "luzgas" : (data.saleType || saleTypeDefault(getTariff(data.tariffId)) || "luz");
+
+    div.innerHTML =
+      '<div class="sale-head"><div><div class="sale-title">Venta</div><div class="sale-sub autoInfo">Tarifa y SVA separados</div></div><button type="button" class="btn-danger btn-small removeSale">Quitar</button></div>' +
+      '<div class="row cols3">' +
+        '<label class="field">Tipo<select class="saleType"><option value="luz">Luz</option><option value="gas">Gas</option><option value="luzgas">Luz + Gas</option></select></label>' +
+        '<label class="field">ID<input class="saleId" type="text" placeholder="Ej. 4862394"></label>' +
+        '<label class="field">Cliente<input class="saleClient" type="text" placeholder="Ej. Manuela"></label>' +
+      '</div>' +
+      '<div class="row cols2"><label class="field">Canal de la venta<select class="saleChannel">' + channelOptions(data.channel || state.settings.defaultChannel || "waylet") + '</select></label></div>' +
+      '<div class="singleSaleBox">' +
+        '<div class="row cols3">' +
+          '<label class="field singleTariffLabel">Tarifa<select class="saleTariff"></select></label>' +
+          '<label class="field">SVA<select class="saleSva"><option value="0">Sin SVA</option><option value="1">Con SVA</option></select></label>' +
+          '<label class="field noSvaReasonField">Motivo sin SVA<select class="saleNoSvaReason"><option value="">No aplica</option><option value="permiso">Con permiso</option><option value="caso_especial">Caso especial</option></select></label>' +
+        '</div>' +
+      '</div>' +
+      '<div class="dualSaleBox hidden">' +
+        '<h3>Luz</h3><div class="row cols3">' +
+          '<label class="field">Tarifa luz<select class="dualLightTariff">' + tariffOptions(light.tariffId || "", "luz") + '</select></label>' +
+          '<label class="field">SVA luz<select class="dualLightSva"><option value="0">Sin SVA</option><option value="1">Con SVA</option></select></label>' +
+          '<label class="field">Motivo sin SVA luz<select class="dualLightReason"><option value="">No aplica</option><option value="permiso">Con permiso</option><option value="caso_especial">Caso especial</option></select></label>' +
+        '</div>' +
+        '<h3>Gas</h3><div class="row cols3">' +
+          '<label class="field">Tarifa gas<select class="dualGasTariff">' + tariffOptions(gas.tariffId || "", "gas") + '</select></label>' +
+          '<label class="field">SVA gas<select class="dualGasSva"><option value="0">Sin SVA</option><option value="1">Con SVA</option></select></label>' +
+          '<label class="field">Motivo sin SVA gas<select class="dualGasReason"><option value="">No aplica</option><option value="permiso">Con permiso</option><option value="caso_especial">Caso especial</option></select></label>' +
+        '</div>' +
+      '</div>';
+
+    div.querySelector(".saleType").value = type;
+    div.querySelector(".saleId").value = data.id || "";
+    div.querySelector(".saleClient").value = data.client || "";
+    div.querySelector(".saleChannel").value = data.channel || state.settings.defaultChannel || "waylet";
+    div.querySelector(".saleSva").value = data.sva ? "1" : "0";
+    div.querySelector(".saleNoSvaReason").value = data.noSvaReason || "";
+    div.querySelector(".dualLightSva").value = light.sva ? "1" : "0";
+    div.querySelector(".dualLightReason").value = light.noSvaReason || "";
+    div.querySelector(".dualGasSva").value = gas.sva ? "1" : "0";
+    div.querySelector(".dualGasReason").value = gas.noSvaReason || "";
+
+    function refresh(){
+      var tp = div.querySelector(".saleType").value;
+      var single = tp !== "luzgas";
+      div.querySelector(".singleSaleBox").classList.toggle("hidden", !single);
+      div.querySelector(".dualSaleBox").classList.toggle("hidden", single);
+      if(single){
+        var kind = tp === "gas" ? "gas" : "luz";
+        var sel = div.querySelector(".saleTariff");
+        var current = sel.value || data.tariffId || "";
+        sel.innerHTML = tariffOptions(current, kind);
+        var t = getTariff(sel.value);
+        div.querySelector(".autoInfo").textContent = t ? ((t.svaMandatory ? "SVA obligatorio salvo permiso/caso especial" : (t.permissionSva ? "Sin SVA con permiso" : "SVA opcional")) + (t.maxPower ? " · hasta " + t.maxPower + " kW" : "")) : "Selecciona tarifa";
+      }else{
+        div.querySelector(".autoInfo").textContent = "Dual: elige tarifa y SVA por separado en luz y gas.";
+      }
+    }
+    div.querySelector(".saleType").onchange = refresh;
+    div.querySelector(".saleTariff").onchange = refresh;
+    div.querySelector(".removeSale").onclick = function(){ div.remove(); };
+    refresh();
+    $("salesEditor").appendChild(div);
+  }
+
+  function renderChannelSelects(){
+    if($("dayFixedChannel")) $("dayFixedChannel").innerHTML = channelOptions($("dayFixedChannel").value || state.settings.defaultChannel || "waylet");
+    if($("defaultChannel")) $("defaultChannel").innerHTML = channelOptions(state.settings.defaultChannel || "waylet");
+  }
+
+  function renderChannelControls(){
+    if(!$("dayChannelMode") || !$("channelAllocBox")) return;
+    renderChannelSelects();
+    var mode = $("dayChannelMode").value || "fixed";
+    var h = Number($("dayHours").value || 0) + Number($("recoveryHours") ? $("recoveryHours").value || 0 : 0);
+    $("channelAllocBox").classList.toggle("hidden", mode !== "mixed");
+    if(mode !== "mixed"){
+      $("channelTotalInfo").textContent = "Canal fijo: " + channelName($("dayFixedChannel").value || state.settings.defaultChannel) + " · " + fmtHours(h);
+      return;
+    }
+    $("channelAllocBox").innerHTML = CHANNELS.map(function(c){
+      return '<label class="field">' + escapeHtml(c.name) + '<select class="channelHours" data-channel="' + c.id + '"></select></label>';
+    }).join("");
+    document.querySelectorAll(".channelHours").forEach(function(sel){
+      fillHourSelectElement(sel, Number(sel.dataset.value || 0), Math.max(12, h));
+      sel.onchange = updateChannelTotal;
+    });
+    updateChannelTotal();
+  }
+
+  function fillHourSelectElement(sel, selected, max){
+    selected = Number(selected || 0); max = Number(max || 12);
+    var out = "";
+    for(var i=0;i<=Math.round(max*4);i++){
+      var val=i/4;
+      out += '<option value="' + val + '"' + (Math.abs(val-selected)<0.001?' selected':'') + '>' + fmtHours(val) + '</option>';
+    }
+    sel.innerHTML = out;
+  }
+
+  function updateChannelTotal(){
+    if(!$("channelTotalInfo")) return;
+    var h = Number($("dayHours").value || 0) + recoveryHoursTotal({specialHours:readSpecialHours ? readSpecialHours() : {}});
+    var used = 0;
+    document.querySelectorAll(".channelHours").forEach(function(sel){ used += Number(sel.value || 0); });
+    var diff = h - used;
+    if($("dayChannelMode").value !== "mixed") return;
+    $("channelTotalInfo").textContent = diff >= 0 ? ("Total canales: " + fmtHours(used) + " / " + fmtHours(h) + " · faltan " + fmtHours(diff) + " (se asignan al canal fijo)") : ("Total canales: " + fmtHours(used) + " / " + fmtHours(h) + " · te pasas " + fmtHours(Math.abs(diff)));
+    $("channelTotalInfo").className = "small " + (diff < -0.001 ? "bad" : "");
+  }
+
+  function readChannelInfo(){
+    var mode = $("dayChannelMode") ? $("dayChannelMode").value : (state.settings.defaultChannelMode || "fixed");
+    var fixed = $("dayFixedChannel") ? $("dayFixedChannel").value : (state.settings.defaultChannel || "waylet");
+    var alloc = {};
+    if(mode === "mixed"){
+      document.querySelectorAll(".channelHours").forEach(function(sel){
+        var v = Number(sel.value || 0);
+        if(v > 0) alloc[sel.dataset.channel] = v;
+      });
+    }
+    return {channelMode:mode, fixedChannel:fixed, channelHours:mode === "mixed" ? alloc : null};
+  }
+
+  function validateChannelInfo(info, worked){
+    if(!info || info.channelMode !== "mixed") return true;
+    var used = Object.keys(info.channelHours || {}).reduce(function(s,k){ return s + Number(info.channelHours[k] || 0); },0);
+    if(used - worked > 0.001){
+      toast("Te pasas en horas por canal. Revisa el reparto.");
+      return false;
+    }
+    return true;
+  }
+
+  function clearForm(){
+    if(!$("dayForm")) return;
+    $("dayForm").reset();
+    $("dayDate").value = todayISO();
+    initHourSelects();
+    if($("dayChannelMode")) $("dayChannelMode").value = state.settings.defaultChannelMode || "fixed";
+    if($("dayFixedChannel")) $("dayFixedChannel").value = state.settings.defaultChannel || "waylet";
+    $("dayMode").value = "normal";
+    $("specialType").value = "personalizado";
+    setDefaultHoursForDate();
+    setSelectValue("dayGiftHours", 0);
+    resetSpecialSelects();
+    updateSpecialHoursVisibility();
+    renderChannelControls();
+    $("salesEditor").innerHTML = "";
+    editingDate = null;
+  }
+
+  function formSales(){
+    return Array.from(document.querySelectorAll(".saleEditorItem")).map(function(div){
+      var type = div.querySelector(".saleType").value;
+      var channel = div.querySelector(".saleChannel").value || state.settings.defaultChannel || "waylet";
+      var base = {
+        localId:div.dataset.localId || uid(),
+        saleType:type,
+        dual:type === "luzgas",
+        id:div.querySelector(".saleId").value.trim(),
+        client:div.querySelector(".saleClient").value.trim(),
+        channel:channel,
+        cashback:0
+      };
+      if(type === "luzgas"){
+        var lt = getTariff(div.querySelector(".dualLightTariff").value);
+        var gt = getTariff(div.querySelector(".dualGasTariff").value);
+        base.light = {tariffId:lt ? lt.id : "", tariffName:lt ? lt.name : "Sin tarifa luz", sva:div.querySelector(".dualLightSva").value === "1", noSvaReason:div.querySelector(".dualLightReason").value};
+        base.gas = {tariffId:gt ? gt.id : "", tariffName:gt ? gt.name : "Sin tarifa gas", sva:div.querySelector(".dualGasSva").value === "1", noSvaReason:div.querySelector(".dualGasReason").value};
+        base.tariffId = [base.light.tariffId, base.gas.tariffId].filter(Boolean).join("+");
+        base.tariffName = "Dual: " + base.light.tariffName + " + " + base.gas.tariffName;
+        base.sva = !!(base.light.sva || base.gas.sva);
+      }else{
+        var t = getTariff(div.querySelector(".saleTariff").value);
+        base.tariffId = t ? t.id : "";
+        base.tariffName = t ? t.name : "Sin tarifa";
+        base.sva = div.querySelector(".saleSva").value === "1";
+        base.noSvaReason = div.querySelector(".saleNoSvaReason").value;
+      }
+      return base;
+    }).filter(function(v){ return v.tariffId || v.id || v.client || v.dual; });
+  }
+
+  function readSpecialHours(){
+    if($("dayMode").value !== "especial"){
+      return {free:0, vacation:0, medical:0, incident:0, course:0, customNoSph:0, recovery:0};
+    }
+    return {
+      free:Number($("freeHours").value || 0),
+      vacation:Number($("vacationHours").value || 0),
+      medical:Number($("medicalHours").value || 0),
+      incident:Number($("incidentHours").value || 0),
+      course:Number($("courseHours").value || 0),
+      customNoSph:Number($("customNoSphHours").value || 0),
+      recovery:Number($("recoveryHours").value || 0)
+    };
+  }
+
+  function saveDay(goHome){
+    var date = $("dayDate").value;
+    if(!date){ toast("Pon una fecha para guardar el día."); return false; }
+    var ch = readChannelInfo();
+    var worked = Number($("dayHours").value || 0) + recoveryHoursTotal({specialHours:readSpecialHours()});
+    if(!validateChannelInfo(ch, worked)) return false;
+    var record = {
+      id: uid(),
+      date: date,
+      hours: Number($("dayHours").value || 0),
+      giftHours: Number($("dayGiftHours").value || 0),
+      specialHours: readSpecialHours(),
+      channelMode: ch.channelMode,
+      fixedChannel: ch.fixedChannel,
+      channelHours: ch.channelHours,
+      sales: formSales()
+    };
+    var existing = state.records.find(function(r){ return r.date === date; });
+    if(existing){ record.id = existing.id; Object.assign(existing, record); }
+    else{ state.records.push(record); }
+    state.settings.month = date.slice(0,7);
+    state.settings.cutoff = date;
+    saveState();
+    clearForm();
+    renderAll();
+    if(goHome !== false) switchTab("inicio");
+    toast("Día guardado. V9 bajo control.");
+    return true;
+  }
+
+  function editDay(date){
+    var r = state.records.find(function(x){ return x.date === date; });
+    if(!r) return;
+    clearForm();
+    editingDate = date;
+    $("dayDate").value = r.date;
+    setSelectValue("dayHours", r.hours || 0);
+    setSelectValue("dayGiftHours", r.giftHours || 0);
+    if($("dayChannelMode")) $("dayChannelMode").value = r.channelMode || state.settings.defaultChannelMode || "fixed";
+    renderChannelSelects();
+    if($("dayFixedChannel")) $("dayFixedChannel").value = r.fixedChannel || state.settings.defaultChannel || "waylet";
+    var sp = Object.assign({free:0, vacation:0, medical:0, incident:0, course:0, customNoSph:0, recovery:0}, r.specialHours || {});
+    setSelectValue("freeHours", sp.free || 0);
+    setSelectValue("vacationHours", sp.vacation || 0);
+    setSelectValue("medicalHours", sp.medical || 0);
+    setSelectValue("incidentHours", sp.incident || 0);
+    setSelectValue("courseHours", sp.course || 0);
+    setSelectValue("customNoSphHours", sp.customNoSph || 0);
+    setSelectValue("recoveryHours", sp.recovery || 0);
+    $("dayMode").value = specialHoursTotal(r) > 0 ? "especial" : "normal";
+    $("specialType").value = sp.free ? "libre" : sp.vacation ? "vacaciones" : sp.medical ? "medico" : sp.incident ? "incidencia" : sp.course ? "curso" : sp.customNoSph ? "personalizado" : sp.recovery ? "recuperacion" : "personalizado";
+    updateSpecialHoursVisibility(false);
+    renderChannelControls();
+    if(r.channelMode === "mixed" && r.channelHours){
+      document.querySelectorAll(".channelHours").forEach(function(sel){ sel.value = String(r.channelHours[sel.dataset.channel] || 0); });
+      updateChannelTotal();
+    }
+    $("salesEditor").innerHTML = "";
+    (r.sales || []).forEach(function(s){ saleEditorCard(s); });
+    switchTab("venta");
+    toast("Día cargado para editar.");
+  }
+
+  function deleteDay(date){
+    if(!confirm("¿Borrar este día entero?")) return;
+    state.records = state.records.filter(function(r){ return r.date !== date; });
+    saveState();
+    renderAll();
+    toast("Día borrado.");
+  }
+
+  
+  function rateGroupOrder(group, type){
+    if(type === "gas") return 80;
+    if(type === "luz30") return group === "3.0TD DH" ? 95 : 90;
+    var order = {
+      "Precio fijo":10,
+      "Precio fijo Pyme":20,
+      "TAP":30,
+      "Solar":40,
+      "Batería Virtual":45,
+      "Discriminación horaria":50,
+      "Smart":60,
+      "Luz M+":70
+    };
+    return order[group] || 999;
+  }
+
+  function sortedTariffs(list){
+    return list.slice().sort(function(a,b){
+      var ga = rateGroupOrder(a.group, a.type);
+      var gb = rateGroupOrder(b.group, b.type);
+      if(ga !== gb) return ga - gb;
+      var pa = Number(a.maxPower || 0);
+      var pb = Number(b.maxPower || 0);
+      if(pa !== pb) return pa - pb;
+      return String(a.name).localeCompare(String(b.name), "es");
+    });
+  }
+
+  function groupDisplayTitle(group, type){
+    if(type === "gas") return "Gas";
+    if(type === "luz30") return group === "3.0TD DH" ? "3.0TD con discriminación" : "3.0TD";
+    return group || "Tarifas";
+  }
+
+  function groupedTariffs(list){
+    var groups = [];
+    var map = {};
+    sortedTariffs(list).forEach(function(t){
+      var key = groupDisplayTitle(t.group, t.type);
+      if(!map[key]){
+        map[key] = {title:key, order:rateGroupOrder(t.group, t.type), items:[]};
+        groups.push(map[key]);
+      }
+      map[key].items.push(t);
+    });
+    groups.sort(function(a,b){ return a.order - b.order || a.title.localeCompare(b.title, "es"); });
+    return groups;
+  }
+
+  function tariffLabel(t){
+    if(!t) return "Tarifa";
+    var label = t.name || "Tarifa";
+    if(t.type === "gas") return label;
+    if(t.type === "luz30") return label;
+    return label + (t.maxPower ? " · hasta " + t.maxPower + " kW" : "");
+  }
+
+  function tariffOptions(selected, kind){
+    var list = tariffsBy(kind);
+    var out = '<option value="">Sin tarifa / manual</option>';
+    groupedTariffs(list).forEach(function(g){
+      out += '<optgroup label="' + escapeHtml(g.title) + '">';
+      g.items.forEach(function(t){
+        out += '<option value="' + t.id + '"' + (selected === t.id ? " selected" : "") + '>' + escapeHtml(tariffLabel(t)) + '</option>';
+      });
+      out += '</optgroup>';
+    });
+    return out;
+  }
+
+  function tariffOptionGroups(list, selected){
+    return groupedTariffs(list).map(function(g){
+      var html = '<optgroup label="' + escapeHtml(g.title) + '">';
+      g.items.forEach(function(t){
+        html += '<option value="' + t.id + '"' + (selected === t.id ? " selected" : "") + '>' + escapeHtml(tariffLabel(t)) + '</option>';
+      });
+      return html + '</optgroup>';
+    }).join("");
+  }
+
+  function renderRates(){
+    var q = ($("rateSearch").value || "").toLowerCase().trim();
+    var list = TARIFFS.filter(function(t){
+      return !q || (t.name + " " + t.group + " " + t.type + " " + (t.notes||"") + " " + tariffLabel(t)).toLowerCase().indexOf(q) >= 0;
+    });
+
+    var html = "";
+    groupedTariffs(list).forEach(function(g){
+      html += '<div class="rateGroupBlock"><h3>' + escapeHtml(g.title) + '</h3><div class="grid">';
+      html += g.items.map(function(t){
+        var prices = "";
+        if(t.type === "gas"){
+          prices = '<span class="chip">Fijo ' + fmtNum(t.gasFixed,2) + ' €/mes</span><span class="chip">kWh ' + fmtNum(t.energy,4) + '</span>';
+        }else if(t.type === "luz30"){
+          prices = '<span class="chip">Energía ' + fmtNum(t.energy,4) + '</span><span class="chip">Potencia P1-P6</span>' + (t.isDh30 ? '<span class="chip">Consumo por P1-P6</span>' : '<span class="chip">Consumo único</span>');
+        }else{
+          prices = '<span class="chip">kWh ' + fmtNum(t.energy,4) + '</span>' +
+                   '<span class="chip">P1 ' + fmtNum(t.p1,6) + '</span>' +
+                   '<span class="chip">P2 ' + fmtNum(t.p2,6) + '</span>' +
+                   (t.maxPower ? '<span class="chip">Hasta ' + t.maxPower + ' kW</span>' : '');
+        }
+        var badge = t.svaMandatory ? "SVA obligatorio" : (t.permissionSva ? "Sin SVA con permiso" : "SVA opcional");
+        return '<div class="rate-card"><div class="rate-top"><div><div class="rate-title">' + escapeHtml(t.name) + '</div><div class="rate-meta">' + escapeHtml(groupDisplayTitle(t.group, t.type)) + '</div></div><span class="badge ' + (t.svaMandatory ? 'warn' : (t.permissionSva ? 'pink' : 'turq')) + '">' + badge + '</span></div><div class="chips">' + prices + (t.exc ? '<span class="chip">Exc. ' + fmtNum(t.exc,2) + '</span>' : '') + '</div><div class="small">' + escapeHtml(t.notes || "") + '</div></div>';
+      }).join("");
+      html += '</div></div>';
+    });
+
+    $("ratesList").innerHTML = html || '<div class="empty">No hay tarifas que coincidan.</div>';
+
+    $("servicesList").innerHTML = SERVICES.filter(function(s){ return s.id !== "none"; }).map(function(s){
+      return '<div class="rate-card"><div class="rate-top"><div><div class="rate-title">' + escapeHtml(s.name) + '</div><div class="rate-meta">' + fmtEuro(s.basePrice) + '/mes base</div></div><span class="badge pink">SVA</span></div><div class="small">Sujeto a IVA cuando se calculan impuestos.</div></div>';
+    }).join("");
+  }
+
+  function renderCalcSelectors(){
+    if($("calcTariff")){
+      $("calcTariff").innerHTML = tariffOptionGroups(TARIFFS.filter(function(t){ return t.type !== "luz30"; }), $("calcTariff").value);
+    }
+    if($("calcService")) $("calcService").innerHTML = serviceOptions("none", true);
+    renderCalc3Selectors();
+    setTimeout(updateCalcVisibility, 0);
+  }
+
+  function renderCalc3Selectors(){
+    if(!$("calc30Tariff")) return;
+    $("calc30Tariff").innerHTML = tariffOptionGroups(TARIFFS.filter(function(t){ return t.type === "luz30"; }), $("calc30Tariff").value);
+  }
+
+function updateCalcVisibility(){
+    var t = getTariff($("calcTariff").value);
+    if(!t) return;
+    var isLight = t.type !== "gas";
+    var isSolar = t.group === "Solar" || t.group === "Batería Virtual";
+    var isDh = !!t.isDh;
+    $("calcP1Field").classList.toggle("calcHidden", !isLight);
+    $("calcP2Field").classList.toggle("calcHidden", !isLight);
+    $("calcExcessField").classList.toggle("calcHidden", !isSolar);
+    $("calcKwhField").classList.toggle("calcHidden", isDh);
+    $("calcDhFields").classList.toggle("calcHidden", !isDh);
+    if(!isLight){ $("calcP1").value = 0; $("calcP2").value = 0; }
+    if(!isSolar){ $("calcExcess").value = 0; }
+  }
+
+  function updateCalc30Visibility(){
+    var t = getTariff($("calc30Tariff").value);
+    if(!t) return;
+    var isDh = !!t.isDh30;
+    $("calc30KwhField").classList.toggle("calcHidden", isDh);
+    $("calc30DhFields").classList.toggle("calcHidden", !isDh);
+  }
+
+  function setCalcMode(mode){
+    var is30 = mode === "30";
+    document.querySelectorAll(".calcNormalPane").forEach(function(el){ el.classList.toggle("hidden", is30); });
+    document.querySelectorAll(".calc30Pane").forEach(function(el){ el.classList.toggle("hidden", !is30); });
+    if($("calcNormalTab")) $("calcNormalTab").classList.toggle("active", !is30);
+    if($("calc30Tab")) $("calc30Tab").classList.toggle("active", is30);
+    if(is30) updateCalc30Visibility(); else updateCalcVisibility();
+  }
+
+  function resultRow(label, value, note){
+    return '<div class="result-row"><span>' + escapeHtml(label) + (note ? '<small>' + escapeHtml(note) + '</small>' : '') + '</span><b>' + fmtEuro(value) + '</b></div>';
+  }
+
+  function calculateBill(){
+    var t = getTariff($("calcTariff").value);
+    if(!t) return;
+    updateCalcVisibility();
+    var days = Number($("calcDays").value || 0);
+    var kwh = Number($("calcKwh").value || 0);
+    var excessKwh = Number($("calcExcess").value || 0);
+    var p1kw = Number($("calcP1").value || 0);
+    var p2kw = Number($("calcP2").value || 0);
+    var addTaxes = $("calcTaxes").value === "1";
+    var svc = SERVICES.find(function(s){ return s.id === $("calcService").value; }) || SERVICES[0];
+    var tax = taxSettings();
+    var isLight = t.type !== "gas";
+    var isGas = t.type === "gas";
+    var isSolar = t.group === "Solar" || t.group === "Batería Virtual";
+    var isBvSolar = t.id === "solar-v26bv";
+    var maxp = powerLimit(t);
+    if(isLight && maxp && (p1kw > maxp || p2kw > maxp)){
+      $("calcResult").innerHTML = '<div class="empty bad">Esta tarifa permite hasta ' + maxp + ' kW. Baja la potencia para calcular.</div>';
+      return;
+    }
+    var grossEnergy = kwh * Number(t.energy || 0);
+    if(t.isDh && t.energyPeriods){
+      var e1 = Number($("calcKwhP1").value || 0);
+      var e2 = Number($("calcKwhP2").value || 0);
+      var e3 = Number($("calcKwhP3").value || 0);
+      grossEnergy = e1 * Number(t.energyPeriods[0] || 0) + e2 * Number(t.energyPeriods[1] || 0) + e3 * Number(t.energyPeriods[2] || 0);
+    }
+    var excessCredit = isSolar ? excessKwh * Number(t.exc || 0) : 0;
+    var energy = grossEnergy;
+    var fixed = isGas ? Number(t.gasFixed || 0) * days / 30 : 0;
+    var power = isLight ? (p1kw * Number(t.p1 || 0) + p2kw * Number(t.p2 || 0)) * days : 0;
+    var solarNote = "";
+    if(isSolar && !isBvSolar){ energy = Math.max(0, grossEnergy - Math.min(grossEnergy, excessCredit)); solarNote = "Excedente descuenta energía"; }
+    var supplyBase = energy + fixed + power;
+    if(isSolar && isBvSolar){ supplyBase = Math.max(0, supplyBase - Math.min(supplyBase, excessCredit)); solarNote = "BV descuenta total sin impuestos"; }
+    var serviceBase = Number(svc.basePrice || 0) * days / 30;
+    var iee = addTaxes && isLight ? supplyBase * Number(tax.iee || 0) : 0;
+    var hydro = addTaxes && isGas ? kwh * Number(tax.hydrocarbons || 0) : 0;
+    var meter = addTaxes && isLight ? days * Number(tax.meterRentDay || 0) : 0;
+    var bono = addTaxes && isLight ? days * Number(tax.bonoSocialDay || 0) : 0;
+    var ivaBase = supplyBase + serviceBase + iee + hydro + meter + bono;
+    var iva = addTaxes ? ivaBase * Number(tax.iva || 0) : 0;
+    var total = ivaBase + iva;
+    var html = resultRow("Energía", energy, (t.isDh ? "Punta/llano/valle" : solarNote)) + (fixed ? resultRow("Término fijo gas", fixed, "€/mes prorrateado") : "") + (power ? resultRow("Potencia", power, "Total P1/P2") : "") + (serviceBase ? resultRow("SVA", serviceBase, svc.name) : "");
+    if(addTaxes){ html += (iee ? resultRow("IEE", iee, fmtNum(tax.iee*100,4) + "%") : "") + (hydro ? resultRow("Impuesto hidrocarburos", hydro, fmtNum(tax.hydrocarbons,6) + " €/kWh") : "") + (meter ? resultRow("Alquiler equipo", meter, fmtNum(tax.meterRentDay,5) + " €/día") : "") + (bono ? resultRow("Financiación bono social", bono, fmtNum(tax.bonoSocialDay,5) + " €/día") : "") + resultRow("IVA", iva, fmtNum(tax.iva*100,2) + "%"); }
+    html += '<div class="total-line"><span>Total estimado</span><b>' + fmtEuro(total) + '</b></div>';
+    $("calcResult").innerHTML = html;
+  }
+
+  function calculateBill30(){
+    var t = getTariff($("calc30Tariff").value);
+    if(!t) return;
+    updateCalc30Visibility();
+    var days = Number($("calc30Days").value || 0);
+    var kwh = Number($("calc30Kwh").value || 0);
+    var addTaxes = $("calc30Taxes").value === "1";
+    var tax = taxSettings();
+    var powers = [];
+    for(var i=1;i<=6;i++) powers.push(Number($("calc30P"+i).value || 0));
+    var energy = kwh * Number(t.energy || 0);
+    if(t.isDh30 && t.energyPeriods){
+      energy = 0;
+      for(var e=1;e<=6;e++){
+        energy += Number($("calc30KwhP"+e).value || 0) * Number(t.energyPeriods[e-1] || 0);
+      }
+    }
+    var powerTotal = 0;
+    (t.powers || []).forEach(function(price,idx){
+      powerTotal += powers[idx] * Number(price || 0) * days;
+    });
+    var supplyBase = energy + powerTotal;
+    var iee = addTaxes ? supplyBase * Number(tax.iee || 0) : 0;
+    var meter = addTaxes ? days * Number(tax.meterRentDay || 0) : 0;
+    var bono = addTaxes ? days * Number(tax.bonoSocialDay || 0) : 0;
+    var ivaBase = supplyBase + iee + meter + bono;
+    var iva = addTaxes ? ivaBase * Number(tax.iva || 0) : 0;
+    var total = ivaBase + iva;
+    var html = resultRow("Energía", energy, t.isDh30 ? "Consumo por P1-P6" : "Consumo único") + resultRow("Potencia", powerTotal, "Total P1-P6");
+    if(addTaxes){ html += resultRow("IEE", iee, fmtNum(tax.iee*100,4) + "%") + resultRow("Alquiler equipo", meter, fmtNum(tax.meterRentDay,5) + " €/día") + resultRow("Financiación bono social", bono, fmtNum(tax.bonoSocialDay,5) + " €/día") + resultRow("IVA", iva, fmtNum(tax.iva*100,2) + "%"); }
+    html += '<div class="total-line"><span>Total estimado 3.0TD</span><b>' + fmtEuro(total) + '</b></div>';
+    $("calc30Result").innerHTML = html;
+  }
+
+
+  function docCard(d, type){
+    var emailBtn = d.email.indexOf("@") >= 0 ? '<button type="button" class="btn-small copyEmail" data-email="' + d.email + '">Copiar correo</button>' : '';
+    return '<div class="doc-card docItem" data-search="' + escapeHtml((d.title + " " + d.email + " " + d.docs.join(" ") + " " + (d.when || []).join(" ") + " " + d.note).toLowerCase()) + '">' +
+      '<div class="day-head"><div><div class="day-title">' + escapeHtml(d.title) + '</div><div class="day-sub">' + escapeHtml(d.email) + '</div></div><span class="badge ' + (type === "alta" ? "turq" : "pink") + '">' + (type === "alta" ? "Alta" : "TT") + '</span></div>' +
+      (d.when ? '<div><b>Cuándo aplica</b><ul>' + d.when.map(function(x){ return '<li>' + escapeHtml(x) + '</li>'; }).join("") + '</ul></div>' : '') +
+      '<div><b>Documentación</b><ul>' + d.docs.map(function(x){ return '<li>' + escapeHtml(x) + '</li>'; }).join("") + '</ul></div>' +
+      '<div class="small">' + escapeHtml(d.note || "") + '</div>' +
+      (emailBtn ? '<div class="actions">' + emailBtn + '</div>' : '') +
+    '</div>';
+  }
+
+  function renderDocs(){
+    $("altaDocs").innerHTML = DOCS_ALTAS.map(function(d){ return docCard(d, "alta"); }).join("");
+    $("ttDocs").innerHTML = DOCS_TT.map(function(d){ return docCard(d, "tt"); }).join("");
+    filterDocs();
+
+    document.querySelectorAll(".copyEmail").forEach(function(btn){
+      btn.onclick = function(){
+        var email = btn.dataset.email;
+        if(navigator.clipboard){
+          navigator.clipboard.writeText(email).then(function(){ toast("Correo copiado."); });
+        }else{
+          toast(email);
+        }
+      };
+    });
+  }
+
+  function filterDocs(){
+    var q = ($("docSearch").value || "").toLowerCase().trim();
+    document.querySelectorAll(".docItem").forEach(function(item){
+      item.style.display = !q || item.dataset.search.indexOf(q) >= 0 ? "" : "none";
+    });
+  }
+
+  function renderSettings(){
+    renderChannelSelects();
+    if($("journeyType")) $("journeyType").value = state.settings.journeyType || "39";
+    if($("defaultChannel")) $("defaultChannel").value = state.settings.defaultChannel || "waylet";
+    if($("defaultChannelMode")) $("defaultChannelMode").value = state.settings.defaultChannelMode || "fixed";
+    if($("wayletMinSph")) $("wayletMinSph").value = state.settings.channelThresholds.waylet || 0.120;
+    [0,1,2,3,4,5,6].forEach(function(d){ if($("h" + d)) $("h" + d).value = state.settings.workHours[d] || 0; });
+    if($("customHoursBox")) $("customHoursBox").classList.toggle("hidden", ($("journeyType") && $("journeyType").value !== "custom"));
+    var tx = taxSettings();
+    if($("taxIva")) $("taxIva").value = tx.iva;
+    if($("taxIee")) $("taxIee").value = tx.iee;
+    if($("taxHydro")) $("taxHydro").value = tx.hydrocarbons;
+    if($("taxMeter")) $("taxMeter").value = tx.meterRentDay;
+    if($("taxBono")) $("taxBono").value = tx.bonoSocialDay;
+  }
+
+  function updateHeaderHeight(){
+    var header = document.querySelector("header");
+    if(!header) return;
+    var h = Math.ceil(header.getBoundingClientRect().height);
+    if(!h || h < 64) h = 86;
+    document.documentElement.style.setProperty("--headerH", h + "px");
+  }
+
+  var lastScrollY = 0;
+  var scrollTicking = false;
+
+  function handleHeaderScroll(){
+    var header = document.querySelector("header");
+    if(!header) return;
+
+    var y = window.scrollY || document.documentElement.scrollTop || 0;
+    var diff = y - lastScrollY;
+
+    header.classList.toggle("headerRaised", y > 6);
+
+    if(y < 24){
+      header.classList.remove("headerHidden");
+    }else if(diff > 8 && y > 130){
+      header.classList.add("headerHidden");
+    }else if(diff < -8){
+      header.classList.remove("headerHidden");
+    }
+
+    lastScrollY = y;
+  }
+
+  function requestHeaderScroll(){
+    if(scrollTicking) return;
+    scrollTicking = true;
+    requestAnimationFrame(function(){
+      handleHeaderScroll();
+      scrollTicking = false;
+    });
+  }
+
+
+
+  function fillHourSelect(id, selected, max){
+    if(!$(id)) return;
+    selected = Number(selected || 0);
+    max = Number(max || 12);
+    var out = "";
+    for(var i=0; i<=Math.round(max*4); i++){
+      var val = i / 4;
+      out += '<option value="' + val + '"' + (Math.abs(val-selected) < 0.001 ? ' selected' : '') + '>' + fmtHours(val) + '</option>';
+    }
+    $(id).innerHTML = out;
+  }
+
+  function setSelectValue(id, val){
+    if(!$(id)) return;
+    val = Number(val || 0);
+    var exists = Array.from($(id).options).some(function(o){ return Math.abs(Number(o.value) - val) < 0.001; });
+    if(!exists){
+      var opt = document.createElement("option");
+      opt.value = String(val);
+      opt.textContent = fmtHours(val);
+      $(id).appendChild(opt);
+    }
+    $(id).value = String(val);
+  }
+
+  function initHourSelects(){
+    ["dayHours","dayGiftHours","freeHours","vacationHours","medicalHours","incidentHours","courseHours","customNoSphHours","recoveryHours"].forEach(function(id){
+      fillHourSelect(id, 0, 12);
+    });
+  }
+
+  function baseHoursForDate(dateStr){
+    if(!dateStr) return 0;
+    var d = new Date(dateStr + "T12:00:00");
+    if(isNaN(d.getTime())) return 0;
+    return Number(state.settings.workHours[d.getDay()] || 0);
+  }
+
+  function setDefaultHoursForDate(){
+    var base = baseHoursForDate($("dayDate").value);
+    if($("dayMode").value === "normal") setSelectValue("dayHours", base);
+  }
+
+  function resetSpecialSelects(){
+    ["freeHours","vacationHours","medicalHours","incidentHours","courseHours","customNoSphHours","recoveryHours"].forEach(function(id){ setSelectValue(id, 0); });
+  }
+
+  function lockSelect(id, locked){
+    if(!$(id)) return;
+    $(id).disabled = !!locked;
+    $(id).classList.toggle("lockedSelect", !!locked);
+  }
+
+  function visibleSpecialFields(ids){
+    ["freeHoursField","vacationHoursField","medicalHoursField","incidentHoursField","courseHoursField","customNoSphHoursField","recoveryHoursField"].forEach(function(id){
+      if($(id)) $(id).classList.toggle("hidden", ids.indexOf(id) === -1);
+    });
+  }
+
+  function syncWorkedFromSpecial(){
+    if($("dayMode").value !== "especial") return;
+    var type = $("specialType").value;
+    var base = baseHoursForDate($("dayDate").value);
+    if(!base) base = Number($("dayHours").value || 0) || 8;
+
+    if(type === "libre"){
+      resetSpecialSelects();
+      setSelectValue("dayHours", 0);
+      setSelectValue("freeHours", base);
+      return;
+    }
+
+    if(type === "vacaciones"){
+      resetSpecialSelects();
+      setSelectValue("dayHours", 0);
+      setSelectValue("vacationHours", base);
+      return;
+    }
+
+    if(type === "recuperacion"){
+      setSelectValue("freeHours", 0);
+      setSelectValue("vacationHours", 0);
+      setSelectValue("medicalHours", 0);
+      setSelectValue("incidentHours", 0);
+      setSelectValue("courseHours", 0);
+      setSelectValue("customNoSphHours", 0);
+      setSelectValue("dayHours", base);
+      return;
+    }
+
+    var noSph = 0;
+    if(type === "medico") noSph = Number($("medicalHours").value || 0);
+    else if(type === "incidencia") noSph = Number($("incidentHours").value || 0);
+    else if(type === "curso") noSph = Number($("courseHours").value || 0);
+    else if(type === "personalizado") noSph = Number($("customNoSphHours").value || 0);
+
+    setSelectValue("dayHours", Math.max(0, base - noSph));
+  }
+
+  function updateSpecialHoursVisibility(resetValues){
+    var isSpecial = $("dayMode") && $("dayMode").value === "especial";
+    var type = $("specialType") ? $("specialType").value : "personalizado";
+    if($("specialHoursBox")) $("specialHoursBox").classList.toggle("hidden", !isSpecial);
+    if($("specialTypeField")) $("specialTypeField").classList.toggle("hidden", !isSpecial);
+
+    ["freeHours","vacationHours","medicalHours","incidentHours","courseHours","customNoSphHours","recoveryHours"].forEach(function(id){ lockSelect(id, false); });
+
+    if(!isSpecial){
+      resetSpecialSelects();
+      visibleSpecialFields([]);
+      setDefaultHoursForDate();
+      return;
+    }
+
+    if(resetValues !== false) resetSpecialSelects();
+
+    if(type === "libre"){
+      visibleSpecialFields(["freeHoursField"]);
+      syncWorkedFromSpecial();
+      lockSelect("freeHours", true);
+    }else if(type === "vacaciones"){
+      visibleSpecialFields(["vacationHoursField"]);
+      syncWorkedFromSpecial();
+      lockSelect("vacationHours", true);
+    }else if(type === "medico"){
+      visibleSpecialFields(["medicalHoursField"]);
+    }else if(type === "incidencia"){
+      visibleSpecialFields(["incidentHoursField"]);
+    }else if(type === "curso"){
+      visibleSpecialFields(["courseHoursField"]);
+    }else if(type === "recuperacion"){
+      visibleSpecialFields(["recoveryHoursField"]);
+      syncWorkedFromSpecial();
+    }else{
+      visibleSpecialFields(["customNoSphHoursField"]);
+    }
+  }
+
+
+  function tabTitle(id){
+    return {
+      inicio:"Inicio",
+      venta:"Añadir día",
+      ventas:"Ventas",
+      calendario:"Calendario",
+      tarifas:"Tarifas",
+      calc:"Calculadora",
+      calc30:"Calc 3.0TD",
+      doc:"Documentación",
+      ajustes:"Ajustes"
+    }[id] || "Ventas SPH";
+  }
+
+  function showMainMenu(){
+    if(!$("mainMenuOverlay")) return;
+    $("mainMenuOverlay").classList.add("show");
+    $("mainMenuOverlay").setAttribute("aria-hidden","false");
+    if($("hamburgerBtn")){
+      $("hamburgerBtn").classList.add("active");
+      $("hamburgerBtn").setAttribute("aria-expanded","true");
+    }
+  }
+
+  function hideMainMenu(){
+    if(!$("mainMenuOverlay")) return;
+    $("mainMenuOverlay").classList.remove("show");
+    $("mainMenuOverlay").setAttribute("aria-hidden","true");
+    if($("hamburgerBtn")){
+      $("hamburgerBtn").classList.remove("active");
+      $("hamburgerBtn").setAttribute("aria-expanded","false");
+    }
+  }
+
+  function showMoreMenu(){ showMainMenu(); }
+  function hideMoreMenu(){ hideMainMenu(); }
+
+  function switchTab(id){
+    if(!id) return;
+    var header = document.querySelector("header");
+    if(header) header.classList.remove("headerHidden");
+
+    document.querySelectorAll("main section").forEach(function(sec){
+      sec.classList.toggle("active", sec.id === id);
+    });
+
+    if($("headerTitle")) $("headerTitle").textContent = tabTitle(id);
+
+    document.querySelectorAll(".mainMenuItem[data-tab]").forEach(function(btn){
+      btn.classList.toggle("active", btn.dataset.tab === id);
+    });
+
+    hideMainMenu();
+    window.scrollTo(0,0);
+  }
+
+  function renderCalendar(){
+    if(!$("calendarWeeks")) return;
+    var month = $("calendarMonth").value || getMonth();
+    $("calendarMonth").value = month;
+
+    var r = monthRange(month);
+    var recMap = {};
+    state.records.filter(function(x){ return x.date.indexOf(month) === 0; }).forEach(function(x){ recMap[x.date] = x; });
+
+    var view = $("calendarView") ? $("calendarView").value : "all";
+    var dayNames = ["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
+    var shortNames = ["D","L","M","X","J","V","S"];
+    var out = "";
+    var weekHtml = "";
+    var weekCount = 0;
+    var weekStartLabel = "";
+
+    function flushWeek(){
+      if(!weekHtml) return;
+      weekCount++;
+      out += '<div class="weekBlock">' +
+        '<div class="weekTitle">Semana ' + weekCount + (weekStartLabel ? ' · ' + weekStartLabel : '') + '</div>' +
+        '<div class="weekList">' + weekHtml + '</div>' +
+      '</div>';
+      weekHtml = "";
+      weekStartLabel = "";
+    }
+
+    for(var day=1; day<=r.last; day++){
+      var iso = month + '-' + String(day).padStart(2,'0');
+      var dateObj = new Date(iso + "T12:00:00");
+      var dow = dateObj.getDay();
+      var base = baseHoursForDate(iso);
+      var weekend = base <= 0;
+      var rec = recMap[iso];
+      var registered = !!rec;
+      var special = registered && specialHoursTotal(rec) > 0;
+
+      if(dow === 1 && weekHtml) flushWeek();
+      if(!weekStartLabel) weekStartLabel = String(day).padStart(2,"0") + "/" + String(r.month).padStart(2,"0");
+
+      // Fines de semana sin registro no salen como pendientes.
+      if(!registered && weekend) continue;
+      if(view === "registered" && !registered) continue;
+
+      var status = registered ? dayTypeLabel(rec) : "Pendiente";
+      var hours = registered ? workedHoursForRecord(rec) : base;
+      var sales = registered ? saleCount(rec) : 0;
+      var cls = "calBar " + (registered ? "registered " : "pending ") + (special ? "special " : "");
+
+      var meta = registered
+        ? (specialHoursText(rec) ? specialHoursText(rec) : "Día normal")
+        : "Falta cerrar este día";
+
+      var right = registered ? (sales + "v · " + fmtHours(hours)) : fmtHours(base);
+
+      weekHtml += '<div class="' + cls + '" data-date="' + iso + '" data-registered="' + (registered ? '1' : '0') + '">' +
+        '<div class="calDateBadge">' + shortNames[dow] + ' ' + day + '</div>' +
+        '<div class="calText">' +
+          '<div class="calTitle">' + dayNames[dow] + ' · ' + status + '</div>' +
+          '<div class="calMeta">' + escapeHtml(meta) + '</div>' +
+        '</div>' +
+        '<div class="calRight">' + right + '</div>' +
+      '</div>';
+
+      if(dow === 0) flushWeek();
+    }
+    flushWeek();
+
+    $("calendarWeeks").innerHTML = out || '<div class="empty">No hay días para mostrar.</div>';
+
+    document.querySelectorAll("#calendarWeeks .calBar[data-date]").forEach(function(el){
+      el.onclick = function(){
+        var date = el.dataset.date;
+        if(el.dataset.registered === "1"){
+          showDayDetail(date);
+        }else{
+          clearForm();
+          $("dayDate").value = date;
+          setDefaultHoursForDate();
+          switchTab("venta");
+        }
+      };
+    });
+  }
+
+  function renderSalesTab(){
+    if(!$("salesMonthSummary")) return;
+    var recs = monthRecords();
+    var totals = calc(recs);
+    var bd = saleBreakdown(recs);
+    var sales = [];
+    recs.forEach(function(r){ (r.sales || []).forEach(function(s){ sales.push(Object.assign({date:r.date, fixedChannel:r.fixedChannel}, s)); }); });
+    $("salesMonthSummary").innerHTML = '<div class="mini-grid">' +
+      '<div class="mini"><span>CUPS mes</span><b>' + totals.sales + '</b></div>' +
+      '<div class="mini"><span>Luz</span><b>' + bd.luz + '</b></div>' +
+      '<div class="mini"><span>Gas</span><b>' + bd.gas + '</b></div>' +
+      '<div class="mini"><span>Duales</span><b>' + bd.dual + '</b></div>' +
+      '<div class="mini"><span>SVAs</span><b>' + bd.sva + '</b></div>' +
+      '<div class="mini"><span>Horas SPH</span><b>' + fmtHours(totals.hours) + '</b></div>' +
+      '<div class="mini"><span>SPH</span><b>' + fmtSph(totals.sph) + '</b></div>' +
+      '<div class="mini"><span>Tarifa top</span><b>' + escapeHtml(topTariffName(recs)) + '</b></div>' +
+    '</div>';
+    var counts = bd.tariffs;
+    var sorted = Object.keys(counts).sort(function(a,b){ return counts[b] - counts[a]; });
+    $("tariffAverageBox").innerHTML = sorted.length ? sorted.map(function(k){
+      var pct = bd.total ? counts[k] / bd.total * 100 : 0;
+      return '<div class="rate-card"><div class="rate-top"><div><div class="rate-title">' + escapeHtml(k) + '</div><div class="rate-meta">' + counts[k] + ' venta(s) · ' + fmtNum(pct,1) + '%</div></div><span class="badge turq">' + counts[k] + '</span></div></div>';
+    }).join("") : '<div class="empty">Aún no hay ventas este mes.</div>';
+    var daysHtml = "";
+    recs.filter(function(r){ return saleCount(r)>0; }).forEach(function(r){
+      var h = workedHoursForRecord(r); var sph = h>0 ? saleCount(r)/h : 0;
+      daysHtml += '<div class="salesDayCard openDayDetail" data-date="' + r.date + '"><div class="day-head"><div><div class="day-title">' + fmtDate(r.date) + '</div><div class="day-sub">' + saleCount(r) + ' CUPS · ' + fmtHours(h) + ' · ' + escapeHtml(channelName(r.fixedChannel || state.settings.defaultChannel)) + '</div></div><span class="badge ' + (sph>=.12?'good':'warn') + '">' + fmtSph(sph) + '</span></div></div>';
+    });
+    $("salesByDayBox").innerHTML = daysHtml || '<div class="empty">Aún no hay ventas por día.</div>';
+    document.querySelectorAll(".openDayDetail").forEach(function(el){ el.onclick = function(){ showDayDetail(el.dataset.date); }; });
+  }
+
+  function renderAll(){
+    $("monthFilter").value = state.settings.month || currentMonth();
+    $("cutoffDate").value = state.settings.cutoff || todayISO();
+    $("monthPill").textContent = monthLabel(getMonth());
+
+    if($("calendarMonth")) $("calendarMonth").value = getMonth();
+    renderKpis();
+    renderObjectives();
+    renderPace();
+    renderSummary();
+    renderCalendar();
+    renderSalesTab();
+    renderRates();
+    renderDocs();
+    renderSettings();
+    renderChannelSelects();
+  }
+
+
+  function monthlyReportRows(){
+    var rows = [];
+    var accH = 0;
+    var accS = 0;
+
+    monthRecords().forEach(function(r){
+      var h = workedHoursForRecord(r);
+      var s = saleCount(r);
+      var daySph = h > 0 ? s / h : 0;
+      accH += h;
+      accS += s;
+      var accSph = accH > 0 ? accS / accH : 0;
+
+      var salesText = (r.sales || []).map(function(v){
+        return (v.id || "SIN ID") + " · " + (v.tariffName || "Sin tarifa") + " · " + (v.sva ? "con SVA" : "sin SVA") + (v.client ? " · " + v.client : "");
+      }).join(" | ");
+
+      rows.push({
+        date:r.date,
+        hours:h,
+        baseHours:Number(r.hours || 0),
+        recovery:recoveryHoursTotal(r),
+        gift:Number(r.giftHours || 0),
+        special:specialHoursTotal(r),
+        specialText:specialHoursText(r) || "-",
+        sales:s,
+        salesText:salesText || "-",
+        daySph:daySph,
+        accSales:accS,
+        accHours:accH,
+        accSph:accSph
+      });
+    });
+
+    return rows;
+  }
+
+  function printMonthReport(){
+    var month = getMonth();
+    var rows = monthlyReportRows();
+    var totals = calc(monthRecords());
+    var now = new Date().toLocaleString("es-ES");
+    var title = "Informe ventas SPH · " + monthLabel(month);
+
+    if(!rows.length){
+      toast("No hay datos en este mes para sacar PDF.");
+      return;
+    }
+
+    var tableRows = rows.map(function(r){
+      return '<tr>' +
+        '<td>' + fmtDate(r.date) + '</td>' +
+        '<td>' + fmtHours(r.hours) + '</td>' +
+        '<td>' + fmtHours(r.recovery) + '</td>' +
+        '<td>' + fmtHours(r.gift) + '</td>' +
+        '<td>' + fmtHours(r.special) + '</td>' +
+        '<td>' + escapeHtml(r.specialText) + '</td>' +
+        '<td>' + r.sales + '</td>' +
+        '<td>' + escapeHtml(r.salesText) + '</td>' +
+        '<td>' + fmtSph(r.daySph) + '</td>' +
+        '<td>' + r.accSales + '</td>' +
+        '<td>' + fmtHours(r.accHours) + '</td>' +
+        '<td>' + fmtSph(r.accSph) + '</td>' +
+      '</tr>';
+    }).join("");
+
+    var htmlReport = '<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">' +
+      '<meta name="viewport" content="width=device-width, initial-scale=1">' +
+      '<title>' + escapeHtml(title) + '</title>' +
+      '<style>' +
+        'body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:#111827;margin:22px;background:#fff;}' +
+        'h1{font-size:22px;margin:0 0 4px;}' +
+        '.sub{color:#4b5563;font-size:12px;margin-bottom:16px;}' +
+        '.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0 18px;}' +
+        '.card{border:1px solid #d1d5db;border-radius:10px;padding:10px;background:#f9fafb;}' +
+        '.label{font-size:11px;color:#6b7280;font-weight:700;text-transform:uppercase;}' +
+        '.value{font-size:18px;font-weight:800;margin-top:4px;}' +
+        'table{width:100%;border-collapse:collapse;font-size:11px;}' +
+        'th,td{border:1px solid #d1d5db;padding:6px;vertical-align:top;text-align:left;}' +
+        'th{background:#111827;color:#fff;font-size:10px;}' +
+        'tr:nth-child(even) td{background:#f9fafb;}' +
+        '.sales{min-width:230px;}' +
+        '.footer{margin-top:12px;color:#6b7280;font-size:10px;}' +
+        '.reportActions{position:fixed;right:16px;bottom:16px;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.printBtn,.closeBtn{border:0;border-radius:999px;color:white;padding:12px 16px;font-weight:800;box-shadow:0 8px 24px rgba(0,0,0,.18);}.printBtn{background:#111827}.closeBtn{background:#4b5563}' +
+        '@media print{body{margin:10mm}.reportActions{display:none}.cards{grid-template-columns:repeat(4,1fr)} table{font-size:9px} th{font-size:8px}}' +
+      '</style></head><body>' +
+      '<div class="reportActions"><button class="printBtn" onclick="window.print()">Imprimir / Guardar PDF</button><button class="closeBtn" onclick="closeReport()">Cerrar informe</button></div>' +
+      '<h1>' + escapeHtml(title) + '</h1>' +
+      '<div class="sub">Generado: ' + escapeHtml(now) + '</div>' +
+      '<div class="cards">' +
+        '<div class="card"><div class="label">Ventas</div><div class="value">' + totals.sales + '</div></div>' +
+        '<div class="card"><div class="label">Horas</div><div class="value">' + fmtHours(totals.hours) + '</div></div>' +
+        '<div class="card"><div class="label">SPH</div><div class="value">' + fmtSph(totals.sph) + '</div></div>' +
+        '<div class="card"><div class="label">Horas regalo</div><div class="value">' + fmtHours(totals.gift) + '</div></div>' +
+      '</div>' +
+      '<table><thead><tr>' +
+        '<th>Día</th><th>Horas SPH</th><th>Recuperación</th><th>Regalo</th><th>Especial</th><th>Detalle especial</th><th>Ventas</th><th class="sales">Detalle ventas</th><th>SPH día</th><th>Ventas acum.</th><th>Horas acum.</th><th>SPH acum.</th>' +
+      '</tr></thead><tbody>' + tableRows + '</tbody></table>' +
+      '<div class="footer">Ventas SPH · Informe mensual. Datos sacados de la app instalada en este dispositivo.</div>' +
+      '<script>function closeReport(){ try{ window.close(); }catch(e){} setTimeout(function(){ if(!window.closed){ history.back(); } },120); } setTimeout(function(){ window.print(); }, 400);<\/script>' +
+      '</body></html>';
+
+    var w = window.open("", "_blank");
+    if(!w){
+      toast("El navegador bloqueó la ventana. Permite pop-ups o usa Exportar CSV.");
+      return;
+    }
+    w.document.open();
+    w.document.write(htmlReport);
+    w.document.close();
+  }
+
+  function exportJson(){
+    download("ventas_sph_pro_" + todayISO() + ".json", JSON.stringify(state,null,2), "application/json");
+  }
+
+  function exportCsv(){
+    var rows = [["fecha","horas_base","horas_recuperacion","horas_trabajadas_sph","horas_regalo","horas_vacaciones","horas_medicas","horas_incidencia","horas_cursos","ventas","sph_dia","id","cliente","tarifa","tipo","sva"]];
+    monthRecords().forEach(function(r){
+      var sph = r.hours > 0 ? saleCount(r)/r.hours : 0;
+      if(!(r.sales || []).length){
+        rows.push([r.date,r.hours,r.giftHours || 0,0,fmtSph(sph),"","","","","",""]);
+      }else{
+        (r.sales || []).forEach(function(s){
+          rows.push([r.date,r.hours,r.giftHours || 0,saleCount(r),fmtSph(sph),s.id || "",s.client || "",s.tariffName || "",s.saleType || "",s.sva ? "sí" : "no"]);
+        });
+      }
+    });
+
+    var csv = rows.map(function(row){
+      return row.map(function(cell){ return '"' + String(cell).replace(/"/g,'""') + '"'; }).join(";");
+    }).join("\n");
+
+    download("ventas_sph_pro_" + getMonth() + ".csv", csv, "text/csv;charset=utf-8");
+  }
+
+  function download(filename, content, type){
+    var blob = new Blob([content], {type:type});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  function importJsonFile(file){
+    var reader = new FileReader();
+    reader.onload = function(){
+      try{
+        var data = JSON.parse(reader.result);
+        if(!Array.isArray(data.records)) throw new Error("Formato no válido");
+        state = normalizeState(migrateOld(data));
+        if(data.version === 1 && data.records.some(function(r){ return Array.isArray(r.sales); })){
+          state = normalizeState(data);
+        }
+        persist();
+        renderAll();
+        toast("JSON importado.");
+      }catch(e){
+        alert("No se pudo importar. Tiene que ser un JSON de esta app o de la anterior.");
+      }
+      $("importFile").value = "";
+    };
+    reader.readAsText(file);
+  }
+
+  function init(){
+    updateHeaderHeight();
+
+
+    // Menú principal robusto y fijo.
+    if($("hamburgerBtn") && !$("hamburgerBtn").dataset.bound){
+      $("hamburgerBtn").dataset.bound = "1";
+      $("hamburgerBtn").addEventListener("click", function(e){
+        e.preventDefault();
+        if($("mainMenuOverlay") && $("mainMenuOverlay").classList.contains("show")){
+          hideMainMenu();
+        }else{
+          showMainMenu();
+        }
+      }, {passive:false});
+    }
+
+    if($("closeMenuBtn") && !$("closeMenuBtn").dataset.bound){
+      $("closeMenuBtn").dataset.bound = "1";
+      $("closeMenuBtn").addEventListener("click", function(e){
+        e.preventDefault();
+        hideMainMenu();
+      }, {passive:false});
+    }
+
+    var mainOverlay = $("mainMenuOverlay");
+    if(mainOverlay && !mainOverlay.dataset.bound){
+      mainOverlay.dataset.bound = "1";
+      mainOverlay.addEventListener("click", function(e){
+        if(e.target === mainOverlay) hideMainMenu();
+        var item = e.target.closest(".mainMenuItem[data-tab]");
+        if(item){
+          e.preventDefault();
+          switchTab(item.dataset.tab);
+        }
+      }, {passive:false});
+    }
+
+
+
+    // Navegación superior robusta.
+    var tabsNav = $("tabs");
+    if(tabsNav && !tabsNav.dataset.bound){
+      tabsNav.dataset.bound = "1";
+      tabsNav.addEventListener("click", function(e){
+        var btn = e.target.closest(".tab");
+        if(!btn) return;
+        e.preventDefault();
+        if(btn.dataset.tab){
+          switchTab(btn.dataset.tab);
+        }else if(btn.id === "moreMenuBtn"){
+          showMoreMenu();
+        }
+      }, {passive:false});
+    }
+
+    var moreOverlay = $("moreMenuOverlay");
+    if(moreOverlay && !moreOverlay.dataset.bound){
+      moreOverlay.dataset.bound = "1";
+      moreOverlay.addEventListener("click", function(e){
+        if(e.target === moreOverlay) hideMoreMenu();
+        var item = e.target.closest(".moreItem[data-tab]");
+        if(item){
+          e.preventDefault();
+          switchTab(item.dataset.tab);
+        }
+      }, {passive:false});
+    }
+
+
+    clearForm();
+    renderCalcSelectors();
+    renderChannelSelects();
+    updateSpecialHoursVisibility();
+    renderChannelControls();
+
+    updateHeaderHeight();
+    window.addEventListener("resize", updateHeaderHeight);
+    window.addEventListener("orientationchange", function(){ setTimeout(updateHeaderHeight, 250); });
+    window.addEventListener("scroll", requestHeaderScroll, {passive:true});
+
+    $("dayDetailOverlay").onclick = function(e){
+      if(e.target === $("dayDetailOverlay")) hideDayDetail();
+    };
+
+    $("dayDate").onchange = function(){ setDefaultHoursForDate(); updateSpecialHoursVisibility(false); renderChannelControls(); };
+    $("dayMode").onchange = function(){ updateSpecialHoursVisibility(true); };
+    $("specialType").onchange = function(){ updateSpecialHoursVisibility(true); };
+    ["medicalHours","incidentHours","courseHours","customNoSphHours","recoveryHours"].forEach(function(id){
+      $(id).onchange = function(){ syncWorkedFromSpecial(); renderChannelControls(); };
+    });
+    if($("dayHours")) $("dayHours").onchange = renderChannelControls;
+    if($("dayChannelMode")) $("dayChannelMode").onchange = renderChannelControls;
+    if($("dayFixedChannel")) $("dayFixedChannel").onchange = renderChannelControls;
+
+    $("dayForm").onsubmit = function(e){
+      e.preventDefault();
+      saveDay(true);
+    };
+
+    $("addSaleBtn").onclick = function(){ saleEditorCard(); };
+    $("clearSalesBtn").onclick = function(){ $("salesEditor").innerHTML = ""; toast("Ventas vaciadas."); };
+    $("clearFormBtn").onclick = function(){ clearForm(); toast("Formulario limpio."); };
+    $("saveAnotherBtn").onclick = function(){ if(saveDay(false)) switchTab("venta"); };
+
+    $("monthFilter").onchange = function(){
+      state.settings.month = $("monthFilter").value || currentMonth();
+      if($("cutoffDate").value.indexOf(state.settings.month) !== 0){
+        var r = monthRange(state.settings.month);
+        state.settings.cutoff = state.settings.month + "-" + String(r.last).padStart(2,"0");
+      }
+      saveState();
+    };
+
+    $("cutoffDate").onchange = function(){
+      state.settings.cutoff = $("cutoffDate").value || todayISO();
+      state.settings.month = state.settings.cutoff.slice(0,7);
+      saveState();
+    };
+
+    $("homeMode").onchange = renderObjectives;
+
+    if($("calendarMonth")) $("calendarMonth").onchange = function(){ state.settings.month = $("calendarMonth").value || currentMonth(); saveState(); };
+    if($("calendarView")) $("calendarView").onchange = renderCalendar;
+    $("rateSearch").oninput = renderRates;
+    $("docSearch").oninput = filterDocs;
+    $("calcBtn").onclick = calculateBill;
+    ["calcTariff","calcDays","calcKwh","calcKwhP1","calcKwhP2","calcKwhP3","calcExcess","calcP1","calcP2","calcService","calcTaxes"].forEach(function(id){
+      if($(id)){ $(id).onchange = calculateBill; if($(id).tagName === "INPUT") $(id).oninput = calculateBill; }
+    });
+    ["calc30Tariff","calc30Days","calc30Kwh","calc30KwhP1","calc30KwhP2","calc30KwhP3","calc30KwhP4","calc30KwhP5","calc30KwhP6","calc30P1","calc30P2","calc30P3","calc30P4","calc30P5","calc30P6","calc30Taxes"].forEach(function(id){
+      if($(id)){ $(id).onchange = calculateBill30; if($(id).tagName === "INPUT") $(id).oninput = calculateBill30; }
+    });
+    if($("calc30Btn")) $("calc30Btn").onclick = calculateBill30;
+    if($("calcNormalTab")) $("calcNormalTab").onclick = function(){ setCalcMode("normal"); };
+    if($("calc30Tab")) $("calc30Tab").onclick = function(){ setCalcMode("30"); };
+    if($("calcTariff")) $("calcTariff").addEventListener("change", updateCalcVisibility);
+    if($("calc30Tariff")) $("calc30Tariff").addEventListener("change", updateCalc30Visibility);
+    setCalcMode("normal");
+    if($("journeyType")) $("journeyType").onchange = function(){ if($("customHoursBox")) $("customHoursBox").classList.toggle("hidden", $("journeyType").value !== "custom"); };
+
+
+    $("saveHoursBtn").onclick = function(){
+      state.settings.journeyType = $("journeyType") ? $("journeyType").value : "39";
+      if(state.settings.journeyType !== "custom") applyJourneyHours(state.settings.journeyType);
+      else [0,1,2,3,4,5,6].forEach(function(d){ state.settings.workHours[d] = Number($("h" + d).value || 0); });
+      state.settings.defaultChannel = $("defaultChannel") ? $("defaultChannel").value : "waylet";
+      state.settings.defaultChannelMode = $("defaultChannelMode") ? $("defaultChannelMode").value : "fixed";
+      state.settings.channelThresholds.waylet = Number($("wayletMinSph") ? $("wayletMinSph").value || 0.120 : 0.120);
+      state.settings.taxes = {
+        iva:Number($("taxIva") ? $("taxIva").value || TAX_DEFAULTS.iva : TAX_DEFAULTS.iva),
+        iee:Number($("taxIee") ? $("taxIee").value || TAX_DEFAULTS.iee : TAX_DEFAULTS.iee),
+        hydrocarbons:Number($("taxHydro") ? $("taxHydro").value || TAX_DEFAULTS.hydrocarbons : TAX_DEFAULTS.hydrocarbons),
+        meterRentDay:Number($("taxMeter") ? $("taxMeter").value || TAX_DEFAULTS.meterRentDay : TAX_DEFAULTS.meterRentDay),
+        bonoSocialDay:Number($("taxBono") ? $("taxBono").value || TAX_DEFAULTS.bonoSocialDay : TAX_DEFAULTS.bonoSocialDay)
+      };
+      saveState();
+      renderSettings();
+      toast("Ajustes guardados.");
+    };
+
+    $("exportJsonBtn").onclick = function(){ exportJson(); toast("JSON exportado."); };
+    $("exportCsvBtn").onclick = function(){ exportCsv(); toast("CSV exportado."); };
+    $("monthPdfBtn").onclick = function(){ printMonthReport(); };
+    $("importJsonBtn").onclick = function(){ $("importFile").click(); };
+    $("importFile").onchange = function(e){
+      var file = e.target.files[0];
+      if(file) importJsonFile(file);
+    };
+
+    $("clearMonthBtn").onclick = function(){
+      var month = getMonth();
+      if(!confirm("¿Borrar " + monthLabel(month) + " entero?")) return;
+      state.records = state.records.filter(function(r){ return r.date.indexOf(month) !== 0; });
+      saveState();
+      toast("Mes borrado.");
+    };
+
+    $("clearAllBtn").onclick = function(){
+      if(!confirm("¿Borrar absolutamente todo?")) return;
+      state.records = [];
+      saveState();
+      toast("Todo borrado.");
+    };
+
+    if(!state.settings.month) state.settings.month = currentMonth();
+    if(!state.settings.cutoff) state.settings.cutoff = todayISO();
+
+    renderAll();
+  }
+
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", init);
+  }else{
+    init();
+  }
+
+  if("serviceWorker" in navigator){
+    window.addEventListener("load", function(){
+      navigator.serviceWorker.register("./service-worker.js").catch(function(){});
+    });
+  }
+})();
+</script>
+</body>
+</html>
