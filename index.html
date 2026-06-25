@@ -1210,12 +1210,12 @@
         <div id="v9ChannelSph" class="grid"></div>
       </div>
 
-      <div class="panel">
+      <div class="panel" id="objectivePanel">
         <h2>Objetivos automáticos</h2>
         <div id="objectiveCards" class="grid"></div>
       </div>
 
-      <div class="panel">
+      <div class="panel" id="pacePanel">
         <h2>Ritmo del mes</h2>
         <div id="paceBox" class="grid"></div>
       </div>
@@ -1603,7 +1603,7 @@
     </section>
   </main>
 
-  <div class="footer">v9.4 · DH visible</div>
+  <div class="footer">v9.5 · objetivos Waylet</div>
 </div>
 </div>
 
@@ -2234,7 +2234,19 @@
     }
   }
 
+  function automaticObjectivesAllowed(){
+    return (state.settings.defaultChannelMode || "fixed") === "fixed" && (state.settings.defaultChannel || "waylet") === "waylet";
+  }
+
   function renderObjectives(){
+    var panel = $("objectivePanel");
+    if(!automaticObjectivesAllowed()){
+      if(panel) panel.classList.add("hidden");
+      if($("objectiveCards")) $("objectiveCards").innerHTML = "";
+      return;
+    }
+    if(panel) panel.classList.remove("hidden");
+
     var totals = calc(cutoffRecords());
     var month = getMonth();
     var cutoff = getCutoff();
@@ -2242,7 +2254,7 @@
     var hoursBase = mode === "estimado" ? estimatedHoursForMonth(month) : totals.hours;
     var title = mode === "estimado" ? "Objetivo estimado del mes completo" : "Objetivo según horas reales";
 
-    var html = '<div class="hint">' + title + ': se calculan los CUPS necesarios para cada tramo.</div>';
+    var html = '<div class="hint">' + title + ': se calculan los CUPS necesarios para Waylet fijo.</div>';
 
     THRESHOLDS.forEach(function(th){
       var needed = Math.ceil(hoursBase * th.value);
@@ -2264,6 +2276,14 @@
   }
 
   function renderPace(){
+    var panel = $("pacePanel");
+    if(!automaticObjectivesAllowed()){
+      if(panel) panel.classList.add("hidden");
+      if($("paceBox")) $("paceBox").innerHTML = "";
+      return;
+    }
+    if(panel) panel.classList.remove("hidden");
+
     var totals = calc(cutoffRecords());
     var month = getMonth();
     var cutoff = getCutoff();
@@ -2280,7 +2300,7 @@
         '<div class="mini"><span>Faltan para 0,140</span><b>' + missing014 + '</b></div>' +
         '<div class="mini"><span>Media necesaria</span><b>' + fmtNum(avgDay,2) + '/día</b></div>' +
       '</div>' +
-      '<div class="small">Quedan ' + remaining.days + ' días laborables estimados y ' + fmtHours(remaining.hours) + '. Objetivo calculado según el horario base y las ventas registradas.</div>';
+      '<div class="small">Quedan ' + remaining.days + ' días laborables estimados y ' + fmtHours(remaining.hours) + '. Objetivo automático solo visible con canal fijo Waylet.</div>';
   }
 
   function renderSummary(){
