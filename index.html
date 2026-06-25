@@ -1603,7 +1603,7 @@
     </section>
   </main>
 
-  <div class="footer">v9.3 · tarifas PDF</div>
+  <div class="footer">v9.4 · DH visible</div>
 </div>
 </div>
 
@@ -2748,12 +2748,25 @@
         if(t.type === "gas"){
           prices = '<span class="chip">Fijo ' + fmtNum(t.gasFixed,2) + ' €/mes</span><span class="chip">kWh ' + fmtNum(t.energy,4) + '</span>';
         }else if(t.type === "luz30"){
-          prices = '<span class="chip">Energía ' + fmtNum(t.energy,4) + '</span><span class="chip">Potencia P1-P6</span>' + (t.isDh30 ? '<span class="chip">Consumo por P1-P6</span>' : '<span class="chip">Consumo único</span>');
+          if(t.isDh30 && Array.isArray(t.energyPeriods)){
+            prices = t.energyPeriods.map(function(p, idx){ return '<span class="chip">Energía P' + (idx + 1) + ' ' + fmtNum(p,4) + '</span>'; }).join('') + '<span class="chip">Potencia P1-P6</span><span class="chip">Consumo por P1-P6</span>';
+          }else{
+            prices = '<span class="chip">Energía ' + fmtNum(t.energy,4) + '</span><span class="chip">Potencia P1-P6</span><span class="chip">Consumo único</span>';
+          }
         }else{
-          prices = '<span class="chip">kWh ' + fmtNum(t.energy,4) + '</span>' +
-                   '<span class="chip">P1 ' + fmtNum(t.p1,6) + '</span>' +
-                   '<span class="chip">P2 ' + fmtNum(t.p2,6) + '</span>' +
-                   (t.maxPower ? '<span class="chip">Hasta ' + t.maxPower + ' kW</span>' : '');
+          if(t.isDh && Array.isArray(t.energyPeriods)){
+            prices = '<span class="chip">Punta ' + fmtNum(t.energyPeriods[0],4) + '</span>' +
+                     '<span class="chip">Llano ' + fmtNum(t.energyPeriods[1],4) + '</span>' +
+                     '<span class="chip">Valle ' + fmtNum(t.energyPeriods[2],4) + '</span>' +
+                     '<span class="chip">P1 ' + fmtNum(t.p1,6) + '</span>' +
+                     '<span class="chip">P2 ' + fmtNum(t.p2,6) + '</span>' +
+                     (t.maxPower ? '<span class="chip">Hasta ' + t.maxPower + ' kW</span>' : '');
+          }else{
+            prices = '<span class="chip">kWh ' + fmtNum(t.energy,4) + '</span>' +
+                     '<span class="chip">P1 ' + fmtNum(t.p1,6) + '</span>' +
+                     '<span class="chip">P2 ' + fmtNum(t.p2,6) + '</span>' +
+                     (t.maxPower ? '<span class="chip">Hasta ' + t.maxPower + ' kW</span>' : '');
+          }
         }
         var badge = t.svaMandatory ? "SVA obligatorio" : (t.permissionSva ? "Sin SVA con permiso" : "SVA opcional");
         return '<div class="rate-card"><div class="rate-top"><div><div class="rate-title">' + escapeHtml(t.name) + '</div><div class="rate-meta">' + escapeHtml(groupDisplayTitle(t.group, t.type)) + '</div></div><span class="badge ' + (t.svaMandatory ? 'warn' : (t.permissionSva ? 'pink' : 'turq')) + '">' + badge + '</span></div><div class="chips">' + prices + (t.exc ? '<span class="chip">Exc. ' + fmtNum(t.exc,2) + '</span>' : '') + '</div><div class="small">' + escapeHtml(t.notes || "") + '</div></div>';
