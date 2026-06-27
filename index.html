@@ -1229,6 +1229,40 @@
     html.theme-light .warn{color:#92400e!important;background:rgba(245,158,11,.16)!important;}
     html.theme-light .bad{color:#b91c1c!important;background:rgba(239,68,68,.12)!important;}
 
+
+    .pendingWarningCard{
+      border-color:rgba(245,158,11,.38)!important;
+      background:
+        radial-gradient(circle at 0% 0%,rgba(245,158,11,.13),transparent 16rem),
+        linear-gradient(180deg,rgba(255,255,255,.085),rgba(255,255,255,.04))!important;
+    }
+
+    .pendingWarningCard .day-title{
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .pendingDot{
+      width:9px;
+      height:9px;
+      border-radius:999px;
+      background:var(--amber);
+      box-shadow:0 0 0 4px rgba(245,158,11,.12);
+      flex:0 0 auto;
+    }
+
+    .pendingReason{
+      margin-top:8px;
+      color:var(--muted);
+      font-size:.86rem;
+      line-height:1.35;
+    }
+
+    .pendingWarningCard:active{
+      transform:scale(.992);
+    }
+
   </style>
 </head>
 
@@ -1294,6 +1328,11 @@
 
       </div>
 
+
+      <div class="panel compactPanel" id="pendingPanel">
+        <h2>Pendientes por revisar</h2>
+        <div id="pendingWarningsBox" class="grid"></div>
+      </div>
       <div class="panel compactPanel">
         <h2>Resumen ventas</h2>
         <div id="v9HomeBreakdown" class="grid"></div>
@@ -1424,6 +1463,11 @@
         <div id="salesMonthSummary" class="grid"></div>
       </div>
 
+
+      <div class="panel" id="pendingSalesPanel">
+        <h2>Pendientes por revisar</h2>
+        <div id="pendingWarningsSalesBox" class="grid"></div>
+      </div>
       <div class="panel">
         <h2>Media de tarifas</h2>
         <div id="tariffAverageBox" class="grid"></div>
@@ -1566,12 +1610,6 @@
           <label id="calc30KwhField" class="field">Consumo mensual kWh
             <input id="calc30Kwh" type="number" min="0" step="0.01" value="0">
           </label>
-          <label class="field">Impuestos y cargos
-            <select id="calc30Taxes">
-              <option value="0">Sin impuestos ni cargos</option>
-              <option value="1">Añadir conceptos que aplican</option>
-            </select>
-          </label>
         </div>
         <div id="calc30DhFields" class="calcHidden">
           <div class="dhFieldsTitle">Consumo 3.0TD por periodos</div>
@@ -1591,6 +1629,14 @@
           <label class="field">Potencia P4 kW<input id="calc30P4" type="number" min="0" step="0.01" value="0"></label>
           <label class="field">Potencia P5 kW<input id="calc30P5" type="number" min="0" step="0.01" value="0"></label>
           <label class="field">Potencia P6 kW<input id="calc30P6" type="number" min="0" step="0.01" value="0"></label>
+        </div>
+        <div class="row cols2">
+          <label class="field">Impuestos y cargos
+            <select id="calc30Taxes">
+              <option value="0">Sin impuestos ni cargos</option>
+              <option value="1">Añadir conceptos que aplican</option>
+            </select>
+          </label>
         </div>
         <div class="actions"><button id="calc30Btn" type="button" class="btn-main">Calcular 3.0TD</button></div>
       </div>
@@ -1845,7 +1891,7 @@
     {id:"tag", name:"TAG", basePrice:9.08, price:9.08, promo:"Para todos"}
   ];
 
-  var TARIFFS = [{"id":"tranquilisima-10","name":"Tranquilísima","group":"Especiales","type":"luz","maxPower":10,"p1":0.081918,"p2":0.081918,"energy":0.1399,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 10 kW.","exc":0,"isBvSolar":false,"energyIva":0.169279,"p1Iva":0.099121,"p2Iva":0.099121,"shortName":"Tranquilísima"},{"id":"v32-gdo-10","name":"V32","group":"Precio fijo","type":"luz","maxPower":10,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":true,"svaLabel":"Sin SVA con permiso","cashbackEligible":true,"notes":"Potencia permitida: hasta 10 kW. GdO.","exc":0,"isBvSolar":false,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V32"},{"id":"tap-v32-10","name":"TAP V32","group":"TAP","type":"luz","maxPower":10,"p1":0.084431,"p2":0.001987,"energy":0.1699,"svaMandatory":false,"permissionSva":true,"svaLabel":"Sin SVA con permiso","cashbackEligible":true,"notes":"Potencia permitida: hasta 10 kW. P1 y P2 distintos.","exc":0,"isBvSolar":false,"energyIva":0.205579,"p1Iva":0.102162,"p2Iva":0.002404,"shortName":"TAP V32"},{"id":"tap-hogar-v34-10","name":"TAP Hogar V34","group":"TAP","type":"luz","maxPower":10,"p1":0.084431,"p2":0.001987,"energy":0.1649,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 10 kW. P1 y P2 distintos.","exc":0,"isBvSolar":false,"energyIva":0.199529,"p1Iva":0.102162,"p2Iva":0.002404,"shortName":"TAP Hogar V34"},{"id":"v30-15","name":"V30","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1599,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.193479,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V30"},{"id":"v31-15","name":"V31","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1499,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.181379,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V31"},{"id":"v32-15","name":"V32","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":true,"svaLabel":"Sin SVA con permiso","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. Puede ir sin SVA con permiso.","exc":0,"isBvSolar":false,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V32"},{"id":"v33-15","name":"V33","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1199,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.145079,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V33"},{"id":"v35-15","name":"V35","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1099,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.132979,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V35"},{"id":"pyme-v30-15","name":"Pyme V30","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1599,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.193479,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Pyme V30"},{"id":"pyme-v31-15","name":"Pyme V31","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1499,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.181379,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Pyme V31"},{"id":"pyme-v32-15","name":"Pyme V32","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":true,"svaLabel":"Sin SVA con permiso","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. Puede ir sin SVA con permiso.","exc":0,"isBvSolar":false,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Pyme V32"},{"id":"solar-v30-15","name":"Solar V30","group":"Solar","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1399,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. Excedente 0,06 €/kWh.","exc":0.06,"isBvSolar":false,"energyIva":0.169279,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Solar V30"},{"id":"bv-v26-15","name":"Batería Virtual V26","group":"Batería Virtual","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. Excedente 0,06 €/kWh.","exc":0.06,"isBvSolar":true,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Batería Virtual V26"},{"id":"dh-v33-15","name":"Discriminación Horaria V33","group":"Discriminación horaria","type":"luz","maxPower":15,"p1":0.120274,"p2":0.06,"energy":0.1659,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW. Consumo punta, llano y valle.","exc":0,"isBvSolar":false,"energyIva":0.200739,"p1Iva":0.145532,"p2Iva":0.0726,"shortName":"Discriminación Horaria V33","isDh":true,"energyPeriods":[0.1659,0.1159,0.0969]},{"id":"smart-v35-15","name":"Tarifa Smart","group":"Smart","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1699,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.205579,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Tarifa Smart"},{"id":"luz-mplus-v31-15","name":"Luz M+ V31","group":"Luz M+","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Luz M+ V31"},{"id":"empresa30-l2","name":"Empresa 3.0 L2","group":"3.0TD","type":"luz30","energy":0.1549,"energyPeriods":[0.1549,0.1549,0.1549,0.1549,0.1549,0.1549],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":false,"notes":"Consumo único.","energyIva":0.187429,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Empresa 3.0 L2"},{"id":"empresa30-l4","name":"Empresa 3.0 L4","group":"3.0TD","type":"luz30","energy":0.1449,"energyPeriods":[0.1449,0.1449,0.1449,0.1449,0.1449,0.1449],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":false,"notes":"Consumo único.","energyIva":0.175329,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Empresa 3.0 L4"},{"id":"empresa30-l8","name":"Empresa 3.0 L8","group":"3.0TD DH","type":"luz30","energy":0.1649,"energyPeriods":[0.1649,0.1609,0.1569,0.1549,0.1259,0.1159],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":false,"notes":"Consumo por periodos P1-P6.","energyIva":0.199529,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Empresa 3.0 L8","isDh30":true},{"id":"dh30-l4","name":"Discriminación Horaria 3.0 L4","group":"3.0TD DH","type":"luz30","energy":0.1699,"energyPeriods":[0.1699,0.1659,0.1619,0.1599,0.1309,0.1209],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":false,"notes":"Consumo por periodos P1-P6.","energyIva":0.205579,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Discriminación Horaria 3.0 L4","isDh30":true},{"id":"comercio30-l4","name":"Comercio 3.0 L4","group":"3.0TD DH","type":"luz30","energy":0.11495,"energyPeriods":[0.11495,0.11495,0.11495,0.11495,0.11495,0.2299],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":false,"notes":"Consumo por periodos P1-P6.","energyIva":0.13909,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Comercio 3.0 L4","isDh30":true},{"id":"gas-rl1-v10","name":"Gas V10 · RL1","group":"Gas","type":"gas","gasFixed":6.9,"energy":0.0899,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL1. Fijo mensual y energía.","energyIva":0.108779,"gasFixedIva":8.349,"shortName":"Gas V10 · RL1"},{"id":"gas-rl1-v11","name":"Gas V11 · RL1","group":"Gas","type":"gas","gasFixed":6.9,"energy":0.0799,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL1. Fijo mensual y energía.","energyIva":0.096679,"gasFixedIva":8.349,"shortName":"Gas V11 · RL1"},{"id":"gas-rl1-v12","name":"Gas V12 · RL1","group":"Gas","type":"gas","gasFixed":6.9,"energy":0.0699,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL1. Fijo mensual y energía.","energyIva":0.084579,"gasFixedIva":8.349,"shortName":"Gas V12 · RL1"},{"id":"gas-rl2-v10","name":"Gas V10 · RL2","group":"Gas","type":"gas","gasFixed":13.9,"energy":0.0899,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL2. Fijo mensual y energía.","energyIva":0.108779,"gasFixedIva":16.819,"shortName":"Gas V10 · RL2"},{"id":"gas-rl2-v11","name":"Gas V11 · RL2","group":"Gas","type":"gas","gasFixed":13.9,"energy":0.0799,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL2. Fijo mensual y energía.","energyIva":0.096679,"gasFixedIva":16.819,"shortName":"Gas V11 · RL2"},{"id":"gas-rl2-v12","name":"Gas V12 · RL2","group":"Gas","type":"gas","gasFixed":13.9,"energy":0.0699,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL2. Fijo mensual y energía.","energyIva":0.084579,"gasFixedIva":16.819,"shortName":"Gas V12 · RL2"},{"id":"gas-rl3-v10","name":"Gas V10 · RL3","group":"Gas","type":"gas","gasFixed":22.9,"energy":0.0899,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL3. Fijo mensual y energía.","energyIva":0.108779,"gasFixedIva":27.709,"shortName":"Gas V10 · RL3"},{"id":"gas-rl3-v11","name":"Gas V11 · RL3","group":"Gas","type":"gas","gasFixed":22.9,"energy":0.0799,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL3. Fijo mensual y energía.","energyIva":0.096679,"gasFixedIva":27.709,"shortName":"Gas V11 · RL3"},{"id":"gas-rl3-v12","name":"Gas V12 · RL3","group":"Gas","type":"gas","gasFixed":22.9,"energy":0.0699,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL3. Fijo mensual y energía.","energyIva":0.084579,"gasFixedIva":27.709,"shortName":"Gas V12 · RL3"}];
+  var TARIFFS = [{"id":"tranquilisima-10","name":"Tranquilísima","group":"Especiales","type":"luz","maxPower":10,"p1":0.081918,"p2":0.081918,"energy":0.1399,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 10 kW.","exc":0,"isBvSolar":false,"energyIva":0.169279,"p1Iva":0.099121,"p2Iva":0.099121,"shortName":"Tranquilísima"},{"id":"tap-v32-10","name":"TAP V32","group":"TAP","type":"luz","maxPower":10,"p1":0.084431,"p2":0.001987,"energy":0.1699,"svaMandatory":false,"permissionSva":true,"svaLabel":"Sin SVA con permiso","cashbackEligible":true,"notes":"Potencia permitida: hasta 10 kW. P1 y P2 distintos.","exc":0,"isBvSolar":false,"energyIva":0.205579,"p1Iva":0.102162,"p2Iva":0.002404,"shortName":"TAP V32"},{"id":"tap-hogar-v34-10","name":"TAP Hogar V34","group":"TAP","type":"luz","maxPower":10,"p1":0.084431,"p2":0.001987,"energy":0.1649,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 10 kW. P1 y P2 distintos.","exc":0,"isBvSolar":false,"energyIva":0.199529,"p1Iva":0.102162,"p2Iva":0.002404,"shortName":"TAP Hogar V34"},{"id":"v30-15","name":"V30","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1599,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.193479,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V30"},{"id":"v31-15","name":"V31","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1499,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.181379,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V31"},{"id":"v32-15","name":"V32","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":true,"svaLabel":"Sin SVA con permiso","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. Puede ir sin SVA con permiso.","exc":0,"isBvSolar":false,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V32"},{"id":"v33-15","name":"V33","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1199,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.145079,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V33"},{"id":"v35-15","name":"V35","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1099,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.132979,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V35"},{"id":"pyme-v30-15","name":"Pyme V30","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1599,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.193479,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Pyme V30"},{"id":"pyme-v31-15","name":"Pyme V31","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1499,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.181379,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Pyme V31"},{"id":"pyme-v32-15","name":"Pyme V32","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":true,"svaLabel":"Sin SVA con permiso","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. Puede ir sin SVA con permiso.","exc":0,"isBvSolar":false,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Pyme V32"},{"id":"solar-v30-15","name":"Solar V30","group":"Solar","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1399,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. Excedente 0,06 €/kWh.","exc":0.06,"isBvSolar":false,"energyIva":0.169279,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Solar V30"},{"id":"bv-v26-15","name":"Batería Virtual V26","group":"Batería Virtual","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. Excedente 0,06 €/kWh.","exc":0.06,"isBvSolar":true,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Batería Virtual V26"},{"id":"dh-v33-15","name":"Discriminación Horaria V33","group":"Discriminación horaria","type":"luz","maxPower":15,"p1":0.120274,"p2":0.06,"energy":0.1659,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW. Consumo punta, llano y valle.","exc":0,"isBvSolar":false,"energyIva":0.200739,"p1Iva":0.145532,"p2Iva":0.0726,"shortName":"Discriminación Horaria V33","isDh":true,"energyPeriods":[0.1659,0.1159,0.0969]},{"id":"smart-v35-15","name":"Tarifa Smart","group":"Smart","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1699,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.205579,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Tarifa Smart"},{"id":"luz-mplus-v31-15","name":"Luz M+ V31","group":"Luz M+","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Luz M+ V31"},{"id":"empresa30-l2","name":"Empresa 3.0 L2","group":"3.0TD","type":"luz30","energy":0.1549,"energyPeriods":[0.1549,0.1549,0.1549,0.1549,0.1549,0.1549],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":false,"notes":"Consumo único.","energyIva":0.187429,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Empresa 3.0 L2"},{"id":"empresa30-l4","name":"Empresa 3.0 L4","group":"3.0TD","type":"luz30","energy":0.1449,"energyPeriods":[0.1449,0.1449,0.1449,0.1449,0.1449,0.1449],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":false,"notes":"Consumo único.","energyIva":0.175329,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Empresa 3.0 L4"},{"id":"empresa30-l8","name":"Empresa 3.0 L8","group":"3.0TD DH","type":"luz30","energy":0.1649,"energyPeriods":[0.1649,0.1609,0.1569,0.1549,0.1259,0.1159],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":false,"notes":"Consumo por periodos P1-P6.","energyIva":0.199529,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Empresa 3.0 L8","isDh30":true},{"id":"dh30-l4","name":"Discriminación Horaria 3.0 L4","group":"3.0TD DH","type":"luz30","energy":0.1699,"energyPeriods":[0.1699,0.1659,0.1619,0.1599,0.1309,0.1209],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":false,"notes":"Consumo por periodos P1-P6.","energyIva":0.205579,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Discriminación Horaria 3.0 L4","isDh30":true},{"id":"comercio30-l4","name":"Comercio 3.0 L4","group":"3.0TD DH","type":"luz30","energy":0.11495,"energyPeriods":[0.11495,0.11495,0.11495,0.11495,0.11495,0.2299],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":false,"notes":"Consumo por periodos P1-P6.","energyIva":0.13909,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Comercio 3.0 L4","isDh30":true},{"id":"gas-rl1-v10","name":"Gas V10 · RL1","group":"Gas","type":"gas","gasFixed":6.9,"energy":0.0899,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL1. Fijo mensual y energía.","energyIva":0.108779,"gasFixedIva":8.349,"shortName":"Gas V10 · RL1"},{"id":"gas-rl1-v11","name":"Gas V11 · RL1","group":"Gas","type":"gas","gasFixed":6.9,"energy":0.0799,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL1. Fijo mensual y energía.","energyIva":0.096679,"gasFixedIva":8.349,"shortName":"Gas V11 · RL1"},{"id":"gas-rl1-v12","name":"Gas V12 · RL1","group":"Gas","type":"gas","gasFixed":6.9,"energy":0.0699,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL1. Fijo mensual y energía.","energyIva":0.084579,"gasFixedIva":8.349,"shortName":"Gas V12 · RL1"},{"id":"gas-rl2-v10","name":"Gas V10 · RL2","group":"Gas","type":"gas","gasFixed":13.9,"energy":0.0899,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL2. Fijo mensual y energía.","energyIva":0.108779,"gasFixedIva":16.819,"shortName":"Gas V10 · RL2"},{"id":"gas-rl2-v11","name":"Gas V11 · RL2","group":"Gas","type":"gas","gasFixed":13.9,"energy":0.0799,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL2. Fijo mensual y energía.","energyIva":0.096679,"gasFixedIva":16.819,"shortName":"Gas V11 · RL2"},{"id":"gas-rl2-v12","name":"Gas V12 · RL2","group":"Gas","type":"gas","gasFixed":13.9,"energy":0.0699,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL2. Fijo mensual y energía.","energyIva":0.084579,"gasFixedIva":16.819,"shortName":"Gas V12 · RL2"},{"id":"gas-rl3-v10","name":"Gas V10 · RL3","group":"Gas","type":"gas","gasFixed":22.9,"energy":0.0899,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL3. Fijo mensual y energía.","energyIva":0.108779,"gasFixedIva":27.709,"shortName":"Gas V10 · RL3"},{"id":"gas-rl3-v11","name":"Gas V11 · RL3","group":"Gas","type":"gas","gasFixed":22.9,"energy":0.0799,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL3. Fijo mensual y energía.","energyIva":0.096679,"gasFixedIva":27.709,"shortName":"Gas V11 · RL3"},{"id":"gas-rl3-v12","name":"Gas V12 · RL3","group":"Gas","type":"gas","gasFixed":22.9,"energy":0.0699,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL3. Fijo mensual y energía.","energyIva":0.084579,"gasFixedIva":27.709,"shortName":"Gas V12 · RL3"}];
 
   var DOCS_ALTAS = [
     {title:"Alta 1ª ocupación", email:"doc.altas@repsolluzygas.com", when:["Suministro que nunca ha tenido luz/gas.","Suministro con mucha antigüedad que necesita nuevo boletín eléctrico.","Gas con más de 3 años de antigüedad."], docs:["DNI.","Escritura de propiedad hasta apartado exponen o contrato de alquiler.","Boletín eléctrico/gas."], note:"Documentación antes de hacer la venta en portal."},
@@ -2290,6 +2336,130 @@
   function cutoffRecords(){
     var cutoff = getCutoff();
     return monthRecords().filter(function(r){ return r.date <= cutoff; });
+  }
+
+
+  function isMissingSaleId(v){
+    var raw = String((v && v.id) || "").trim().toLowerCase();
+    return !raw || raw === "sin id" || raw === "sinid" || raw === "pendiente" || raw === "pte";
+  }
+
+  function isMissingSaleClient(v){
+    return !String((v && v.client) || "").trim();
+  }
+
+  function pendingLimitDate(month){
+    var r = monthRange(month);
+    var last = month + "-" + String(r.last).padStart(2,"0");
+    var today = todayISO();
+    var cutoff = getCutoff();
+    var limit = last;
+
+    if(month === today.slice(0,7) && today < limit) limit = today;
+    if(month > today.slice(0,7)) return "";
+    if(cutoff && cutoff.indexOf(month) === 0 && cutoff < limit) limit = cutoff;
+    return limit;
+  }
+
+  function pendingWarningsForMonth(){
+    var month = getMonth();
+    var recs = monthRecords();
+    var recMap = {};
+    var warnings = [];
+    recs.forEach(function(r){ if(r.date) recMap[r.date] = r; });
+
+    var limit = pendingLimitDate(month);
+    if(limit){
+      var rng = monthRange(month);
+      for(var d=1; d<=rng.last; d++){
+        var iso = month + "-" + String(d).padStart(2,"0");
+        if(iso > limit) break;
+        var base = baseHoursForDate(iso);
+        if(base > 0 && !recMap[iso]){
+          warnings.push({
+            type:"day-open",
+            date:iso,
+            title:"Día sin cerrar",
+            badge:"Cerrar día",
+            detail:"Falta guardar el día " + fmtDate(iso) + " · " + fmtHours(base) + " estimadas."
+          });
+        }
+      }
+    }
+
+    recs.forEach(function(r){
+      (r.sales || []).forEach(function(v, idx){
+        var label = "Venta " + (idx + 1) + " · " + fmtDate(r.date);
+        var tariff = v.tariffName || (v.saleType === "luzgas" ? "Dual" : "Venta");
+        if(isMissingSaleId(v)){
+          warnings.push({
+            type:"sale-id",
+            date:r.date,
+            title:"Venta sin ID",
+            badge:"Poner ID",
+            detail:label + " · " + tariff + " · " + (v.client ? ("cliente " + v.client) : "sin cliente") + "."
+          });
+        }
+        if(isMissingSaleClient(v)){
+          warnings.push({
+            type:"sale-client",
+            date:r.date,
+            title:"Venta sin nombre",
+            badge:"Poner nombre",
+            detail:label + " · " + (v.id ? ("ID " + v.id) : "sin ID") + " · " + tariff + "."
+          });
+        }
+      });
+    });
+
+    return warnings.sort(function(a,b){
+      if(a.date !== b.date) return a.date.localeCompare(b.date);
+      var order = {"day-open":0,"sale-id":1,"sale-client":2};
+      return (order[a.type] || 9) - (order[b.type] || 9);
+    });
+  }
+
+  function renderPendingWarnings(){
+    var ids = ["pendingWarningsBox", "pendingWarningsSalesBox"];
+    var warnings = pendingWarningsForMonth();
+    var html = "";
+    if(!warnings.length){
+      html = '<div class="empty">No hay pendientes. Todo cerrado, con ID y con nombre. Rarísimo, pero precioso.</div>';
+    }else{
+      html = warnings.map(function(w){
+        var badgeClass = w.type === "day-open" ? "warn" : "pink";
+        return '<div class="day-card clickable pendingWarningCard" data-date="' + escapeHtml(w.date) + '">' +
+          '<div class="day-head">' +
+            '<div><div class="day-title"><span class="pendingDot"></span>' + escapeHtml(w.title) + '</div>' +
+            '<div class="day-sub">' + fmtDate(w.date) + '</div></div>' +
+            '<span class="badge ' + badgeClass + '">' + escapeHtml(w.badge) + '</span>' +
+          '</div>' +
+          '<div class="pendingReason">' + escapeHtml(w.detail) + '</div>' +
+        '</div>';
+      }).join("");
+    }
+
+    ids.forEach(function(id){
+      if($(id)) $(id).innerHTML = html;
+    });
+
+    document.querySelectorAll(".pendingWarningCard[data-date]").forEach(function(card){
+      card.onclick = function(){
+        var date = card.dataset.date;
+        var existing = state.records.find(function(r){ return r.date === date; });
+        if(existing){
+          editDay(date);
+        }else{
+          clearForm();
+          $("dayDate").value = date;
+          setDefaultHoursForDate();
+          updateSpecialHoursVisibility(false);
+          renderChannelControls();
+          switchTab("venta");
+          toast("Día pendiente cargado para cerrar.");
+        }
+      };
+    });
   }
 
   function calc(records){
@@ -2789,7 +2959,7 @@
     clearForm();
     renderAll();
     if(goHome !== false) switchTab("inicio");
-    toast("Día guardado. V9 bajo control.");
+    toast("Día guardado. V9.8 bajo control.");
     return true;
   }
 
@@ -3518,6 +3688,7 @@ function updateCalcVisibility(){
     renderKpis();
     renderObjectives();
     renderPace();
+    renderPendingWarnings();
     renderSummary();
     renderCalendar();
     renderSalesTab();
