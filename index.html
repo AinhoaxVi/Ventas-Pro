@@ -1135,6 +1135,100 @@
     .channelHours{min-width:100%}
 
     .fileInput{display:none}
+
+
+    /* v9.7 · Tema claro/oscuro + colores personalizables */
+    :root,
+    html.theme-dark{
+      color-scheme:dark;
+      --bg:#080b10;
+      --bg2:#0b1018;
+      --panel:#171d27;
+      --panel2:#202734;
+      --panel3:#2b3343;
+      --text:#f8fafc;
+      --muted:#aeb8ca;
+      --line:rgba(255,255,255,.13);
+      --soft:rgba(255,255,255,.06);
+      --glass1:rgba(255,255,255,.075);
+      --glass2:rgba(255,255,255,.04);
+      --fieldBg:rgba(0,0,0,.24);
+      --buttonBg:rgba(255,255,255,.085);
+      --controlBorder:rgba(255,255,255,.14);
+      --headerBg:linear-gradient(180deg,rgba(8,11,16,.98),rgba(8,11,16,.90));
+      --headerFade:linear-gradient(180deg,rgba(8,11,16,.24),rgba(8,11,16,0));
+      --bodyBg:radial-gradient(circle at top left,color-mix(in srgb,var(--turq) 16%,transparent),transparent 18rem),radial-gradient(circle at top right,color-mix(in srgb,var(--pink) 12%,transparent),transparent 18rem),linear-gradient(180deg,#080b10 0%,#0b111b 100%);
+      --sheetBg:radial-gradient(circle at 10% 0%,color-mix(in srgb,var(--turq) 12%,transparent),transparent 16rem),linear-gradient(180deg,#151b25,#0d121a);
+      --logoCore:linear-gradient(145deg,#0b1018,#151c27);
+      --menuOverlay:rgba(0,0,0,.48);
+      --primarySolid:#14b8a6;
+      --primaryShadow:rgba(20,184,166,.20);
+      --accentGradient:linear-gradient(135deg,var(--turq),var(--blue) 34%,var(--lila) 62%,var(--pink));
+      --accentShine:linear-gradient(110deg,rgba(255,255,255,.28),transparent 22%,rgba(255,255,255,.22) 44%,transparent 66%);
+      --shadow:0 18px 44px rgba(0,0,0,.34);
+    }
+
+    html.theme-light{
+      color-scheme:light;
+      --bg:#f6f8fb;
+      --bg2:#eef3f8;
+      --panel:#ffffff;
+      --panel2:#f4f7fb;
+      --panel3:#e9eef6;
+      --text:#111827;
+      --muted:#5b6779;
+      --line:rgba(15,23,42,.13);
+      --soft:rgba(15,23,42,.055);
+      --glass1:rgba(255,255,255,.88);
+      --glass2:rgba(255,255,255,.58);
+      --fieldBg:rgba(255,255,255,.92);
+      --buttonBg:rgba(255,255,255,.78);
+      --controlBorder:rgba(15,23,42,.14);
+      --headerBg:linear-gradient(180deg,rgba(255,255,255,.96),rgba(255,255,255,.88));
+      --headerFade:linear-gradient(180deg,rgba(255,255,255,.72),rgba(255,255,255,0));
+      --bodyBg:radial-gradient(circle at top left,color-mix(in srgb,var(--turq) 16%,transparent),transparent 19rem),radial-gradient(circle at top right,color-mix(in srgb,var(--pink) 12%,transparent),transparent 19rem),linear-gradient(180deg,#f6f8fb 0%,#eef3f8 100%);
+      --sheetBg:radial-gradient(circle at 10% 0%,color-mix(in srgb,var(--turq) 10%,transparent),transparent 16rem),linear-gradient(180deg,#ffffff,#f2f6fb);
+      --logoCore:linear-gradient(145deg,#ffffff,#eef3f8);
+      --menuOverlay:rgba(15,23,42,.22);
+      --primaryShadow:rgba(20,184,166,.16);
+      --shadow:0 18px 38px rgba(15,23,42,.12);
+    }
+
+    html[data-accent="turquesa"]{--turq:#14b8a6;--turq2:#67fff0;--blue:#38bdf8;--lila:#a855f7;--pink:#ff4daa;--primarySolid:#14b8a6;--primaryShadow:rgba(20,184,166,.20)}
+    html[data-accent="rosa"]{--turq:#ff4daa;--turq2:#ffd1ea;--blue:#fb7185;--lila:#a855f7;--pink:#ec4899;--primarySolid:#ec4899;--primaryShadow:rgba(236,72,153,.20)}
+    html[data-accent="lila"]{--turq:#8b5cf6;--turq2:#ddd6fe;--blue:#6366f1;--lila:#a855f7;--pink:#d946ef;--primarySolid:#8b5cf6;--primaryShadow:rgba(139,92,246,.20)}
+    html[data-accent="azul"]{--turq:#0ea5e9;--turq2:#bae6fd;--blue:#2563eb;--lila:#6366f1;--pink:#06b6d4;--primarySolid:#0ea5e9;--primaryShadow:rgba(14,165,233,.20)}
+    html[data-accent="verde"]{--turq:#22c55e;--turq2:#bbf7d0;--blue:#14b8a6;--lila:#84cc16;--pink:#10b981;--primarySolid:#22c55e;--primaryShadow:rgba(34,197,94,.20)}
+    html[data-accent="naranja"]{--turq:#f97316;--turq2:#fed7aa;--blue:#f59e0b;--lila:#ef4444;--pink:#fb7185;--primarySolid:#f97316;--primaryShadow:rgba(249,115,22,.22)}
+
+    html{background:var(--bg)!important;}
+    body{background:var(--bodyBg)!important;color:var(--text)!important;}
+    header{background:var(--headerBg)!important;border-bottom:1px solid var(--line)!important;box-shadow:0 8px 28px var(--primaryShadow)!important;}
+    header:after{background:var(--headerFade)!important;}
+    .panel,.card,.day-card,.sale-box{background:linear-gradient(180deg,var(--glass1),var(--glass2))!important;border-color:var(--line)!important;box-shadow:var(--shadow)!important;}
+    .detailSheet,.mainMenuPanel{background:var(--sheetBg)!important;border-color:var(--line)!important;}
+    .mainMenuOverlay,.detailOverlay{background:var(--menuOverlay)!important;}
+    .appLogo{background:radial-gradient(circle at 28% 20%,rgba(255,255,255,.42),transparent 20%),conic-gradient(from 145deg,var(--turq),var(--blue),var(--lila),var(--pink),var(--turq))!important;box-shadow:0 0 0 1px var(--line),0 10px 26px var(--primaryShadow)!important;}
+    .appLogo:before{background:var(--logoCore)!important;}
+    input,select,textarea{background:var(--fieldBg)!important;border-color:var(--controlBorder)!important;color:var(--text)!important;}
+    input[type="month"],input[type="date"]{color-scheme:inherit;}
+    input:focus,select:focus,textarea:focus{border-color:color-mix(in srgb,var(--turq) 80%,white)!important;box-shadow:0 0 0 4px color-mix(in srgb,var(--turq) 18%,transparent)!important;}
+    button,.hamburgerBtn,.mainMenuItem,.closeMenuBtn,.tab,.pill{background:var(--buttonBg)!important;border-color:var(--controlBorder)!important;color:var(--text)!important;}
+    .tab.active,#moreMenuBtn.active,#moreMenuBtn.menuOpen{color:white!important;border-color:rgba(255,255,255,.22)!important;background:var(--accentShine),var(--accentGradient)!important;box-shadow:0 10px 26px var(--primaryShadow)!important;}
+    .btn-main,.btn-turq,.chip.active,.badge.active,.hamburgerBtn.active,.mainMenuItem.active{background:var(--primarySolid)!important;border-color:var(--primarySolid)!important;color:white!important;box-shadow:0 10px 22px var(--primaryShadow)!important;}
+    .goalbar div{background:linear-gradient(90deg,var(--turq),var(--blue),var(--lila),var(--pink))!important;}
+    .turq{background:color-mix(in srgb,var(--turq) 18%,transparent)!important;color:var(--turq2)!important;}
+    html.theme-light .turq{color:var(--primarySolid)!important;}
+    .pink{background:color-mix(in srgb,var(--pink) 18%,transparent)!important;color:#fbcfe8!important;}
+    html.theme-light .pink{color:var(--pink)!important;}
+    .small,.hint,.gray{background:var(--soft)!important;border-color:var(--line)!important;color:var(--muted)!important;}
+    .chip{background:var(--soft)!important;border-color:var(--line)!important;color:var(--text)!important;}
+    .btn-danger{background:rgba(239,68,68,.15)!important;border-color:rgba(239,68,68,.35)!important;color:#fecaca!important;}
+    html.theme-light .btn-danger{color:#b91c1c!important;background:rgba(239,68,68,.09)!important;}
+    html.theme-light .good{color:#166534!important;background:rgba(34,197,94,.14)!important;}
+    html.theme-light .warn{color:#92400e!important;background:rgba(245,158,11,.16)!important;}
+    html.theme-light .bad{color:#b91c1c!important;background:rgba(239,68,68,.12)!important;}
+
   </style>
 </head>
 
@@ -1527,6 +1621,31 @@
     </section>
 
     <section id="ajustes">
+
+      <div class="panel">
+        <h2>Apariencia</h2>
+        <div class="row cols2">
+          <label class="field">Tema de la app
+            <select id="appearanceMode">
+              <option value="system">Según el dispositivo</option>
+              <option value="dark">Oscuro</option>
+              <option value="light">Claro</option>
+            </select>
+          </label>
+          <label class="field">Color de la app
+            <select id="accentColor">
+              <option value="turquesa">Turquesa original</option>
+              <option value="rosa">Rosa / fucsia</option>
+              <option value="lila">Lila</option>
+              <option value="azul">Azul</option>
+              <option value="verde">Verde</option>
+              <option value="naranja">Naranja</option>
+            </select>
+          </label>
+        </div>
+        <div class="hint">Puedes dejarlo automático para que siga el iPhone, o forzarlo en claro/oscuro. El color cambia botones, menú, barras y acentos principales.</div>
+      </div>
+
       <div class="panel">
         <h2>Jornada y canales</h2>
         <div class="row cols2">
@@ -1671,6 +1790,43 @@
     bonoSocialDay:0.006282
   };
 
+  var APPEARANCE_MODES = ["system","dark","light"];
+  var ACCENT_COLORS = ["turquesa","rosa","lila","azul","verde","naranja"];
+
+  function safeAppearance(v){
+    return APPEARANCE_MODES.indexOf(v) >= 0 ? v : "system";
+  }
+
+  function safeAccent(v){
+    return ACCENT_COLORS.indexOf(v) >= 0 ? v : "turquesa";
+  }
+
+  function resolvedAppearance(){
+    var mode = safeAppearance(state && state.settings ? state.settings.appearanceMode : "system");
+    if(mode === "system"){
+      try{
+        return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      }catch(e){
+        return "dark";
+      }
+    }
+    return mode;
+  }
+
+  function applyTheme(){
+    var mode = resolvedAppearance();
+    var accent = safeAccent(state && state.settings ? state.settings.accentColor : "turquesa");
+    var root = document.documentElement;
+    root.classList.toggle("theme-light", mode === "light");
+    root.classList.toggle("theme-dark", mode !== "light");
+    root.setAttribute("data-accent", accent);
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if(meta) meta.setAttribute("content", mode === "light" ? "#f6f8fb" : "#080b10");
+    var apple = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
+    if(apple) apple.setAttribute("content", mode === "light" ? "default" : "black-translucent");
+  }
+
+
   var JOURNEYS = {
     "30":{label:"Parcial 30h", hours:{0:0,1:6,2:6,3:6,4:6,5:6,6:0}},
     "35":{label:"Parcial 35h", hours:{0:0,1:7,2:7,3:7,4:7,5:7,6:0}},
@@ -1689,7 +1845,7 @@
     {id:"tag", name:"TAG", basePrice:9.08, price:9.08, promo:"Para todos"}
   ];
 
-  var TARIFFS = [{"id":"v35-10","name":"V35","group":"Precio fijo","type":"luz","maxPower":10,"p1":0.090137,"p2":0.090137,"energy":0.0999,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 10 kW.","exc":0,"isBvSolar":false,"energyIva":0.120879,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V35"},{"id":"tranquilisima-10","name":"Tranquilísima","group":"Especiales","type":"luz","maxPower":10,"p1":0.081918,"p2":0.081918,"energy":0.1399,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 10 kW.","exc":0,"isBvSolar":false,"energyIva":0.169279,"p1Iva":0.099121,"p2Iva":0.099121,"shortName":"Tranquilísima"},{"id":"v32-gdo-10","name":"V32","group":"Precio fijo","type":"luz","maxPower":10,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":true,"svaLabel":"Sin SVA con permiso","cashbackEligible":true,"notes":"Potencia permitida: hasta 10 kW. GdO.","exc":0,"isBvSolar":false,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V32"},{"id":"tap-v32-10","name":"TAP V32","group":"TAP","type":"luz","maxPower":10,"p1":0.084431,"p2":0.001987,"energy":0.1699,"svaMandatory":false,"permissionSva":true,"svaLabel":"Sin SVA con permiso","cashbackEligible":true,"notes":"Potencia permitida: hasta 10 kW. P1 y P2 distintos.","exc":0,"isBvSolar":false,"energyIva":0.205579,"p1Iva":0.102162,"p2Iva":0.002404,"shortName":"TAP V32"},{"id":"tap-hogar-v34-10","name":"TAP Hogar V34","group":"TAP","type":"luz","maxPower":10,"p1":0.084431,"p2":0.001987,"energy":0.1649,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 10 kW. P1 y P2 distintos.","exc":0,"isBvSolar":false,"energyIva":0.199529,"p1Iva":0.102162,"p2Iva":0.002404,"shortName":"TAP Hogar V34"},{"id":"v30-15","name":"V30","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1599,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.193479,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V30"},{"id":"v31-15","name":"V31","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1499,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.181379,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V31"},{"id":"v32-15","name":"V32","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":true,"svaLabel":"Sin SVA con permiso","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. Puede ir sin SVA con permiso.","exc":0,"isBvSolar":false,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V32"},{"id":"v33-15","name":"V33","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1199,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.145079,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V33"},{"id":"v35-15","name":"V35","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1099,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.132979,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V35"},{"id":"pyme-v30-15","name":"Pyme V30","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1599,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.193479,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Pyme V30"},{"id":"pyme-v31-15","name":"Pyme V31","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1499,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.181379,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Pyme V31"},{"id":"pyme-v32-15","name":"Pyme V32","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":true,"svaLabel":"Sin SVA con permiso","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. Puede ir sin SVA con permiso.","exc":0,"isBvSolar":false,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Pyme V32"},{"id":"solar-v30-15","name":"Solar V30","group":"Solar","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1399,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. Excedente 0,06 €/kWh.","exc":0.06,"isBvSolar":false,"energyIva":0.169279,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Solar V30"},{"id":"bv-v26-15","name":"Batería Virtual V26","group":"Batería Virtual","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. Excedente 0,06 €/kWh.","exc":0.06,"isBvSolar":true,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Batería Virtual V26"},{"id":"dh-v33-15","name":"Discriminación Horaria V33","group":"Discriminación horaria","type":"luz","maxPower":15,"p1":0.120274,"p2":0.06,"energy":0.1659,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW. Consumo punta, llano y valle.","exc":0,"isBvSolar":false,"energyIva":0.200739,"p1Iva":0.145532,"p2Iva":0.0726,"shortName":"Discriminación Horaria V33","isDh":true,"energyPeriods":[0.1659,0.1159,0.0969]},{"id":"smart-v35-15","name":"Tarifa Smart","group":"Smart","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1699,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.205579,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Tarifa Smart"},{"id":"luz-mplus-v31-15","name":"Luz M+ V31","group":"Luz M+","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Luz M+ V31"},{"id":"empresa30-l2","name":"Empresa 3.0 L2","group":"3.0TD","type":"luz30","energy":0.1549,"energyPeriods":[0.1549,0.1549,0.1549,0.1549,0.1549,0.1549],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":false,"notes":"Consumo único.","energyIva":0.187429,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Empresa 3.0 L2"},{"id":"empresa30-l4","name":"Empresa 3.0 L4","group":"3.0TD","type":"luz30","energy":0.1449,"energyPeriods":[0.1449,0.1449,0.1449,0.1449,0.1449,0.1449],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":false,"notes":"Consumo único.","energyIva":0.175329,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Empresa 3.0 L4"},{"id":"empresa30-l8","name":"Empresa 3.0 L8","group":"3.0TD DH","type":"luz30","energy":0.1649,"energyPeriods":[0.1649,0.1609,0.1569,0.1549,0.1259,0.1159],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":false,"notes":"Consumo por periodos P1-P6.","energyIva":0.199529,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Empresa 3.0 L8","isDh30":true},{"id":"dh30-l4","name":"Discriminación Horaria 3.0 L4","group":"3.0TD DH","type":"luz30","energy":0.1699,"energyPeriods":[0.1699,0.1659,0.1619,0.1599,0.1309,0.1209],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":false,"notes":"Consumo por periodos P1-P6.","energyIva":0.205579,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Discriminación Horaria 3.0 L4","isDh30":true},{"id":"comercio30-l4","name":"Comercio 3.0 L4","group":"3.0TD DH","type":"luz30","energy":0.11495,"energyPeriods":[0.11495,0.11495,0.11495,0.11495,0.11495,0.2299],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":false,"notes":"Consumo por periodos P1-P6.","energyIva":0.13909,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Comercio 3.0 L4","isDh30":true},{"id":"gas-rl1-v10","name":"Gas V10 · RL1","group":"Gas","type":"gas","gasFixed":6.9,"energy":0.0899,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL1. Fijo mensual y energía.","energyIva":0.108779,"gasFixedIva":8.349,"shortName":"Gas V10 · RL1"},{"id":"gas-rl1-v11","name":"Gas V11 · RL1","group":"Gas","type":"gas","gasFixed":6.9,"energy":0.0799,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL1. Fijo mensual y energía.","energyIva":0.096679,"gasFixedIva":8.349,"shortName":"Gas V11 · RL1"},{"id":"gas-rl1-v12","name":"Gas V12 · RL1","group":"Gas","type":"gas","gasFixed":6.9,"energy":0.0699,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL1. Fijo mensual y energía.","energyIva":0.084579,"gasFixedIva":8.349,"shortName":"Gas V12 · RL1"},{"id":"gas-rl2-v10","name":"Gas V10 · RL2","group":"Gas","type":"gas","gasFixed":13.9,"energy":0.0899,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL2. Fijo mensual y energía.","energyIva":0.108779,"gasFixedIva":16.819,"shortName":"Gas V10 · RL2"},{"id":"gas-rl2-v11","name":"Gas V11 · RL2","group":"Gas","type":"gas","gasFixed":13.9,"energy":0.0799,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL2. Fijo mensual y energía.","energyIva":0.096679,"gasFixedIva":16.819,"shortName":"Gas V11 · RL2"},{"id":"gas-rl2-v12","name":"Gas V12 · RL2","group":"Gas","type":"gas","gasFixed":13.9,"energy":0.0699,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL2. Fijo mensual y energía.","energyIva":0.084579,"gasFixedIva":16.819,"shortName":"Gas V12 · RL2"},{"id":"gas-rl3-v10","name":"Gas V10 · RL3","group":"Gas","type":"gas","gasFixed":22.9,"energy":0.0899,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL3. Fijo mensual y energía.","energyIva":0.108779,"gasFixedIva":27.709,"shortName":"Gas V10 · RL3"},{"id":"gas-rl3-v11","name":"Gas V11 · RL3","group":"Gas","type":"gas","gasFixed":22.9,"energy":0.0799,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL3. Fijo mensual y energía.","energyIva":0.096679,"gasFixedIva":27.709,"shortName":"Gas V11 · RL3"},{"id":"gas-rl3-v12","name":"Gas V12 · RL3","group":"Gas","type":"gas","gasFixed":22.9,"energy":0.0699,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL3. Fijo mensual y energía.","energyIva":0.084579,"gasFixedIva":27.709,"shortName":"Gas V12 · RL3"}];
+  var TARIFFS = [{"id":"tranquilisima-10","name":"Tranquilísima","group":"Especiales","type":"luz","maxPower":10,"p1":0.081918,"p2":0.081918,"energy":0.1399,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 10 kW.","exc":0,"isBvSolar":false,"energyIva":0.169279,"p1Iva":0.099121,"p2Iva":0.099121,"shortName":"Tranquilísima"},{"id":"v32-gdo-10","name":"V32","group":"Precio fijo","type":"luz","maxPower":10,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":true,"svaLabel":"Sin SVA con permiso","cashbackEligible":true,"notes":"Potencia permitida: hasta 10 kW. GdO.","exc":0,"isBvSolar":false,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V32"},{"id":"tap-v32-10","name":"TAP V32","group":"TAP","type":"luz","maxPower":10,"p1":0.084431,"p2":0.001987,"energy":0.1699,"svaMandatory":false,"permissionSva":true,"svaLabel":"Sin SVA con permiso","cashbackEligible":true,"notes":"Potencia permitida: hasta 10 kW. P1 y P2 distintos.","exc":0,"isBvSolar":false,"energyIva":0.205579,"p1Iva":0.102162,"p2Iva":0.002404,"shortName":"TAP V32"},{"id":"tap-hogar-v34-10","name":"TAP Hogar V34","group":"TAP","type":"luz","maxPower":10,"p1":0.084431,"p2":0.001987,"energy":0.1649,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 10 kW. P1 y P2 distintos.","exc":0,"isBvSolar":false,"energyIva":0.199529,"p1Iva":0.102162,"p2Iva":0.002404,"shortName":"TAP Hogar V34"},{"id":"v30-15","name":"V30","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1599,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.193479,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V30"},{"id":"v31-15","name":"V31","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1499,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.181379,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V31"},{"id":"v32-15","name":"V32","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":true,"svaLabel":"Sin SVA con permiso","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. Puede ir sin SVA con permiso.","exc":0,"isBvSolar":false,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V32"},{"id":"v33-15","name":"V33","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1199,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.145079,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V33"},{"id":"v35-15","name":"V35","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1099,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.132979,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V35"},{"id":"pyme-v30-15","name":"Pyme V30","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1599,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.193479,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Pyme V30"},{"id":"pyme-v31-15","name":"Pyme V31","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1499,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.181379,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Pyme V31"},{"id":"pyme-v32-15","name":"Pyme V32","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":true,"svaLabel":"Sin SVA con permiso","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. Puede ir sin SVA con permiso.","exc":0,"isBvSolar":false,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Pyme V32"},{"id":"solar-v30-15","name":"Solar V30","group":"Solar","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1399,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. Excedente 0,06 €/kWh.","exc":0.06,"isBvSolar":false,"energyIva":0.169279,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Solar V30"},{"id":"bv-v26-15","name":"Batería Virtual V26","group":"Batería Virtual","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. Excedente 0,06 €/kWh.","exc":0.06,"isBvSolar":true,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Batería Virtual V26"},{"id":"dh-v33-15","name":"Discriminación Horaria V33","group":"Discriminación horaria","type":"luz","maxPower":15,"p1":0.120274,"p2":0.06,"energy":0.1659,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW. Consumo punta, llano y valle.","exc":0,"isBvSolar":false,"energyIva":0.200739,"p1Iva":0.145532,"p2Iva":0.0726,"shortName":"Discriminación Horaria V33","isDh":true,"energyPeriods":[0.1659,0.1159,0.0969]},{"id":"smart-v35-15","name":"Tarifa Smart","group":"Smart","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1699,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.205579,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Tarifa Smart"},{"id":"luz-mplus-v31-15","name":"Luz M+ V31","group":"Luz M+","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Luz M+ V31"},{"id":"empresa30-l2","name":"Empresa 3.0 L2","group":"3.0TD","type":"luz30","energy":0.1549,"energyPeriods":[0.1549,0.1549,0.1549,0.1549,0.1549,0.1549],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":false,"notes":"Consumo único.","energyIva":0.187429,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Empresa 3.0 L2"},{"id":"empresa30-l4","name":"Empresa 3.0 L4","group":"3.0TD","type":"luz30","energy":0.1449,"energyPeriods":[0.1449,0.1449,0.1449,0.1449,0.1449,0.1449],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":false,"notes":"Consumo único.","energyIva":0.175329,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Empresa 3.0 L4"},{"id":"empresa30-l8","name":"Empresa 3.0 L8","group":"3.0TD DH","type":"luz30","energy":0.1649,"energyPeriods":[0.1649,0.1609,0.1569,0.1549,0.1259,0.1159],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":false,"notes":"Consumo por periodos P1-P6.","energyIva":0.199529,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Empresa 3.0 L8","isDh30":true},{"id":"dh30-l4","name":"Discriminación Horaria 3.0 L4","group":"3.0TD DH","type":"luz30","energy":0.1699,"energyPeriods":[0.1699,0.1659,0.1619,0.1599,0.1309,0.1209],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":false,"notes":"Consumo por periodos P1-P6.","energyIva":0.205579,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Discriminación Horaria 3.0 L4","isDh30":true},{"id":"comercio30-l4","name":"Comercio 3.0 L4","group":"3.0TD DH","type":"luz30","energy":0.11495,"energyPeriods":[0.11495,0.11495,0.11495,0.11495,0.11495,0.2299],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"Opcional","cashbackEligible":false,"notes":"Consumo por periodos P1-P6.","energyIva":0.13909,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Comercio 3.0 L4","isDh30":true},{"id":"gas-rl1-v10","name":"Gas V10 · RL1","group":"Gas","type":"gas","gasFixed":6.9,"energy":0.0899,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL1. Fijo mensual y energía.","energyIva":0.108779,"gasFixedIva":8.349,"shortName":"Gas V10 · RL1"},{"id":"gas-rl1-v11","name":"Gas V11 · RL1","group":"Gas","type":"gas","gasFixed":6.9,"energy":0.0799,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL1. Fijo mensual y energía.","energyIva":0.096679,"gasFixedIva":8.349,"shortName":"Gas V11 · RL1"},{"id":"gas-rl1-v12","name":"Gas V12 · RL1","group":"Gas","type":"gas","gasFixed":6.9,"energy":0.0699,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL1. Fijo mensual y energía.","energyIva":0.084579,"gasFixedIva":8.349,"shortName":"Gas V12 · RL1"},{"id":"gas-rl2-v10","name":"Gas V10 · RL2","group":"Gas","type":"gas","gasFixed":13.9,"energy":0.0899,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL2. Fijo mensual y energía.","energyIva":0.108779,"gasFixedIva":16.819,"shortName":"Gas V10 · RL2"},{"id":"gas-rl2-v11","name":"Gas V11 · RL2","group":"Gas","type":"gas","gasFixed":13.9,"energy":0.0799,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL2. Fijo mensual y energía.","energyIva":0.096679,"gasFixedIva":16.819,"shortName":"Gas V11 · RL2"},{"id":"gas-rl2-v12","name":"Gas V12 · RL2","group":"Gas","type":"gas","gasFixed":13.9,"energy":0.0699,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL2. Fijo mensual y energía.","energyIva":0.084579,"gasFixedIva":16.819,"shortName":"Gas V12 · RL2"},{"id":"gas-rl3-v10","name":"Gas V10 · RL3","group":"Gas","type":"gas","gasFixed":22.9,"energy":0.0899,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL3. Fijo mensual y energía.","energyIva":0.108779,"gasFixedIva":27.709,"shortName":"Gas V10 · RL3"},{"id":"gas-rl3-v11","name":"Gas V11 · RL3","group":"Gas","type":"gas","gasFixed":22.9,"energy":0.0799,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL3. Fijo mensual y energía.","energyIva":0.096679,"gasFixedIva":27.709,"shortName":"Gas V11 · RL3"},{"id":"gas-rl3-v12","name":"Gas V12 · RL3","group":"Gas","type":"gas","gasFixed":22.9,"energy":0.0699,"maxPower":null,"svaMandatory":true,"permissionSva":true,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL3. Fijo mensual y energía.","energyIva":0.084579,"gasFixedIva":27.709,"shortName":"Gas V12 · RL3"}];
 
   var DOCS_ALTAS = [
     {title:"Alta 1ª ocupación", email:"doc.altas@repsolluzygas.com", when:["Suministro que nunca ha tenido luz/gas.","Suministro con mucha antigüedad que necesita nuevo boletín eléctrico.","Gas con más de 3 años de antigüedad."], docs:["DNI.","Escritura de propiedad hasta apartado exponen o contrato de alquiler.","Boletín eléctrico/gas."], note:"Documentación antes de hacer la venta en portal."},
@@ -1708,6 +1864,7 @@
 
 
   var state = loadState();
+  applyTheme();
   var editingDate = null;
 
   function $(id){ return document.getElementById(id); }
@@ -1767,7 +1924,9 @@
         defaultChannel:"waylet",
         defaultChannelMode:"fixed",
         channelThresholds:{waylet:0.120,digital:0.120,marca_blanca:0.120,nurturing:0.120,foto_factura:0.120,colectivos:0.120,otro:0.120},
-        taxes:Object.assign({}, TAX_DEFAULTS)
+        taxes:Object.assign({}, TAX_DEFAULTS),
+        appearanceMode:"system",
+        accentColor:"turquesa"
       }
     };
   }
@@ -1809,6 +1968,8 @@
     if(!s.settings.defaultChannel) s.settings.defaultChannel = "waylet";
     if(!s.settings.defaultChannelMode) s.settings.defaultChannelMode = "fixed";
     if(!s.settings.journeyType) s.settings.journeyType = "39";
+    s.settings.appearanceMode = safeAppearance(s.settings.appearanceMode);
+    s.settings.accentColor = safeAccent(s.settings.accentColor);
     s.records.forEach(function(r){
       r.sales = Array.isArray(r.sales) ? r.sales : [];
       r.channelMode = r.channelMode || s.settings.defaultChannelMode || "fixed";
@@ -1889,6 +2050,7 @@
 
   function saveState(){
     persist();
+    applyTheme();
     renderAll();
     setTimeout(updateHeaderHeight, 80);
   }
@@ -2980,6 +3142,8 @@ function updateCalcVisibility(){
     if($("defaultChannel")) $("defaultChannel").value = state.settings.defaultChannel || "waylet";
     if($("defaultChannelMode")) $("defaultChannelMode").value = state.settings.defaultChannelMode || "fixed";
     if($("wayletMinSph")) $("wayletMinSph").value = state.settings.channelThresholds.waylet || 0.120;
+    if($("appearanceMode")) $("appearanceMode").value = safeAppearance(state.settings.appearanceMode);
+    if($("accentColor")) $("accentColor").value = safeAccent(state.settings.accentColor);
     [0,1,2,3,4,5,6].forEach(function(d){ if($("h" + d)) $("h" + d).value = state.settings.workHours[d] || 0; });
     if($("customHoursBox")) $("customHoursBox").classList.toggle("hidden", ($("journeyType") && $("journeyType").value !== "custom"));
     var tx = taxSettings();
@@ -3673,6 +3837,16 @@ function updateCalcVisibility(){
     if($("calc30Tariff")) $("calc30Tariff").addEventListener("change", updateCalc30Visibility);
     setCalcMode("normal");
     if($("journeyType")) $("journeyType").onchange = function(){ if($("customHoursBox")) $("customHoursBox").classList.toggle("hidden", $("journeyType").value !== "custom"); };
+    if($("appearanceMode")) $("appearanceMode").onchange = function(){ state.settings.appearanceMode = safeAppearance($("appearanceMode").value); saveState(); };
+    if($("accentColor")) $("accentColor").onchange = function(){ state.settings.accentColor = safeAccent($("accentColor").value); saveState(); };
+    try{
+      var themeMedia = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)");
+      if(themeMedia){
+        var themeListener = function(){ if(safeAppearance(state.settings.appearanceMode) === "system") applyTheme(); };
+        if(themeMedia.addEventListener) themeMedia.addEventListener("change", themeListener);
+        else if(themeMedia.addListener) themeMedia.addListener(themeListener);
+      }
+    }catch(e){}
 
 
     $("saveHoursBtn").onclick = function(){
@@ -3681,6 +3855,8 @@ function updateCalcVisibility(){
       else [0,1,2,3,4,5,6].forEach(function(d){ state.settings.workHours[d] = Number($("h" + d).value || 0); });
       state.settings.defaultChannel = $("defaultChannel") ? $("defaultChannel").value : "waylet";
       state.settings.defaultChannelMode = $("defaultChannelMode") ? $("defaultChannelMode").value : "fixed";
+      state.settings.appearanceMode = safeAppearance($("appearanceMode") ? $("appearanceMode").value : "system");
+      state.settings.accentColor = safeAccent($("accentColor") ? $("accentColor").value : "turquesa");
       state.settings.channelThresholds.waylet = Number($("wayletMinSph") ? $("wayletMinSph").value || 0.120 : 0.120);
       state.settings.taxes = {
         iva:Number($("taxIva") ? $("taxIva").value || TAX_DEFAULTS.iva : TAX_DEFAULTS.iva),
