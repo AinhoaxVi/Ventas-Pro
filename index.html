@@ -1705,7 +1705,7 @@
     </section>
   </main>
 
-  <div class="footer">v9.6 · objetivos Waylet</div>
+  <div class="footer">v9.7.1 · rescate estable</div>
 </div>
 </div>
 
@@ -1810,7 +1810,6 @@
 
 
   var state = loadState();
-  applyAppearance();
   var editingDate = null;
 
   function $(id){ return document.getElementById(id); }
@@ -1844,7 +1843,6 @@
   function fmtNum(n,d){
     return Number(n || 0).toLocaleString("es-ES", {minimumFractionDigits:d, maximumFractionDigits:d});
   }
-
   function fmtSph(n){ return fmtNum(n,3); }
   function fmtEuro(n){ return fmtNum(n,2) + "€"; }
   function fmtHours(n){
@@ -1893,9 +1891,9 @@
     root.style.setProperty("--blue", pal.blue);
     root.style.setProperty("--lila", pal.lila);
     root.style.setProperty("--pink", pal.pink);
-    var meta = document.querySelector('meta[name="theme-color"]');
-    if(meta) meta.setAttribute("content", root.dataset.theme === "light" ? "#f6f8fb" : "#080b10");
   }
+
+  applyAppearance();
 
   function defaultState(){
     return {
@@ -1940,20 +1938,6 @@
     return fresh;
   }
 
-  function remapSaleTariff(v){
-    var aliases = {"tranquilisimo-10":"tranquilisima-10", "v35-15":"v35-10"};
-    function fix(obj){
-      if(!obj) return;
-      if(aliases[obj.tariffId]) obj.tariffId = aliases[obj.tariffId];
-      var t = getTariff(obj.tariffId);
-      if(t){ obj.tariffName = t.name; }
-      if(obj.tariffName === "Tranquilísimo") obj.tariffName = "Tranquilísima";
-    }
-    fix(v);
-    if(v.light) fix(v.light);
-    if(v.gas) fix(v.gas);
-  }
-
   function normalizeState(s){
     var base = defaultState();
     s = s || {};
@@ -1962,21 +1946,26 @@
     s.settings = Object.assign({}, base.settings, s.settings || {});
     s.settings.workHours = Object.assign({}, base.settings.workHours, s.settings.workHours || {});
     s.settings.taxes = Object.assign({}, base.settings.taxes, s.settings.taxes || {});
-    s.settings.appearance = Object.assign({}, base.settings.appearance, s.settings.appearance || {});
     s.settings.channelThresholds = Object.assign({}, base.settings.channelThresholds, s.settings.channelThresholds || {});
+    s.settings.appearance = Object.assign({}, base.settings.appearance, s.settings.appearance || {});
     if(!s.settings.defaultChannel) s.settings.defaultChannel = "waylet";
     if(!s.settings.defaultChannelMode) s.settings.defaultChannelMode = "fixed";
     if(!s.settings.journeyType) s.settings.journeyType = "39";
+    var aliases = {"tranquilisimo-10":"tranquilisima-10", "v35-15":"v35-10"};
     s.records.forEach(function(r){
       r.sales = Array.isArray(r.sales) ? r.sales : [];
       r.channelMode = r.channelMode || s.settings.defaultChannelMode || "fixed";
       r.fixedChannel = r.fixedChannel || s.settings.defaultChannel || "waylet";
       if(!r.channelHours) r.channelHours = null;
       r.sales.forEach(function(v){
-        remapSaleTariff(v);
         if(!v.saleType) v.saleType = v.dual ? "luzgas" : (v.type || "luz");
         if(v.saleType === "luzgas") v.dual = true;
+        if(v.tariffId && aliases[v.tariffId]) v.tariffId = aliases[v.tariffId];
+        if(v.tariffName === "Tranquilísimo") v.tariffName = "Tranquilísima";
+        if(v.tariffId === "v35-10") v.tariffName = "V35";
         if(!v.channel) v.channel = r.fixedChannel || s.settings.defaultChannel || "waylet";
+        if(v.light && v.light.tariffId && aliases[v.light.tariffId]) v.light.tariffId = aliases[v.light.tariffId];
+        if(v.gas && v.gas.tariffId && aliases[v.gas.tariffId]) v.gas.tariffId = aliases[v.gas.tariffId];
       });
     });
     return s;
@@ -2009,14 +1998,20 @@
       if(Array.isArray(r.sales)){
         sales = r.sales.map(function(v){
           return {
-            localId:uid(),
+            localId:v.localId || uid(),
             tariffId:v.tariffId || "",
             tariffName:v.tariffName || v.type || "Venta",
             saleType:v.saleType || (v.type === "Gas" ? "gas" : "luz"),
+            dual:!!v.dual,
+            light:v.light || null,
+            gas:v.gas || null,
+            serviceId:v.serviceId || "none",
             sva:!!v.sva,
+            noSvaReason:v.noSvaReason || "",
             id:v.id || "",
             client:v.client || v.cliente || "",
-            cashback:0
+            cashback:Number(v.cashback || 0),
+            channel:v.channel || "waylet"
           };
         });
       }else{
@@ -2035,7 +2030,10 @@
         hours:Number(r.hours || 0),
         giftHours:Number(r.giftHours || 0),
         specialHours:Object.assign({free:0, vacation:0, medical:0, incident:0, course:0, customNoSph:0, recovery:0}, r.specialHours || {}),
-        sales:sales
+        sales:sales,
+        channelMode:r.channelMode || s.settings.defaultChannelMode || "fixed",
+        fixedChannel:r.fixedChannel || s.settings.defaultChannel || "waylet",
+        channelHours:r.channelHours || null
       };
     });
 
