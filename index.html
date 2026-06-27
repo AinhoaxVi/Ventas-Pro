@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
-  <meta name="theme-color" content="#080b10">
+  <meta name="theme-color" content="#f8fafc">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="Ventas SPH">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <title>Ventas SPH</title>
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="icon-192.png">
@@ -1964,42 +1964,69 @@
     }
 
 
-    /* v10.6 · Header restaurado: glass oscuro también en modo claro */
+
+    /* v10.7 · Header unido al fondo real de la app */
+    :root{
+      --appTopBg:#080b10;
+      --appTopText:#f8fafc;
+      --appTopControlBg:rgba(255,255,255,.085);
+      --appTopControlBorder:rgba(255,255,255,.14);
+      --appTopShadow:0 8px 22px rgba(0,0,0,.18);
+      --appTopFade:linear-gradient(180deg,#080b10,rgba(8,11,16,0));
+    }
+
     html.theme-light{
-      --headerBg:linear-gradient(180deg,rgba(8,11,16,.97),rgba(8,11,16,.86))!important;
-      --headerFade:linear-gradient(180deg,rgba(8,11,16,.24),rgba(8,11,16,0))!important;
+      --appTopBg:#f8fafc!important;
+      --appTopText:#0f172a!important;
+      --appTopControlBg:#ffffff!important;
+      --appTopControlBorder:rgba(15,23,42,.18)!important;
+      --appTopShadow:0 6px 16px rgba(15,23,42,.06)!important;
+      --appTopFade:linear-gradient(180deg,#f8fafc,rgba(248,250,252,0))!important;
+      --headerBg:#f8fafc!important;
+      --headerFade:linear-gradient(180deg,#f8fafc,rgba(248,250,252,0))!important;
     }
 
-    html.theme-light header{
-      background:var(--headerBg)!important;
-      border-bottom:1px solid rgba(255,255,255,.10)!important;
-      box-shadow:0 10px 28px rgba(0,0,0,.16)!important;
-      color:#f8fafc!important;
-      backdrop-filter:blur(18px)!important;
-      -webkit-backdrop-filter:blur(18px)!important;
+    html.theme-dark{
+      --appTopBg:#080b10!important;
+      --appTopText:#f8fafc!important;
+      --appTopControlBg:rgba(255,255,255,.085)!important;
+      --appTopControlBorder:rgba(255,255,255,.14)!important;
+      --appTopShadow:0 8px 22px rgba(0,0,0,.18)!important;
+      --appTopFade:linear-gradient(180deg,#080b10,rgba(8,11,16,0))!important;
+      --headerBg:#080b10!important;
+      --headerFade:linear-gradient(180deg,#080b10,rgba(8,11,16,0))!important;
     }
 
-    html.theme-light header:after{
-      background:var(--headerFade)!important;
+    header{
+      background:var(--appTopBg)!important;
+      color:var(--appTopText)!important;
+      border-bottom:1px solid var(--line)!important;
+      box-shadow:var(--appTopShadow)!important;
+      backdrop-filter:none!important;
+      -webkit-backdrop-filter:none!important;
     }
 
-    html.theme-light #headerTitle,
-    html.theme-light header h1,
-    html.theme-light header .brandLine,
-    html.theme-light header .cleanBrand{
-      color:#f8fafc!important;
+    header:after{
+      background:var(--appTopFade)!important;
     }
 
-    html.theme-light header .pill,
-    html.theme-light header .hamburgerBtn,
-    html.theme-light header .topActions button{
-      color:#f8fafc!important;
-      background:rgba(255,255,255,.10)!important;
-      border-color:rgba(255,255,255,.16)!important;
+    #headerTitle,
+    header h1,
+    header .brandLine,
+    header .cleanBrand{
+      color:var(--appTopText)!important;
+    }
+
+    header .pill,
+    header .hamburgerBtn,
+    header .topActions button{
+      color:var(--appTopText)!important;
+      background:var(--appTopControlBg)!important;
+      border-color:var(--appTopControlBorder)!important;
       box-shadow:none!important;
     }
 
-    html.theme-light header .hamburgerBtn.active{
+    header .hamburgerBtn.active{
       color:#ffffff!important;
       background:var(--primarySolid)!important;
       border-color:var(--primarySolid)!important;
@@ -2007,29 +2034,29 @@
     }
 
     html.theme-light .mainMenuOverlay{
-      background:rgba(0,0,0,.48)!important;
+      background:rgba(15,23,42,.22)!important;
     }
 
     html.theme-light .mainMenuPanel{
-      background:radial-gradient(circle at 10% 0%,color-mix(in srgb,var(--turq) 12%,transparent),transparent 16rem),linear-gradient(180deg,#151b25,#0d121a)!important;
-      border-color:rgba(255,255,255,.13)!important;
-      color:#f8fafc!important;
+      background:var(--sheetBg)!important;
+      border-color:var(--line)!important;
+      color:#0f172a!important;
     }
 
     html.theme-light .mainMenuPanel .menuEyebrow{
-      color:#aeb8ca!important;
+      color:#475569!important;
     }
 
     html.theme-light .mainMenuPanel h2,
     html.theme-light .mainMenuItem,
     html.theme-light .closeMenuBtn{
-      color:#f8fafc!important;
+      color:#0f172a!important;
     }
 
     html.theme-light .mainMenuItem,
     html.theme-light .closeMenuBtn{
-      background:rgba(255,255,255,.075)!important;
-      border-color:rgba(255,255,255,.12)!important;
+      background:#ffffff!important;
+      border-color:rgba(15,23,42,.18)!important;
     }
 
     html.theme-light .mainMenuItem.active{
@@ -2642,9 +2669,9 @@
     root.classList.toggle("theme-dark", mode !== "light");
     root.setAttribute("data-accent", accent);
     var meta = document.querySelector('meta[name="theme-color"]');
-    if(meta) meta.setAttribute("content", "#080b10");
+    if(meta) meta.setAttribute("content", mode === "light" ? "#f8fafc" : "#080b10");
     var apple = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
-    if(apple) apple.setAttribute("content", "black-translucent");
+    if(apple) apple.setAttribute("content", mode === "light" ? "default" : "black-translucent");
   }
 
 
