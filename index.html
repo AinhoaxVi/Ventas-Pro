@@ -1266,6 +1266,113 @@
       transform:scale(.992);
     }
 
+
+    /* Ajuste visual de textos secundarios y recordatorio */
+    .card .small,.day-card .small,.sale-box .small,.rate-card .small,.doc-card .small,
+    .card .day-sub,.day-card .day-sub,.sale-box .day-sub,.rate-card .rate-meta,
+    .mini span,.pendingReason{
+      background:transparent!important;
+      border:0!important;
+      box-shadow:none!important;
+    }
+
+    #ajustes .panel{
+      min-width:0;
+      overflow:hidden;
+    }
+
+    .reminder-actions{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:8px;
+      width:100%;
+      max-width:100%;
+      margin-top:2px;
+    }
+
+    .reminder-actions button{
+      width:100%;
+      max-width:100%;
+      min-width:0;
+      white-space:normal;
+      text-align:center;
+    }
+
+    .reminder-status{
+      display:block;
+      width:100%;
+      max-width:100%;
+      padding:0!important;
+      margin-top:10px;
+      background:transparent!important;
+      border:0!important;
+      box-shadow:none!important;
+      overflow-wrap:anywhere;
+    }
+
+    @media(min-width:560px){
+      .reminder-actions{grid-template-columns:1fr 1fr;}
+    }
+
+
+    /* Recordatorio de cierre: ajustado a la anchura real de la tarjeta */
+    #ajustes .reminder-panel{
+      width:100%;
+      max-width:100%;
+      min-width:0;
+      overflow:hidden;
+    }
+
+    #ajustes .reminder-panel > *,
+    #ajustes .reminder-panel .row,
+    #ajustes .reminder-panel .field,
+    #ajustes .reminder-panel input,
+    #ajustes .reminder-panel select,
+    #ajustes .reminder-panel button,
+    #ajustes .reminder-panel .reminder-actions,
+    #ajustes .reminder-panel .reminder-status{
+      max-width:100%!important;
+      min-width:0!important;
+      box-sizing:border-box!important;
+    }
+
+    #ajustes .reminder-panel .row{
+      width:100%;
+      overflow:hidden;
+    }
+
+    #ajustes .reminder-panel .actions.reminder-actions{
+      display:grid!important;
+      grid-template-columns:minmax(0,1fr)!important;
+      gap:8px!important;
+      width:100%!important;
+      margin:10px 0 0!important;
+      padding:0!important;
+    }
+
+    #ajustes .reminder-panel .reminder-actions button{
+      width:100%!important;
+      max-width:100%!important;
+      white-space:normal!important;
+      overflow-wrap:anywhere!important;
+      text-align:center!important;
+    }
+
+    #ajustes .reminder-panel .reminder-status{
+      display:block!important;
+      width:100%!important;
+      margin-top:10px!important;
+      padding:0!important;
+      background:transparent!important;
+      border:0!important;
+      box-shadow:none!important;
+      overflow-wrap:anywhere!important;
+    }
+
+    @media(min-width:560px){
+      #ajustes .reminder-panel .actions.reminder-actions{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;}
+    }
+
   </style>
 </head>
 
@@ -1695,7 +1802,7 @@
         <div class="hint">Puedes dejarlo automático para que siga el iPhone, o forzarlo en claro/oscuro. El color cambia botones, menú, barras y acentos principales.</div>
       </div>
 
-      <div class="panel">
+      <div class="panel reminder-panel">
         <h2>Recordatorio de cierre</h2>
         <div class="row cols2">
           <label class="field">Recordatorio diario
@@ -1708,10 +1815,11 @@
             <input id="closeReminderTime" type="time" value="20:45">
           </label>
         </div>
-        <div class="actions">
-          <button id="closeReminderPermissionBtn" type="button">Activar permiso de notificaciones</button>
+        <div class="actions reminder-actions">
+          <button id="closeReminderPermissionBtn" type="button">Activar permiso</button>
+          <button id="closeReminderTestBtn" type="button">Probar ahora</button>
         </div>
-        <div id="closeReminderStatus" class="small">El aviso se muestra si el día laborable sigue sin cerrar.</div>
+        <div id="closeReminderStatus" class="small reminder-status">El aviso se muestra si el día laborable sigue sin cerrar.</div>
       </div>
 
       <div class="panel">
@@ -2137,10 +2245,14 @@
   }
 
   function notificationStatusText(){
+    if(!state || !state.settings || !state.settings.closeReminderEnabled) return "Recordatorio desactivado.";
     if(!("Notification" in window)) return "Notificaciones no disponibles en este navegador.";
-    if(Notification.permission === "granted") return "Permiso concedido. El aviso se mostrará si el día laborable sigue sin cerrar.";
-    if(Notification.permission === "denied") return "Permiso bloqueado. Cambia el permiso desde los ajustes del navegador o del iPhone.";
-    return "Pulsa el botón para permitir notificaciones.";
+    if(Notification.permission === "granted"){
+      if("serviceWorker" in navigator) return "Permiso concedido. Usa Probar ahora para comprobarlo. El aviso programado funciona si la app está abierta o al volver a abrirla después de la hora.";
+      return "Permiso concedido, pero este navegador no permite enviar notificaciones fiables desde esta app.";
+    }
+    if(Notification.permission === "denied") return "Permiso bloqueado. Actívalo desde los ajustes del iPhone o del navegador.";
+    return "Pulsa Activar permiso y después Probar ahora.";
   }
 
   function updateReminderStatus(){
@@ -2158,40 +2270,92 @@
     return !todaysRecordClosed();
   }
 
+  function closeReminderKey(date){
+    return STORE_KEY + "_close_reminder_" + date;
+  }
+
+  function reminderTargetForToday(){
+    var parts = String(state.settings.closeReminderTime || "20:45").split(":");
+    var now = new Date();
+    return new Date(now.getFullYear(), now.getMonth(), now.getDate(), Number(parts[0] || 20), Number(parts[1] || 45), 0, 0);
+  }
+
+  function reminderTimeReachedToday(){
+    if(!state || !state.settings || !state.settings.closeReminderEnabled) return false;
+    return new Date().getTime() >= reminderTargetForToday().getTime();
+  }
+
+  function ensureServiceWorkerReady(){
+    if(!("serviceWorker" in navigator)) return Promise.resolve(null);
+    return navigator.serviceWorker.ready.then(function(reg){ return reg; }).catch(function(){
+      if(navigator.serviceWorker.getRegistration){
+        return navigator.serviceWorker.getRegistration().catch(function(){ return null; });
+      }
+      return null;
+    });
+  }
+
+  function fallbackWindowNotification(title, body, tag){
+    try{
+      if(!("Notification" in window) || Notification.permission !== "granted") return false;
+      new Notification(title, {body:body, icon:"./icon-192.png", tag:tag || "ventas-sph"});
+      return true;
+    }catch(e){
+      return false;
+    }
+  }
+
+  function sendDeviceNotification(title, body, tag){
+    if(!("Notification" in window)){
+      toast("Notificaciones no disponibles.");
+      return Promise.resolve(false);
+    }
+    if(Notification.permission !== "granted"){
+      toast("Permiso de notificaciones pendiente.");
+      return Promise.resolve(false);
+    }
+    var options = {body:body, icon:"./icon-192.png", badge:"./icon-192.png", tag:tag || "ventas-sph", renotify:true};
+    return ensureServiceWorkerReady().then(function(reg){
+      if(reg && reg.showNotification){
+        return reg.showNotification(title, options).then(function(){ return true; }).catch(function(){
+          return fallbackWindowNotification(title, body, tag);
+        });
+      }
+      return fallbackWindowNotification(title, body, tag);
+    }).then(function(ok){
+      if(!ok) toast("No se pudo lanzar la notificación.");
+      return ok;
+    }).catch(function(){
+      var ok = fallbackWindowNotification(title, body, tag);
+      if(!ok) toast("No se pudo lanzar la notificación.");
+      return ok;
+    });
+  }
+
   function showCloseReminder(){
     if(!state.settings.closeReminderEnabled) return;
     if(!shouldSendCloseReminder()) return;
     var today = todayISO();
-    var key = STORE_KEY + "_close_reminder_" + today;
+    var key = closeReminderKey(today);
     try{
       if(localStorage.getItem(key) === "1") return;
       localStorage.setItem(key, "1");
     }catch(e){}
-    var title = "Cerrar el día";
-    var body = "Registra las horas y ventas de hoy.";
-    if(("Notification" in window) && Notification.permission === "granted"){
-      try{
-        if(navigator.serviceWorker && navigator.serviceWorker.getRegistration){
-          navigator.serviceWorker.getRegistration().then(function(reg){
-            if(reg && reg.showNotification) reg.showNotification(title, {body:body, icon:"./icon-192.png", badge:"./icon-192.png", tag:"cerrar-dia", renotify:true});
-            else new Notification(title, {body:body, icon:"./icon-192.png", tag:"cerrar-dia"});
-          }).catch(function(){ new Notification(title, {body:body, icon:"./icon-192.png", tag:"cerrar-dia"}); });
-        }else{
-          new Notification(title, {body:body, icon:"./icon-192.png", tag:"cerrar-dia"});
-        }
-      }catch(e2){ toast(title); }
-    }else{
-      toast(title);
-    }
+    sendDeviceNotification("Cerrar el día", "Registra las horas y ventas de hoy.", "cerrar-dia");
+  }
+
+  function checkCloseReminderDue(){
+    updateReminderStatus();
+    if(!state || !state.settings || !state.settings.closeReminderEnabled) return;
+    if(reminderTimeReachedToday()) showCloseReminder();
   }
 
   function scheduleCloseReminder(){
     clearTimeout(window.__closeReminderTimer);
     updateReminderStatus();
     if(!state || !state.settings || !state.settings.closeReminderEnabled) return;
-    var parts = String(state.settings.closeReminderTime || "20:45").split(":");
     var now = new Date();
-    var target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), Number(parts[0] || 20), Number(parts[1] || 45), 0, 0);
+    var target = reminderTargetForToday();
     if(target.getTime() <= now.getTime()) target.setDate(target.getDate() + 1);
     var delay = Math.min(target.getTime() - now.getTime(), 2147483647);
     window.__closeReminderTimer = setTimeout(function(){ showCloseReminder(); scheduleCloseReminder(); }, delay);
@@ -2210,11 +2374,39 @@
         if($("closeReminderEnabled")) $("closeReminderEnabled").value = "1";
         persist();
         scheduleCloseReminder();
+        checkCloseReminderDue();
         toast("Notificaciones activadas.");
       }else{
         toast("Permiso no concedido.");
       }
     }).catch(function(){ toast("No se pudo pedir permiso."); updateReminderStatus(); });
+  }
+
+  function testCloseReminderNotification(){
+    if(!("Notification" in window)){
+      toast("Notificaciones no disponibles.");
+      updateReminderStatus();
+      return;
+    }
+    function runTest(){
+      updateReminderStatus();
+      sendDeviceNotification("Cerrar el día", "Prueba de recordatorio activa.", "cerrar-dia-test").then(function(ok){
+        toast(ok ? "Prueba enviada." : "No se pudo enviar la prueba.");
+      });
+    }
+    if(Notification.permission === "default"){
+      Notification.requestPermission().then(function(permission){
+        if(permission === "granted") runTest();
+        else{ updateReminderStatus(); toast("Permiso no concedido."); }
+      }).catch(function(){ toast("No se pudo pedir permiso."); updateReminderStatus(); });
+      return;
+    }
+    if(Notification.permission === "denied"){
+      toast("Permiso bloqueado.");
+      updateReminderStatus();
+      return;
+    }
+    runTest();
   }
 
   function getTariff(id){
@@ -2532,7 +2724,7 @@
     var warnings = pendingWarningsForMonth();
     var html = "";
     if(!warnings.length){
-      html = '<div class="empty">No hay pendientes. Todo cerrado, con ID y con nombre. Rarísimo, pero precioso.</div>';
+      html = '<div class="empty">No hay pendientes. Todo cerrado, con ID y con nombre.</div>';
     }else{
       html = warnings.map(function(w){
         var badgeClass = w.type === "day-open" ? "warn" : "pink";
@@ -4055,7 +4247,9 @@ function updateCalcVisibility(){
     updateSpecialHoursVisibility();
     renderChannelControls();
     scheduleCloseReminder();
-    document.addEventListener("visibilitychange", function(){ if(!document.hidden) scheduleCloseReminder(); });
+    setTimeout(checkCloseReminderDue, 800);
+    document.addEventListener("visibilitychange", function(){ if(!document.hidden){ checkCloseReminderDue(); scheduleCloseReminder(); } });
+    window.addEventListener("focus", function(){ checkCloseReminderDue(); scheduleCloseReminder(); });
 
     updateHeaderHeight();
     window.addEventListener("resize", updateHeaderHeight);
@@ -4126,6 +4320,7 @@ function updateCalcVisibility(){
     if($("closeReminderEnabled")) $("closeReminderEnabled").onchange = function(){ state.settings.closeReminderEnabled = $("closeReminderEnabled").value === "1"; saveState(); };
     if($("closeReminderTime")) $("closeReminderTime").onchange = function(){ state.settings.closeReminderTime = $("closeReminderTime").value || "20:45"; saveState(); };
     if($("closeReminderPermissionBtn")) $("closeReminderPermissionBtn").onclick = requestCloseReminderPermission;
+    if($("closeReminderTestBtn")) $("closeReminderTestBtn").onclick = testCloseReminderNotification;
     try{
       var themeMedia = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)");
       if(themeMedia){
