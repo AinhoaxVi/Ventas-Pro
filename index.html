@@ -1963,6 +1963,81 @@
       border-color:#db2777!important;
     }
 
+
+    /* v10.6 · Header restaurado: glass oscuro también en modo claro */
+    html.theme-light{
+      --headerBg:linear-gradient(180deg,rgba(8,11,16,.97),rgba(8,11,16,.86))!important;
+      --headerFade:linear-gradient(180deg,rgba(8,11,16,.24),rgba(8,11,16,0))!important;
+    }
+
+    html.theme-light header{
+      background:var(--headerBg)!important;
+      border-bottom:1px solid rgba(255,255,255,.10)!important;
+      box-shadow:0 10px 28px rgba(0,0,0,.16)!important;
+      color:#f8fafc!important;
+      backdrop-filter:blur(18px)!important;
+      -webkit-backdrop-filter:blur(18px)!important;
+    }
+
+    html.theme-light header:after{
+      background:var(--headerFade)!important;
+    }
+
+    html.theme-light #headerTitle,
+    html.theme-light header h1,
+    html.theme-light header .brandLine,
+    html.theme-light header .cleanBrand{
+      color:#f8fafc!important;
+    }
+
+    html.theme-light header .pill,
+    html.theme-light header .hamburgerBtn,
+    html.theme-light header .topActions button{
+      color:#f8fafc!important;
+      background:rgba(255,255,255,.10)!important;
+      border-color:rgba(255,255,255,.16)!important;
+      box-shadow:none!important;
+    }
+
+    html.theme-light header .hamburgerBtn.active{
+      color:#ffffff!important;
+      background:var(--primarySolid)!important;
+      border-color:var(--primarySolid)!important;
+      box-shadow:0 10px 22px var(--primaryShadow)!important;
+    }
+
+    html.theme-light .mainMenuOverlay{
+      background:rgba(0,0,0,.48)!important;
+    }
+
+    html.theme-light .mainMenuPanel{
+      background:radial-gradient(circle at 10% 0%,color-mix(in srgb,var(--turq) 12%,transparent),transparent 16rem),linear-gradient(180deg,#151b25,#0d121a)!important;
+      border-color:rgba(255,255,255,.13)!important;
+      color:#f8fafc!important;
+    }
+
+    html.theme-light .mainMenuPanel .menuEyebrow{
+      color:#aeb8ca!important;
+    }
+
+    html.theme-light .mainMenuPanel h2,
+    html.theme-light .mainMenuItem,
+    html.theme-light .closeMenuBtn{
+      color:#f8fafc!important;
+    }
+
+    html.theme-light .mainMenuItem,
+    html.theme-light .closeMenuBtn{
+      background:rgba(255,255,255,.075)!important;
+      border-color:rgba(255,255,255,.12)!important;
+    }
+
+    html.theme-light .mainMenuItem.active{
+      background:var(--primarySolid)!important;
+      border-color:var(--primarySolid)!important;
+      color:#fff!important;
+    }
+
   </style>
 </head>
 
@@ -2567,9 +2642,9 @@
     root.classList.toggle("theme-dark", mode !== "light");
     root.setAttribute("data-accent", accent);
     var meta = document.querySelector('meta[name="theme-color"]');
-    if(meta) meta.setAttribute("content", mode === "light" ? "#f6f8fb" : "#080b10");
+    if(meta) meta.setAttribute("content", "#080b10");
     var apple = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
-    if(apple) apple.setAttribute("content", mode === "light" ? "default" : "black-translucent");
+    if(apple) apple.setAttribute("content", "black-translucent");
   }
 
 
