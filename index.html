@@ -1137,7 +1137,7 @@
     .fileInput{display:none}
 
 
-    /* v9.7 · Tema claro/oscuro + colores personalizables */
+    /* Tema claro/oscuro + colores personalizables */
     :root,
     html.theme-dark{
       color-scheme:dark;
@@ -1221,13 +1221,16 @@
     html.theme-light .turq{color:var(--primarySolid)!important;}
     .pink{background:color-mix(in srgb,var(--pink) 18%,transparent)!important;color:#fbcfe8!important;}
     html.theme-light .pink{color:var(--pink)!important;}
-    .small,.hint,.gray{background:var(--soft)!important;border-color:var(--line)!important;color:var(--muted)!important;}
+    .small{background:transparent!important;border-color:transparent!important;color:var(--muted)!important;}
+    .hint,.gray{background:var(--soft)!important;border-color:var(--line)!important;color:var(--muted)!important;}
     .chip{background:var(--soft)!important;border-color:var(--line)!important;color:var(--text)!important;}
     .btn-danger{background:rgba(239,68,68,.15)!important;border-color:rgba(239,68,68,.35)!important;color:#fecaca!important;}
     html.theme-light .btn-danger{color:#b91c1c!important;background:rgba(239,68,68,.09)!important;}
     html.theme-light .good{color:#166534!important;background:rgba(34,197,94,.14)!important;}
     html.theme-light .warn{color:#92400e!important;background:rgba(245,158,11,.16)!important;}
     html.theme-light .bad{color:#b91c1c!important;background:rgba(239,68,68,.12)!important;}
+
+    .card .small,.day-card .small,.sale-box .small,.rate-card .small,.doc-card .small{background:transparent!important;border:0!important;padding:0!important;}
 
 
     .pendingWarningCard{
@@ -1693,6 +1696,25 @@
       </div>
 
       <div class="panel">
+        <h2>Recordatorio de cierre</h2>
+        <div class="row cols2">
+          <label class="field">Recordatorio diario
+            <select id="closeReminderEnabled">
+              <option value="0">Desactivado</option>
+              <option value="1">Activado</option>
+            </select>
+          </label>
+          <label class="field">Hora del aviso
+            <input id="closeReminderTime" type="time" value="20:45">
+          </label>
+        </div>
+        <div class="actions">
+          <button id="closeReminderPermissionBtn" type="button">Activar permiso de notificaciones</button>
+        </div>
+        <div id="closeReminderStatus" class="small">El aviso se muestra si el día laborable sigue sin cerrar.</div>
+      </div>
+
+      <div class="panel">
         <h2>Jornada y canales</h2>
         <div class="row cols2">
           <label class="field">Tipo de jornada
@@ -1768,7 +1790,7 @@
     </section>
   </main>
 
-  <div class="footer">v9.6 · objetivos Waylet</div>
+  <div class="footer">CUPS · control de ventas</div>
 </div>
 </div>
 
@@ -1972,7 +1994,9 @@
         channelThresholds:{waylet:0.120,digital:0.120,marca_blanca:0.120,nurturing:0.120,foto_factura:0.120,colectivos:0.120,otro:0.120},
         taxes:Object.assign({}, TAX_DEFAULTS),
         appearanceMode:"system",
-        accentColor:"turquesa"
+        accentColor:"turquesa",
+        closeReminderEnabled:false,
+        closeReminderTime:"20:45"
       }
     };
   }
@@ -2016,6 +2040,8 @@
     if(!s.settings.journeyType) s.settings.journeyType = "39";
     s.settings.appearanceMode = safeAppearance(s.settings.appearanceMode);
     s.settings.accentColor = safeAccent(s.settings.accentColor);
+    s.settings.closeReminderEnabled = !!s.settings.closeReminderEnabled;
+    s.settings.closeReminderTime = /^([01]\d|2[0-3]):[0-5]\d$/.test(String(s.settings.closeReminderTime || "")) ? String(s.settings.closeReminderTime) : "20:45";
     s.records.forEach(function(r){
       r.sales = Array.isArray(r.sales) ? r.sales : [];
       r.channelMode = r.channelMode || s.settings.defaultChannelMode || "fixed";
@@ -2098,6 +2124,7 @@
     persist();
     applyTheme();
     renderAll();
+    scheduleCloseReminder();
     setTimeout(updateHeaderHeight, 80);
   }
 
@@ -2107,6 +2134,87 @@
     t.style.display = "block";
     clearTimeout(window.__toastTimer);
     window.__toastTimer = setTimeout(function(){ t.style.display = "none"; }, 2300);
+  }
+
+  function notificationStatusText(){
+    if(!("Notification" in window)) return "Notificaciones no disponibles en este navegador.";
+    if(Notification.permission === "granted") return "Permiso concedido. El aviso se mostrará si el día laborable sigue sin cerrar.";
+    if(Notification.permission === "denied") return "Permiso bloqueado. Cambia el permiso desde los ajustes del navegador o del iPhone.";
+    return "Pulsa el botón para permitir notificaciones.";
+  }
+
+  function updateReminderStatus(){
+    if($("closeReminderStatus")) $("closeReminderStatus").textContent = notificationStatusText();
+  }
+
+  function todaysRecordClosed(){
+    var t = todayISO();
+    return state.records.some(function(r){ return r.date === t; });
+  }
+
+  function shouldSendCloseReminder(){
+    var t = todayISO();
+    if(baseHoursForDate(t) <= 0) return false;
+    return !todaysRecordClosed();
+  }
+
+  function showCloseReminder(){
+    if(!state.settings.closeReminderEnabled) return;
+    if(!shouldSendCloseReminder()) return;
+    var today = todayISO();
+    var key = STORE_KEY + "_close_reminder_" + today;
+    try{
+      if(localStorage.getItem(key) === "1") return;
+      localStorage.setItem(key, "1");
+    }catch(e){}
+    var title = "Cerrar el día";
+    var body = "Registra las horas y ventas de hoy.";
+    if(("Notification" in window) && Notification.permission === "granted"){
+      try{
+        if(navigator.serviceWorker && navigator.serviceWorker.getRegistration){
+          navigator.serviceWorker.getRegistration().then(function(reg){
+            if(reg && reg.showNotification) reg.showNotification(title, {body:body, icon:"./icon-192.png", badge:"./icon-192.png", tag:"cerrar-dia", renotify:true});
+            else new Notification(title, {body:body, icon:"./icon-192.png", tag:"cerrar-dia"});
+          }).catch(function(){ new Notification(title, {body:body, icon:"./icon-192.png", tag:"cerrar-dia"}); });
+        }else{
+          new Notification(title, {body:body, icon:"./icon-192.png", tag:"cerrar-dia"});
+        }
+      }catch(e2){ toast(title); }
+    }else{
+      toast(title);
+    }
+  }
+
+  function scheduleCloseReminder(){
+    clearTimeout(window.__closeReminderTimer);
+    updateReminderStatus();
+    if(!state || !state.settings || !state.settings.closeReminderEnabled) return;
+    var parts = String(state.settings.closeReminderTime || "20:45").split(":");
+    var now = new Date();
+    var target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), Number(parts[0] || 20), Number(parts[1] || 45), 0, 0);
+    if(target.getTime() <= now.getTime()) target.setDate(target.getDate() + 1);
+    var delay = Math.min(target.getTime() - now.getTime(), 2147483647);
+    window.__closeReminderTimer = setTimeout(function(){ showCloseReminder(); scheduleCloseReminder(); }, delay);
+  }
+
+  function requestCloseReminderPermission(){
+    if(!("Notification" in window)){
+      toast("Notificaciones no disponibles.");
+      updateReminderStatus();
+      return;
+    }
+    Notification.requestPermission().then(function(permission){
+      updateReminderStatus();
+      if(permission === "granted"){
+        state.settings.closeReminderEnabled = true;
+        if($("closeReminderEnabled")) $("closeReminderEnabled").value = "1";
+        persist();
+        scheduleCloseReminder();
+        toast("Notificaciones activadas.");
+      }else{
+        toast("Permiso no concedido.");
+      }
+    }).catch(function(){ toast("No se pudo pedir permiso."); updateReminderStatus(); });
   }
 
   function getTariff(id){
@@ -2959,7 +3067,7 @@
     clearForm();
     renderAll();
     if(goHome !== false) switchTab("inicio");
-    toast("Día guardado. V9.8 bajo control.");
+    toast("CUPS bajo control.");
     return true;
   }
 
@@ -3314,6 +3422,9 @@ function updateCalcVisibility(){
     if($("wayletMinSph")) $("wayletMinSph").value = state.settings.channelThresholds.waylet || 0.120;
     if($("appearanceMode")) $("appearanceMode").value = safeAppearance(state.settings.appearanceMode);
     if($("accentColor")) $("accentColor").value = safeAccent(state.settings.accentColor);
+    if($("closeReminderEnabled")) $("closeReminderEnabled").value = state.settings.closeReminderEnabled ? "1" : "0";
+    if($("closeReminderTime")) $("closeReminderTime").value = state.settings.closeReminderTime || "20:45";
+    updateReminderStatus();
     [0,1,2,3,4,5,6].forEach(function(d){ if($("h" + d)) $("h" + d).value = state.settings.workHours[d] || 0; });
     if($("customHoursBox")) $("customHoursBox").classList.toggle("hidden", ($("journeyType") && $("journeyType").value !== "custom"));
     var tx = taxSettings();
@@ -3476,7 +3587,7 @@ function updateCalcVisibility(){
     if(!isSpecial){
       resetSpecialSelects();
       visibleSpecialFields([]);
-      setDefaultHoursForDate();
+      if(resetValues !== false) setDefaultHoursForDate();
       return;
     }
 
@@ -3943,6 +4054,8 @@ function updateCalcVisibility(){
     renderChannelSelects();
     updateSpecialHoursVisibility();
     renderChannelControls();
+    scheduleCloseReminder();
+    document.addEventListener("visibilitychange", function(){ if(!document.hidden) scheduleCloseReminder(); });
 
     updateHeaderHeight();
     window.addEventListener("resize", updateHeaderHeight);
@@ -4010,6 +4123,9 @@ function updateCalcVisibility(){
     if($("journeyType")) $("journeyType").onchange = function(){ if($("customHoursBox")) $("customHoursBox").classList.toggle("hidden", $("journeyType").value !== "custom"); };
     if($("appearanceMode")) $("appearanceMode").onchange = function(){ state.settings.appearanceMode = safeAppearance($("appearanceMode").value); saveState(); };
     if($("accentColor")) $("accentColor").onchange = function(){ state.settings.accentColor = safeAccent($("accentColor").value); saveState(); };
+    if($("closeReminderEnabled")) $("closeReminderEnabled").onchange = function(){ state.settings.closeReminderEnabled = $("closeReminderEnabled").value === "1"; saveState(); };
+    if($("closeReminderTime")) $("closeReminderTime").onchange = function(){ state.settings.closeReminderTime = $("closeReminderTime").value || "20:45"; saveState(); };
+    if($("closeReminderPermissionBtn")) $("closeReminderPermissionBtn").onclick = requestCloseReminderPermission;
     try{
       var themeMedia = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)");
       if(themeMedia){
@@ -4028,6 +4144,8 @@ function updateCalcVisibility(){
       state.settings.defaultChannelMode = $("defaultChannelMode") ? $("defaultChannelMode").value : "fixed";
       state.settings.appearanceMode = safeAppearance($("appearanceMode") ? $("appearanceMode").value : "system");
       state.settings.accentColor = safeAccent($("accentColor") ? $("accentColor").value : "turquesa");
+      state.settings.closeReminderEnabled = $("closeReminderEnabled") ? $("closeReminderEnabled").value === "1" : false;
+      state.settings.closeReminderTime = $("closeReminderTime") ? $("closeReminderTime").value || "20:45" : "20:45";
       state.settings.channelThresholds.waylet = Number($("wayletMinSph") ? $("wayletMinSph").value || 0.120 : 0.120);
       state.settings.taxes = {
         iva:Number($("taxIva") ? $("taxIva").value || TAX_DEFAULTS.iva : TAX_DEFAULTS.iva),
