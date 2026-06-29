@@ -2065,6 +2065,81 @@
       color:#fff!important;
     }
 
+    /* Ajuste final de espaciado: evita botones y tarjetas apelotonadas en móvil y portátil. */
+    .panel,
+    .card,
+    .day-card,
+    .sale-box,
+    .rate-card,
+    .doc-card,
+    .salesDayCard,
+    .weekBlock{
+      border-radius:16px!important;
+    }
+
+    main section.active,
+    .grid,
+    .cards,
+    .row,
+    .two,
+    .sale-box,
+    .day-card,
+    .rate-card,
+    .doc-card,
+    .weekList,
+    .mainMenuGrid{
+      gap:16px!important;
+    }
+
+    .actions{
+      display:flex!important;
+      flex-wrap:wrap!important;
+      align-items:stretch!important;
+      gap:12px!important;
+      margin-top:2px!important;
+    }
+
+    .actions > button{
+      min-height:46px!important;
+      margin:0!important;
+    }
+
+    .hint,
+    .small,
+    .pendingReason{
+      margin-top:2px;
+      line-height:1.42!important;
+    }
+
+    .day-head,
+    .sale-head,
+    .rate-top,
+    .menuPanelTop{
+      gap:14px!important;
+    }
+
+    .chips{
+      gap:8px!important;
+    }
+
+    @media(max-width:560px){
+      .actions > button{
+        flex:1 1 100%!important;
+      }
+
+      .day-head,
+      .sale-head,
+      .rate-top{
+        flex-wrap:wrap!important;
+      }
+
+      .badge,
+      .sphStatus{
+        max-width:100%!important;
+        white-space:normal!important;
+      }
+    }
+
   </style>
 </head>
 
@@ -2682,9 +2757,9 @@
     "40":{label:"Completa 40h", hours:{0:0,1:8,2:8,3:8,4:8,5:8,6:0}}
   };
 
-  var SERVICES = [{"id":"none","name":"Sin SVA","basePrice":0,"price":0,"promo":""},{"id":"ta24","name":"TA24H","basePrice":4.12,"price":4.12,"promo":"Para todos"},{"id":"ta24plus","name":"TA24H Plus","basePrice":5.78,"price":5.78,"promo":"Para todos"},{"id":"ta24pyme20","name":"TA24H Pyme 2.0","basePrice":8.26,"price":8.26,"promo":"Para todos"},{"id":"ta24pyme30","name":"TA24H Pyme 3.0","basePrice":10.73,"price":10.73,"promo":"Para todos"},{"id":"sihconfort","name":"SIHConfort","basePrice":8.26,"price":8.26,"promo":"Para todos"},{"id":"sig","name":"SIG","basePrice":11.15,"price":11.15,"promo":"Para todos"},{"id":"tag","name":"TAG","basePrice":9.08,"price":9.08,"promo":"Para todos"},{"id":"ta24gas","name":"TA24HGas","basePrice":4.12,"price":4.12,"promo":"Para todos"},{"id":"ta24plusgas","name":"TA24H Plus Gas","basePrice":5.78,"price":5.78,"promo":"Para todos"},{"id":"tvmovistarplus","name":"TVMovistarPlus+","basePrice":8.26,"price":8.26,"promo":"Para todos"}];
+  var SERVICES = [{"id":"none","name":"Sin SVA","basePrice":0,"price":0,"promo":""},{"id":"ta24","name":"TA24H","basePrice":4.12,"price":4.12,"promo":"Para todos"},{"id":"ta24plus","name":"TA24H Plus","basePrice":5.78,"price":5.78,"promo":"Para todos"},{"id":"ta24pyme20","name":"TA24H Pyme 2.0","basePrice":8.26,"price":8.26,"promo":"Para todos"},{"id":"ta24pyme30","name":"TA24H Pyme 3.0","basePrice":10.73,"price":10.73,"promo":"Para todos"},{"id":"sihconfort","name":"SIHConfort","basePrice":8.26,"price":8.26,"promo":"Para todos"},{"id":"sig","name":"SIG","basePrice":11.15,"price":11.15,"promo":"Para todos"},{"id":"tag","name":"TAG","basePrice":9.08,"price":9.08,"promo":"Para todos"}];
 
-  var TARIFFS = [{"id":"v35-10","name":"V35","group":"Precio fijo","type":"luz","maxPower":10,"p1":0.090137,"p2":0.090137,"energy":0.0999,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 10 kW. TA24H Plus obligatorio.","exc":0,"isBvSolar":false,"energyIva":0.120879,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V35"},{"id":"v34-15","name":"V34","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1099,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW. TA24H Plus obligatorio.","exc":0,"isBvSolar":false,"energyIva":0.132979,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V34"},{"id":"v33-15","name":"V33","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1199,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW. SVA obligatorio.","exc":0,"isBvSolar":false,"energyIva":0.145079,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V33"},{"id":"v32-10","name":"V32","group":"Precio fijo","type":"luz","maxPower":10,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":true,"svaLabel":"Sin SVA con permiso","cashbackEligible":true,"notes":"Potencia permitida: hasta 10 kW. Puede ir sin SVA con permiso.","exc":0,"isBvSolar":false,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V32"},{"id":"v31-15","name":"V31","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1499,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.181379,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V31"},{"id":"v30-15","name":"V30","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1599,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.193479,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V30"},{"id":"pyme-v34-15","name":"Pyme V34","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1099,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW. Ahorro pyme.","exc":0,"isBvSolar":false,"energyIva":0.132979,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Pyme V34"},{"id":"pyme-v33-15","name":"Pyme V33","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1199,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW. Ahorro pyme.","exc":0,"isBvSolar":false,"energyIva":0.145079,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Pyme V33"},{"id":"pyme-v32-15","name":"Pyme V32","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":true,"svaLabel":"Sin SVA con permiso","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. Puede ir sin SVA con permiso.","exc":0,"isBvSolar":false,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Pyme V32"},{"id":"pyme-v31-15","name":"Pyme V31","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1499,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.181379,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Pyme V31"},{"id":"pyme-v30-15","name":"Pyme V30","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1599,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.193479,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Pyme V30"},{"id":"tap-v32-10","name":"TAP V32","group":"TAP","type":"luz","maxPower":10,"p1":0.084431,"p2":0.001987,"energy":0.1699,"svaMandatory":false,"permissionSva":true,"svaLabel":"Sin SVA con permiso","cashbackEligible":true,"notes":"Potencia permitida: hasta 10 kW. Ahorro potencia. Sin SVA con permiso.","exc":0,"isBvSolar":false,"energyIva":0.205579,"p1Iva":0.102162,"p2Iva":0.002404,"shortName":"TAP V32"},{"id":"tap-hogar-v34-10","name":"TAP V34 Hogar","group":"TAP","type":"luz","maxPower":10,"p1":0.084431,"p2":0.001987,"energy":0.1649,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 10 kW. Ahorro potencia hogar.","exc":0,"isBvSolar":false,"energyIva":0.199529,"p1Iva":0.102162,"p2Iva":0.002404,"shortName":"TAP V34 Hogar"},{"id":"solar-v30-15","name":"Solar V30","group":"Solar","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1399,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. Excedente 0,06 €/kWh.","exc":0.06,"isBvSolar":false,"energyIva":0.169279,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Solar V30"},{"id":"bv-v26-15","name":"Batería Virtual V26","group":"Batería Virtual","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. Excedente 0,06 €/kWh.","exc":0.06,"isBvSolar":true,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Batería Virtual V26"},{"id":"dh-v33-15","name":"Discriminación Horaria V33","group":"Discriminación horaria","type":"luz","maxPower":15,"p1":0.120274,"p2":0.06,"energy":0.1659,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW. Consumo punta, llano y valle.","exc":0,"isBvSolar":false,"energyIva":0.200739,"p1Iva":0.145532,"p2Iva":0.0726,"shortName":"Discriminación Horaria V33","isDh":true,"energyPeriods":[0.1659,0.1159,0.0969]},{"id":"luz-mplus-v31-15","name":"Movistar+ V31","group":"Movistar+","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW. Precio energía V32. TVMovistarPlus+ obligatorio.","exc":0,"isBvSolar":false,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Movistar+ V31"},{"id":"tranquilisima-10","name":"Tranquilísima","group":"Tranquilísima","type":"luz","maxPower":10,"p1":0.081918,"p2":0.081918,"energy":0.1399,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 10 kW. SVA obligatorio.","exc":0,"isBvSolar":false,"energyIva":0.169279,"p1Iva":0.099121,"p2Iva":0.099121,"shortName":"Tranquilísima"},{"id":"smart-10h-v33-15","name":"Tarifa Smart 10h V33","group":"Smart","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1699,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. 50% durante 10h. No aparece en calculadora porque no se puede calcular.","exc":0,"isBvSolar":false,"energyIva":0.205579,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Tarifa Smart 10h V33","excludeFromCalculator":true},{"id":"empresa30-l2","name":"Empresa 3.0 L2","group":"3.0TD","type":"luz30","energy":0.1549,"energyPeriods":[0.1549,0.1549,0.1549,0.1549,0.1549,0.1549],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":false,"notes":"Consumo único.","energyIva":0.187429,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Empresa 3.0 L2"},{"id":"empresa30-l4","name":"Empresa 3.0 L4","group":"3.0TD","type":"luz30","energy":0.1449,"energyPeriods":[0.1449,0.1449,0.1449,0.1449,0.1449,0.1449],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":false,"notes":"Consumo único.","energyIva":0.175329,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Empresa 3.0 L4"},{"id":"empresa30-l8","name":"Empresa 3.0 L8","group":"3.0TD DH","type":"luz30","energy":0.1649,"energyPeriods":[0.1649,0.1609,0.1569,0.1549,0.1259,0.1159],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":false,"notes":"Consumo por periodos P1-P6.","energyIva":0.199529,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Empresa 3.0 L8","isDh30":true},{"id":"dh30-l4","name":"Discriminación Horaria 3.0 L4","group":"3.0TD DH","type":"luz30","energy":0.1699,"energyPeriods":[0.1699,0.1659,0.1619,0.1599,0.1309,0.1209],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":false,"notes":"Consumo por periodos P1-P6.","energyIva":0.205579,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Discriminación Horaria 3.0 L4","isDh30":true},{"id":"comercio30-l4","name":"Comercio 3.0 L4","group":"3.0TD DH","type":"luz30","energy":0.11495,"energyPeriods":[0.11495,0.11495,0.11495,0.11495,0.11495,0.2299],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":false,"notes":"Consumo por periodos P1-P6.","energyIva":0.13909,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Comercio 3.0 L4","isDh30":true},{"id":"gas-rl1-v10","name":"Gas RL.1 V10","group":"Gas","type":"gas","gasFixed":6.9,"energy":0.0899,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL1. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.108779,"gasFixedIva":8.349,"shortName":"Gas RL.1 V10"},{"id":"gas-rl1-v11","name":"Gas RL.1 V11","group":"Gas","type":"gas","gasFixed":6.9,"energy":0.0799,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL1. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.096679,"gasFixedIva":8.349,"shortName":"Gas RL.1 V11"},{"id":"gas-rl1-v12","name":"Gas ahorro RL.1 V12","group":"Gas","type":"gas","gasFixed":6.9,"energy":0.0699,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL1. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.084579,"gasFixedIva":8.349,"shortName":"Gas ahorro RL.1 V12"},{"id":"gas-rl2-v10","name":"Gas RL.2 V10","group":"Gas","type":"gas","gasFixed":13.9,"energy":0.0899,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL2. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.108779,"gasFixedIva":16.819,"shortName":"Gas RL.2 V10"},{"id":"gas-rl2-v11","name":"Gas RL.2 V11","group":"Gas","type":"gas","gasFixed":13.9,"energy":0.0799,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL2. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.096679,"gasFixedIva":16.819,"shortName":"Gas RL.2 V11"},{"id":"gas-rl2-v12","name":"Gas ahorro RL.2 V12","group":"Gas","type":"gas","gasFixed":13.9,"energy":0.0699,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL2. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.084579,"gasFixedIva":16.819,"shortName":"Gas ahorro RL.2 V12"},{"id":"gas-rl3-v10","name":"Gas RL.3 V10","group":"Gas","type":"gas","gasFixed":22.9,"energy":0.0899,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL3. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.108779,"gasFixedIva":27.709,"shortName":"Gas RL.3 V10"},{"id":"gas-rl3-v11","name":"Gas RL.3 V11","group":"Gas","type":"gas","gasFixed":22.9,"energy":0.0799,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL3. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.096679,"gasFixedIva":27.709,"shortName":"Gas RL.3 V11"},{"id":"gas-rl3-v12","name":"Gas ahorro RL.3 V12","group":"Gas","type":"gas","gasFixed":22.9,"energy":0.0699,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL3. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.084579,"gasFixedIva":27.709,"shortName":"Gas ahorro RL.3 V12"}];
+  var TARIFFS = [{"id":"v35-10","name":"V35","group":"Precio fijo","type":"luz","maxPower":10,"p1":0.090137,"p2":0.090137,"energy":0.0999,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 10 kW. TA24H Plus obligatorio.","exc":0,"isBvSolar":false,"energyIva":0.120879,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V35"},{"id":"v34-15","name":"V34","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1099,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW. TA24H Plus obligatorio.","exc":0,"isBvSolar":false,"energyIva":0.132979,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V34"},{"id":"v33-15","name":"V33","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1199,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW. SVA obligatorio.","exc":0,"isBvSolar":false,"energyIva":0.145079,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V33"},{"id":"v32-10","name":"V32","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":true,"svaLabel":"Sin SVA con permiso","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. Puede ir sin SVA con permiso.","exc":0,"isBvSolar":false,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V32"},{"id":"v31-15","name":"V31","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1499,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.181379,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V31"},{"id":"v30-15","name":"V30","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1599,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.193479,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V30"},{"id":"pyme-v34-15","name":"Pyme V34","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1099,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW. Ahorro pyme.","exc":0,"isBvSolar":false,"energyIva":0.132979,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Pyme V34"},{"id":"pyme-v33-15","name":"Pyme V33","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1199,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW. Ahorro pyme.","exc":0,"isBvSolar":false,"energyIva":0.145079,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Pyme V33"},{"id":"pyme-v32-15","name":"Pyme V32","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":true,"svaLabel":"Sin SVA con permiso","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. Puede ir sin SVA con permiso.","exc":0,"isBvSolar":false,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Pyme V32"},{"id":"pyme-v31-15","name":"Pyme V31","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1499,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.181379,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Pyme V31"},{"id":"pyme-v30-15","name":"Pyme V30","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1599,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.193479,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Pyme V30"},{"id":"tap-v32-10","name":"TAP V32","group":"TAP","type":"luz","maxPower":10,"p1":0.084431,"p2":0.001987,"energy":0.1699,"svaMandatory":false,"permissionSva":true,"svaLabel":"Sin SVA con permiso","cashbackEligible":true,"notes":"Potencia permitida: hasta 10 kW. Ahorro potencia. Sin SVA con permiso.","exc":0,"isBvSolar":false,"energyIva":0.205579,"p1Iva":0.102162,"p2Iva":0.002404,"shortName":"TAP V32"},{"id":"tap-hogar-v34-10","name":"TAP V34 Hogar","group":"TAP","type":"luz","maxPower":10,"p1":0.084431,"p2":0.001987,"energy":0.1649,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 10 kW. Ahorro potencia hogar.","exc":0,"isBvSolar":false,"energyIva":0.199529,"p1Iva":0.102162,"p2Iva":0.002404,"shortName":"TAP V34 Hogar"},{"id":"solar-v30-15","name":"Solar V30","group":"Solar","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1399,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. Excedente 0,06 €/kWh.","exc":0.06,"isBvSolar":false,"energyIva":0.169279,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Solar V30"},{"id":"bv-v26-15","name":"Batería Virtual V26","group":"Batería Virtual","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. Excedente 0,06 €/kWh.","exc":0.06,"isBvSolar":true,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Batería Virtual V26"},{"id":"dh-v33-15","name":"Discriminación Horaria V33","group":"Discriminación horaria","type":"luz","maxPower":15,"p1":0.120274,"p2":0.06,"energy":0.1659,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW. Consumo punta, llano y valle.","exc":0,"isBvSolar":false,"energyIva":0.200739,"p1Iva":0.145532,"p2Iva":0.0726,"shortName":"Discriminación Horaria V33","isDh":true,"energyPeriods":[0.1659,0.1159,0.0969]},{"id":"luz-mplus-v31-15","name":"Movistar+ V31","group":"Movistar+","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW. Precio energía V32. TVMovistarPlus+ obligatorio.","exc":0,"isBvSolar":false,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Movistar+ V31"},{"id":"tranquilisima-10","name":"Tranquilísima","group":"Tranquilísima","type":"luz","maxPower":10,"p1":0.081918,"p2":0.081918,"energy":0.1399,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 10 kW. SVA obligatorio.","exc":0,"isBvSolar":false,"energyIva":0.169279,"p1Iva":0.099121,"p2Iva":0.099121,"shortName":"Tranquilísima"},{"id":"smart-10h-v33-15","name":"Tarifa Smart 10h V33","group":"Smart","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1699,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. 50% durante 10h. No aparece en calculadora porque no se puede calcular.","exc":0,"isBvSolar":false,"energyIva":0.205579,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Tarifa Smart 10h V33","excludeFromCalculator":true},{"id":"empresa30-l2","name":"Empresa 3.0 L2","group":"3.0TD","type":"luz30","energy":0.1549,"energyPeriods":[0.1549,0.1549,0.1549,0.1549,0.1549,0.1549],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":false,"notes":"Consumo único.","energyIva":0.187429,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Empresa 3.0 L2"},{"id":"empresa30-l4","name":"Empresa 3.0 L4","group":"3.0TD","type":"luz30","energy":0.1449,"energyPeriods":[0.1449,0.1449,0.1449,0.1449,0.1449,0.1449],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":false,"notes":"Consumo único.","energyIva":0.175329,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Empresa 3.0 L4"},{"id":"empresa30-l8","name":"Empresa 3.0 L8","group":"3.0TD DH","type":"luz30","energy":0.1649,"energyPeriods":[0.1649,0.1609,0.1569,0.1549,0.1259,0.1159],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":false,"notes":"Consumo por periodos P1-P6.","energyIva":0.199529,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Empresa 3.0 L8","isDh30":true},{"id":"dh30-l4","name":"Discriminación Horaria 3.0 L4","group":"3.0TD DH","type":"luz30","energy":0.1699,"energyPeriods":[0.1699,0.1659,0.1619,0.1599,0.1309,0.1209],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":false,"notes":"Consumo por periodos P1-P6.","energyIva":0.205579,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Discriminación Horaria 3.0 L4","isDh30":true},{"id":"comercio30-l4","name":"Comercio 3.0 L4","group":"3.0TD DH","type":"luz30","energy":0.11495,"energyPeriods":[0.11495,0.11495,0.11495,0.11495,0.11495,0.2299],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":false,"notes":"Consumo por periodos P1-P6.","energyIva":0.13909,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Comercio 3.0 L4","isDh30":true},{"id":"gas-rl1-v10","name":"Gas RL.1 V10","group":"Gas","type":"gas","gasFixed":6.9,"energy":0.0899,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL1. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.108779,"gasFixedIva":8.349,"shortName":"Gas RL.1 V10"},{"id":"gas-rl1-v11","name":"Gas RL.1 V11","group":"Gas","type":"gas","gasFixed":6.9,"energy":0.0799,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL1. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.096679,"gasFixedIva":8.349,"shortName":"Gas RL.1 V11"},{"id":"gas-rl1-v12","name":"Gas ahorro RL.1 V12","group":"Gas","type":"gas","gasFixed":6.9,"energy":0.0699,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL1. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.084579,"gasFixedIva":8.349,"shortName":"Gas ahorro RL.1 V12"},{"id":"gas-rl2-v10","name":"Gas RL.2 V10","group":"Gas","type":"gas","gasFixed":13.9,"energy":0.0899,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL2. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.108779,"gasFixedIva":16.819,"shortName":"Gas RL.2 V10"},{"id":"gas-rl2-v11","name":"Gas RL.2 V11","group":"Gas","type":"gas","gasFixed":13.9,"energy":0.0799,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL2. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.096679,"gasFixedIva":16.819,"shortName":"Gas RL.2 V11"},{"id":"gas-rl2-v12","name":"Gas ahorro RL.2 V12","group":"Gas","type":"gas","gasFixed":13.9,"energy":0.0699,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL2. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.084579,"gasFixedIva":16.819,"shortName":"Gas ahorro RL.2 V12"},{"id":"gas-rl3-v10","name":"Gas RL.3 V10","group":"Gas","type":"gas","gasFixed":22.9,"energy":0.0899,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL3. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.108779,"gasFixedIva":27.709,"shortName":"Gas RL.3 V10"},{"id":"gas-rl3-v11","name":"Gas RL.3 V11","group":"Gas","type":"gas","gasFixed":22.9,"energy":0.0799,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL3. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.096679,"gasFixedIva":27.709,"shortName":"Gas RL.3 V11"},{"id":"gas-rl3-v12","name":"Gas ahorro RL.3 V12","group":"Gas","type":"gas","gasFixed":22.9,"energy":0.0699,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL3. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.084579,"gasFixedIva":27.709,"shortName":"Gas ahorro RL.3 V12"}];
 
   var DOCS_ALTAS = [
     {title:"Alta 1ª ocupación", email:"doc.altas@repsolluzygas.com", when:["Suministro que nunca ha tenido luz/gas.","Suministro con mucha antigüedad que necesita nuevo boletín eléctrico.","Gas con más de 3 años de antigüedad."], docs:["DNI.","Escritura de propiedad hasta apartado exponen o contrato de alquiler.","Boletín eléctrico/gas."], note:"Documentación antes de hacer la venta en portal."},
@@ -3606,11 +3681,15 @@
       $("channelTotalInfo").textContent = "Canal fijo: " + channelName($("dayFixedChannel").value || state.settings.defaultChannel) + " · " + fmtHours(h);
       return;
     }
+    var previous = {};
+    document.querySelectorAll(".channelHours").forEach(function(sel){
+      previous[sel.dataset.channel] = Number(sel.value || 0);
+    });
     $("channelAllocBox").innerHTML = CHANNELS.map(function(c){
       return '<label class="field">' + escapeHtml(c.name) + '<select class="channelHours" data-channel="' + c.id + '"></select></label>';
     }).join("");
     document.querySelectorAll(".channelHours").forEach(function(sel){
-      fillHourSelectElement(sel, Number(sel.dataset.value || 0), Math.max(12, h));
+      fillHourSelectElement(sel, Number(previous[sel.dataset.channel] || 0), Math.max(12, h));
       sel.onchange = updateChannelTotal;
     });
     updateChannelTotal();
@@ -3675,6 +3754,7 @@
     updateSpecialHoursVisibility();
     renderChannelControls();
     $("salesEditor").innerHTML = "";
+    $("salesEditor").dataset.salesCleared = "";
     editingDate = null;
   }
 
@@ -3743,7 +3823,13 @@
       sales: formSales()
     };
     var existing = state.records.find(function(r){ return r.date === date; });
-    if(existing){ record.id = existing.id; Object.assign(existing, record); }
+    if(existing){
+      record.id = existing.id;
+      if(record.sales.length === 0 && (existing.sales || []).length > 0 && $("salesEditor") && $("salesEditor").dataset.salesCleared !== "1"){
+        record.sales = existing.sales;
+      }
+      Object.assign(existing, record);
+    }
     else{ state.records.push(record); }
     state.settings.month = date.slice(0,7);
     state.settings.cutoff = date;
@@ -3783,6 +3869,7 @@
       updateChannelTotal();
     }
     $("salesEditor").innerHTML = "";
+    $("salesEditor").dataset.salesCleared = "";
     (r.sales || []).forEach(function(s){ saleEditorCard(s); });
     switchTab("venta");
     toast("Día cargado para editar.");
@@ -4620,14 +4707,17 @@ function updateCalcVisibility(){
   }
 
   function exportCsv(){
-    var rows = [["fecha","horas_base","horas_recuperacion","horas_trabajadas_sph","horas_regalo","horas_vacaciones","horas_medicas","horas_incidencia","horas_cursos","ventas","sph_dia","id","cliente","tarifa","tipo","sva"]];
+    var rows = [["fecha","horas_base","horas_recuperacion","horas_trabajadas_sph","horas_regalo","horas_libre","horas_vacaciones","horas_medicas","horas_incidencia","horas_cursos","horas_no_sph","ventas_cups","sph_dia","id","cliente","tarifa","tipo","sva"]];
     monthRecords().forEach(function(r){
-      var sph = r.hours > 0 ? saleCount(r)/r.hours : 0;
+      var worked = workedHoursForRecord(r);
+      var sp = Object.assign({free:0, vacation:0, medical:0, incident:0, course:0, customNoSph:0, recovery:0}, r.specialHours || {});
+      var sph = worked > 0 ? saleCount(r)/worked : 0;
+      var base = [r.date, Number(r.hours || 0), Number(sp.recovery || 0), worked, Number(r.giftHours || 0), Number(sp.free || 0), Number(sp.vacation || 0), Number(sp.medical || 0), Number(sp.incident || 0), Number(sp.course || 0), Number(sp.customNoSph || 0), saleCount(r), fmtSph(sph)];
       if(!(r.sales || []).length){
-        rows.push([r.date,r.hours,r.giftHours || 0,0,fmtSph(sph),"","","","","",""]);
+        rows.push(base.concat(["","","","",""]));
       }else{
         (r.sales || []).forEach(function(s){
-          rows.push([r.date,r.hours,r.giftHours || 0,saleCount(r),fmtSph(sph),s.id || "",s.client || "",s.tariffName || "",s.saleType || "",s.sva ? "sí" : "no"]);
+          rows.push(base.concat([s.id || "", s.client || "", s.tariffName || "", s.saleType || "", s.sva ? "sí" : "no"]));
         });
       }
     });
@@ -4771,8 +4861,8 @@ function updateCalcVisibility(){
       saveDay(true);
     };
 
-    $("addSaleBtn").onclick = function(){ saleEditorCard(); };
-    $("clearSalesBtn").onclick = function(){ $("salesEditor").innerHTML = ""; toast("Ventas vaciadas."); };
+    $("addSaleBtn").onclick = function(){ $("salesEditor").dataset.salesCleared = ""; saleEditorCard(); };
+    $("clearSalesBtn").onclick = function(){ $("salesEditor").innerHTML = ""; $("salesEditor").dataset.salesCleared = "1"; toast("Ventas vaciadas."); };
     $("clearFormBtn").onclick = function(){ clearForm(); toast("Formulario limpio."); };
     $("saveAnotherBtn").onclick = function(){ if(saveDay(false)) switchTab("venta"); };
 
