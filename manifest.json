@@ -1,10 +1,10 @@
 {
-  "name": "Ventas SPH",
-  "short_name": "Ventas",
+  "name": "Ventas Pro",
+  "short_name": "Ventas Pro",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#080b10",
-  "theme_color": "#080b10",
+  "background_color": "#0b1120",
+  "theme_color": "#0b1120",
   "icons": [
     {
       "src": "icon-180.png",

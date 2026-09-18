@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
-  <meta name="theme-color" content="#f8fafc">
+  <meta name="theme-color" content="#0b1120">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Ventas SPH">
+  <meta name="apple-mobile-web-app-title" content="Ventas Pro">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <title>Ventas SPH</title>
+  <title>Ventas Pro</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
@@ -2278,6 +2278,225 @@
       box-shadow:0 10px 28px rgba(15,23,42,.07)!important;
     }
 
+    /* v12 · Sistema visual profesional */
+    :root,
+    html.theme-dark{
+      color-scheme:dark;
+      --bg:#0b1120;
+      --bg2:#0f172a;
+      --panel:#111827;
+      --panel2:#172033;
+      --panel3:#202b40;
+      --text:#f8fafc;
+      --muted:#9aa8bd;
+      --line:#273449;
+      --soft:#182235;
+      --fieldBg:#0d1525;
+      --buttonBg:#182235;
+      --controlBorder:#314057;
+      --shadow:0 12px 30px rgba(0,0,0,.20);
+      --primarySolid:#2563eb;
+      --primaryShadow:rgba(37,99,235,.20);
+      --primarySoft:rgba(37,99,235,.13);
+      --secondarySolid:#c2410c;
+      --secondarySoft:rgba(194,65,12,.14);
+      --surfaceRaised:#172033;
+      --dangerSoft:rgba(220,38,38,.12);
+      --radius:12px;
+    }
+
+    html.theme-light{
+      color-scheme:light;
+      --bg:#f3f5f8;
+      --bg2:#edf1f5;
+      --panel:#ffffff;
+      --panel2:#f8fafc;
+      --panel3:#eef2f6;
+      --text:#101828;
+      --muted:#667085;
+      --line:#d9e0ea;
+      --soft:#f1f4f8;
+      --fieldBg:#ffffff;
+      --buttonBg:#ffffff;
+      --controlBorder:#cdd5df;
+      --shadow:0 8px 24px rgba(16,24,40,.055);
+      --primarySoft:rgba(37,99,235,.09);
+      --secondarySoft:rgba(194,65,12,.09);
+      --surfaceRaised:#ffffff;
+      --dangerSoft:rgba(220,38,38,.07);
+    }
+
+    html[data-accent="azul"]{--primarySolid:#2563eb;--primaryShadow:rgba(37,99,235,.20);--primarySoft:rgba(37,99,235,.11);--turq:#2563eb;--turq2:#93c5fd}
+    html[data-accent="turquesa"]{--primarySolid:#0f766e;--primaryShadow:rgba(15,118,110,.20);--primarySoft:rgba(15,118,110,.11);--turq:#0f766e;--turq2:#5eead4}
+    html[data-accent="lila"]{--primarySolid:#7c3aed;--primaryShadow:rgba(124,58,237,.20);--primarySoft:rgba(124,58,237,.11);--turq:#7c3aed;--turq2:#c4b5fd}
+    html[data-accent="rosa"]{--primarySolid:#be185d;--primaryShadow:rgba(190,24,93,.20);--primarySoft:rgba(190,24,93,.11);--turq:#be185d;--turq2:#f9a8d4}
+    html[data-accent="verde"]{--primarySolid:#15803d;--primaryShadow:rgba(21,128,61,.20);--primarySoft:rgba(21,128,61,.11);--turq:#15803d;--turq2:#86efac}
+    html[data-accent="naranja"]{--primarySolid:#c2410c;--primaryShadow:rgba(194,65,12,.20);--primarySoft:rgba(194,65,12,.11);--turq:#c2410c;--turq2:#fdba74}
+
+    html[data-secondary="azul"]{--secondarySolid:#2563eb;--secondarySoft:rgba(37,99,235,.12)}
+    html[data-secondary="turquesa"]{--secondarySolid:#0f766e;--secondarySoft:rgba(15,118,110,.12)}
+    html[data-secondary="lila"]{--secondarySolid:#7c3aed;--secondarySoft:rgba(124,58,237,.12)}
+    html[data-secondary="rosa"]{--secondarySolid:#be185d;--secondarySoft:rgba(190,24,93,.12)}
+    html[data-secondary="verde"]{--secondarySolid:#15803d;--secondarySoft:rgba(21,128,61,.12)}
+    html[data-secondary="naranja"]{--secondarySolid:#c2410c;--secondarySoft:rgba(194,65,12,.12)}
+    html[data-secondary="grafito"]{--secondarySolid:#475569;--secondarySoft:rgba(71,85,105,.12)}
+
+    html{background:var(--bg)!important;}
+    body{
+      font-family:Inter,"SF Pro Text","Segoe UI Variable","Segoe UI",Roboto,Arial,sans-serif!important;
+      color:var(--text)!important;
+      background:linear-gradient(180deg,var(--bg),var(--bg2))!important;
+      font-size:15px;
+      letter-spacing:-.008em;
+    }
+
+    .app{width:min(1180px,100%)!important;padding-left:20px!important;padding-right:20px!important;}
+    header{
+      background:color-mix(in srgb,var(--bg) 94%,transparent)!important;
+      color:var(--text)!important;
+      border-bottom:1px solid var(--line)!important;
+      box-shadow:none!important;
+      backdrop-filter:blur(18px)!important;
+      -webkit-backdrop-filter:blur(18px)!important;
+      padding:calc(env(safe-area-inset-top) + 9px) 20px 9px!important;
+    }
+    header:before{content:"";position:absolute;inset:auto 0 -1px;height:2px;background:linear-gradient(90deg,var(--primarySolid),var(--secondarySolid));opacity:.9;}
+    header:after{display:none!important;}
+    .cleanTop{max-width:1180px;margin:0 auto;width:100%;}
+    .appLogo{width:28px!important;height:34px!important;}
+    .appLogo:before{background:var(--primarySolid)!important;filter:none!important;inset:4px 5px!important;}
+    .brandCopy{display:grid;gap:2px;min-width:0;}
+    .brandName{font-size:.65rem;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);line-height:1;}
+    #headerTitle{font-size:1.02rem!important;font-weight:700!important;letter-spacing:-.025em!important;max-width:44vw!important;}
+    .pill{border-radius:8px!important;padding:7px 10px!important;font-size:.72rem!important;font-weight:700!important;background:var(--soft)!important;border-color:var(--line)!important;color:var(--text)!important;}
+    .hamburgerBtn{width:40px!important;height:38px!important;border-radius:9px!important;background:var(--soft)!important;border-color:var(--line)!important;color:var(--text)!important;}
+    .hamburgerBtn.active{background:var(--primarySolid)!important;border-color:var(--primarySolid)!important;box-shadow:none!important;}
+
+    main section.active{gap:18px!important;}
+    .mainContent{padding-top:12px!important;}
+    .panel,.card,.day-card,.sale-box,.rate-card,.doc-card,.salesDayCard,.weekBlock{
+      color:var(--text)!important;
+      background:var(--panel)!important;
+      border:1px solid var(--line)!important;
+      border-radius:12px!important;
+      box-shadow:var(--shadow)!important;
+    }
+    .panel{padding:20px!important;}
+    .card{padding:18px!important;min-height:104px!important;}
+    .cards,.grid,.row,.two,.weekList{gap:12px!important;}
+    .panel > * + *,.card > * + *,.day-card > * + *,.sale-box > * + *,.rate-card > * + *,.doc-card > * + *,.detailSheet > * + *{margin-top:0!important;}
+    h1,h2,h3,.value,.day-title,.sale-title,.rate-title,.doc-title,.calTitle,.mini b{
+      font-family:Inter,"SF Pro Display","Segoe UI Variable Display","Segoe UI",sans-serif!important;
+    }
+    h2{font-size:1.02rem!important;font-weight:750!important;letter-spacing:-.02em!important;margin-bottom:14px!important;}
+    h3{font-size:.9rem!important;font-weight:750!important;}
+    label.field,.label{color:var(--muted)!important;font-size:.73rem!important;font-weight:700!important;letter-spacing:.015em;}
+    .value{font-size:1.65rem!important;font-weight:750!important;letter-spacing:-.045em!important;}
+    .small,.day-sub,.sale-sub,.rate-meta,.calMeta,.pendingReason,.settingsInfoText{color:var(--muted)!important;font-size:.78rem!important;font-weight:500!important;line-height:1.4!important;}
+    .card .small,.day-card .small,.sale-box .small,.rate-card .small,.doc-card .small{padding:0!important;margin-top:7px!important;background:transparent!important;}
+    .cards.five .card{position:relative;overflow:hidden;}
+    .cards.five .card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--line);}
+    .cards.five .card:nth-child(3){border-color:color-mix(in srgb,var(--primarySolid) 46%,var(--line))!important;}
+    .cards.five .card:nth-child(3):before{background:var(--primarySolid);}
+
+    input,select,textarea{
+      min-height:44px!important;
+      border-radius:9px!important;
+      padding:10px 12px!important;
+      background:var(--fieldBg)!important;
+      border:1px solid var(--controlBorder)!important;
+      color:var(--text)!important;
+      font-size:15px!important;
+      font-weight:550!important;
+      box-shadow:none!important;
+    }
+    input:focus,select:focus,textarea:focus{border-color:var(--primarySolid)!important;box-shadow:0 0 0 3px var(--primarySoft)!important;}
+    button,.mainMenuItem,.closeMenuBtn,.tab{
+      min-height:42px;
+      border-radius:9px!important;
+      padding:10px 14px;
+      font-weight:700!important;
+      background:var(--buttonBg)!important;
+      color:var(--text)!important;
+      border:1px solid var(--controlBorder)!important;
+      box-shadow:none!important;
+    }
+    button:hover{border-color:color-mix(in srgb,var(--primarySolid) 48%,var(--controlBorder))!important;}
+    .btn-main{background:var(--primarySolid)!important;border-color:var(--primarySolid)!important;color:#fff!important;box-shadow:none!important;}
+    .btn-turq{background:var(--secondarySolid)!important;border-color:var(--secondarySolid)!important;color:#fff!important;box-shadow:none!important;}
+    .btn-danger{background:var(--dangerSoft)!important;border-color:rgba(220,38,38,.28)!important;color:#dc2626!important;}
+    .actions{gap:10px!important;}
+    .actions > button{min-height:44px!important;}
+
+    .hint{padding:11px 13px!important;border-radius:9px!important;border:1px solid var(--line)!important;border-left:3px solid var(--secondarySolid)!important;background:var(--soft)!important;color:var(--muted)!important;font-size:.8rem!important;}
+    .badge,.chip,.sphStatus{border-radius:7px!important;font-size:.7rem!important;font-weight:750!important;padding:6px 9px!important;box-shadow:none!important;}
+    .turq{background:var(--primarySoft)!important;color:color-mix(in srgb,var(--primarySolid) 35%,white)!important;border-color:color-mix(in srgb,var(--primarySolid) 42%,transparent)!important;}
+    .pink{background:var(--secondarySoft)!important;color:color-mix(in srgb,var(--secondarySolid) 35%,white)!important;border-color:color-mix(in srgb,var(--secondarySolid) 42%,transparent)!important;}
+    .sphStatus{width:auto!important;display:inline-flex!important;margin-top:8px!important;}
+    .goalbar{height:8px!important;border:0!important;border-radius:4px!important;background:var(--soft)!important;}
+    .goalbar div{background:linear-gradient(90deg,var(--primarySolid),var(--secondarySolid))!important;}
+    .mini,.result-row{border-radius:9px!important;background:var(--panel2)!important;border:1px solid var(--line)!important;box-shadow:none!important;}
+    .rate-card,.doc-card,.day-card,.sale-box,.salesDayCard{padding:14px!important;box-shadow:none!important;}
+    .sale-box:before{background:var(--secondarySolid)!important;width:3px!important;}
+    .checkField{border-radius:9px!important;background:var(--fieldBg)!important;border-color:var(--controlBorder)!important;font-weight:650!important;min-height:44px!important;}
+    .checkField input[type="checkbox"]{border-radius:5px!important;}
+    .checkField input[type="checkbox"]:checked{background:var(--primarySolid)!important;border-color:var(--primarySolid)!important;}
+    .pendingWarningCard{border-left:3px solid #d97706!important;background:var(--panel)!important;}
+    .pendingDot{width:7px!important;height:7px!important;box-shadow:none!important;}
+    #pendingWarningsBox,#pendingWarningsSalesBox{grid-template-columns:repeat(2,minmax(0,1fr));}
+    #ratesList,#servicesList,#altaDocs,#ttDocs{grid-template-columns:repeat(auto-fit,minmax(280px,1fr));}
+
+    .mainMenuOverlay{padding:0!important;align-items:stretch!important;background:rgba(3,7,18,.46)!important;backdrop-filter:blur(4px)!important;-webkit-backdrop-filter:blur(4px)!important;}
+    .mainMenuPanel{
+      width:min(330px,88vw)!important;
+      max-height:100dvh!important;
+      border-radius:14px 0 0 14px!important;
+      border:0!important;
+      border-left:1px solid var(--line)!important;
+      background:var(--panel)!important;
+      box-shadow:-18px 0 48px rgba(0,0,0,.22)!important;
+      padding:18px!important;
+    }
+    .menuEyebrow{color:var(--primarySolid)!important;text-transform:uppercase;letter-spacing:.1em;font-size:.65rem!important;}
+    .menuPanelTop h2{font-size:1.1rem!important;}
+    .closeMenuBtn{width:36px!important;height:36px!important;padding:0!important;background:var(--soft)!important;}
+    .mainMenuGrid{grid-template-columns:1fr!important;gap:6px!important;}
+    .mainMenuItem{min-height:44px!important;text-align:left!important;background:transparent!important;border-color:transparent!important;color:var(--text)!important;padding:10px 12px!important;}
+    .mainMenuItem:hover{background:var(--soft)!important;border-color:var(--line)!important;}
+    .mainMenuItem.active{background:var(--primarySoft)!important;border-color:color-mix(in srgb,var(--primarySolid) 35%,transparent)!important;color:var(--text)!important;box-shadow:inset 3px 0 0 var(--primarySolid)!important;}
+    .detailSheet{background:var(--panel)!important;border-radius:14px!important;border-color:var(--line)!important;box-shadow:0 24px 70px rgba(0,0,0,.32)!important;}
+    .docAlert{background:var(--panel)!important;border-left:3px solid #d97706!important;}
+
+    html.theme-light header{background:rgba(243,245,248,.94)!important;}
+    html.theme-light .panel,html.theme-light .card,html.theme-light .day-card,html.theme-light .sale-box,html.theme-light .rate-card,html.theme-light .doc-card{box-shadow:var(--shadow)!important;}
+    html.theme-light button,html.theme-light .hamburgerBtn,html.theme-light .mainMenuItem,html.theme-light .closeMenuBtn,html.theme-light .pill{color:var(--text)!important;background:var(--buttonBg)!important;}
+    html.theme-light .btn-main{background:var(--primarySolid)!important;color:#fff!important;}
+    html.theme-light .btn-turq{background:var(--secondarySolid)!important;color:#fff!important;}
+    html.theme-light .mainMenuItem{background:transparent!important;}
+    html.theme-light .mainMenuItem.active{background:var(--primarySoft)!important;color:var(--text)!important;border-color:color-mix(in srgb,var(--primarySolid) 35%,transparent)!important;}
+    html.theme-light .turq{background:var(--primarySoft)!important;color:var(--primarySolid)!important;border-color:color-mix(in srgb,var(--primarySolid) 32%,transparent)!important;}
+    html.theme-light .pink{background:var(--secondarySoft)!important;color:var(--secondarySolid)!important;border-color:color-mix(in srgb,var(--secondarySolid) 32%,transparent)!important;}
+
+    @media(max-width:760px){
+      .app{padding-left:12px!important;padding-right:12px!important;}
+      header{padding-left:12px!important;padding-right:12px!important;}
+      .panel{padding:15px!important;}
+      .card{padding:15px!important;min-height:92px!important;}
+      #pendingWarningsBox,#pendingWarningsSalesBox{grid-template-columns:1fr;}
+      #ratesList,#servicesList,#altaDocs,#ttDocs{grid-template-columns:1fr;}
+      .brandName{display:none;}
+      .brandCopy{display:block;}
+      .mainMenuPanel{border-radius:0!important;}
+    }
+
+    @media(max-width:460px){
+      .appLogo{width:23px!important;}
+      #headerTitle{max-width:38vw!important;}
+      .pill{max-width:34vw;overflow:hidden;text-overflow:ellipsis;}
+      .cards{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+      .cards .card{min-width:0;}
+    }
+
   </style>
 </head>
 
@@ -2287,7 +2506,10 @@
     <div class="top cleanTop">
       <div class="brandLine cleanBrand">
         <span class="appLogo" aria-hidden="true"></span>
-        <h1 id="headerTitle">Inicio</h1>
+        <div class="brandCopy">
+          <span class="brandName">Ventas Pro</span>
+          <h1 id="headerTitle">Inicio</h1>
+        </div>
       </div>
       <div class="topActions">
         <div class="pill" id="monthPill">Mes</div>
@@ -2323,12 +2545,12 @@
         <div class="card">
           <div class="label">Ventas</div>
           <div class="value" id="kpiSales">0</div>
-          <div class="small">Hasta la fecha marcada.</div>
+          <div class="small">CUPS acumulados</div>
         </div>
         <div class="card">
           <div class="label">Horas reales</div>
           <div class="value" id="kpiHours">0h</div>
-          <div class="small">Las que sí cuentan para SPH.</div>
+          <div class="small">Computables para SPH</div>
         </div>
         <div class="card">
           <div class="label">SPH acumulado</div>
@@ -2338,7 +2560,7 @@
         <div class="card">
           <div class="label">Horas regalo</div>
           <div class="value" id="kpiGift">0h</div>
-          <div class="small">No cuentan para SPH.</div>
+          <div class="small">Fuera del cálculo</div>
         </div>
 
       </div>
@@ -2452,10 +2674,6 @@
             <div id="channelTotalInfo" class="small">Si no cambias nada, el día completo se asigna al canal fijo.</div>
           </div>
 
-          <div class="hint">
-            Al elegir fecha se cargan las horas habituales. Puedes guardar el día sin ventas o añadirlas debajo.
-          </div>
-
           <div id="salesEditor" class="grid"></div>
 
           <div class="actions">
@@ -2508,7 +2726,6 @@
             </select>
           </label>
         </div>
-        <div class="small">Vista semanal con una barra horizontal por día. Los fines de semana no salen como pendientes.</div>
       </div>
 
       <div class="panel">
@@ -2523,7 +2740,6 @@
         <label class="field">Buscar tarifa
           <input id="rateSearch" type="search" placeholder="Ej. V33, gas, RL1, TAP, Smart, Solar...">
         </label>
-        <div class="small">Los precios son los cargados desde tu tabla. Si un precio de potencia sale una vez, se usa igual para P1 y P2, cuando el precio sea el mismo para ambos periodos.</div>
       </div>
 
       <div class="panel">
@@ -2539,13 +2755,7 @@
 
     <section id="calc">
       <div class="panel">
-        <h2>Calculadora normal</h2>
-        <div class="hint">Luz, gas, solar y batería virtual en una calculadora limpia. La 3.0TD va en su propia pestaña del menú.</div>
-      </div>
-
-      <div class="panel">
         <h2>Calculadora de factura</h2>
-        <div class="hint">Elige tarifa, mete consumo/potencia y abajo sale el resumen con impuestos separados.</div>
         <div class="row cols2">
           <label class="field">Tarifa
             <select id="calcTariff"></select>
@@ -2607,12 +2817,6 @@
     <section id="calc30">
       <div class="panel">
         <h2>Calculadora 3.0TD</h2>
-        <div class="hint">Pestaña separada. Potencias P1-P6, consumo único o consumo por periodos si la tarifa es con discriminación.</div>
-      </div>
-
-      <div class="panel">
-        <h2>Calculadora 3.0TD</h2>
-        <div class="hint">Calculadora separada. Potencias P1-P6 y consumo único o por periodos si la tarifa es con discriminación.</div>
         <div class="row cols2">
           <label class="field">Tarifa 3.0TD
             <select id="calc30Tariff"></select>
@@ -2685,7 +2889,7 @@
 
       <div class="panel">
         <h2>Apariencia</h2>
-        <div class="row cols2">
+        <div class="row cols3">
           <label class="field">Tema de la app
             <select id="appearanceMode">
               <option value="system">Según el dispositivo</option>
@@ -2695,16 +2899,26 @@
           </label>
           <label class="field">Color de la app
             <select id="accentColor">
-              <option value="turquesa">Turquesa original</option>
-              <option value="rosa">Rosa / fucsia</option>
-              <option value="lila">Lila</option>
               <option value="azul">Azul</option>
+              <option value="turquesa">Turquesa</option>
+              <option value="lila">Violeta</option>
+              <option value="rosa">Rosa</option>
               <option value="verde">Verde</option>
               <option value="naranja">Naranja</option>
             </select>
           </label>
+          <label class="field">Color secundario
+            <select id="secondaryColor">
+              <option value="naranja">Naranja</option>
+              <option value="azul">Azul</option>
+              <option value="turquesa">Turquesa</option>
+              <option value="lila">Violeta</option>
+              <option value="rosa">Rosa</option>
+              <option value="verde">Verde</option>
+              <option value="grafito">Grafito</option>
+            </select>
+          </label>
         </div>
-        <div class="settingsInfoText">Puedes dejarlo automático para que siga el iPhone, o forzarlo en claro/oscuro. El color cambia botones, menú, barras y acentos principales.</div>
       </div>
 
       <div class="panel">
@@ -2743,7 +2957,7 @@
           <label class="field">Sábado<input id="h6" type="number" min="0" step="0.25"></label>
           <label class="field">Domingo<input id="h0" type="number" min="0" step="0.25"></label>
         </div>
-        <div class="hint">Si usas canal fijo, las horas se asignan solas. En combinados puedes poner bloques de 15 minutos y la app asigna lo que falte al canal fijo. Dualización tiene un mínimo fijo de 0,200 SPH.</div>
+        <div class="settingsInfoText">El mínimo se aplica por canal. En días combinados, el objetivo se pondera según las horas asignadas a cada canal.</div>
         <br>
         <button id="saveHoursBtn" type="button" class="btn-main">Guardar ajustes</button>
       </div>
@@ -2762,8 +2976,6 @@
 
       <div class="panel">
         <h2>Copias de seguridad</h2>
-        <div class="hint">Exporta JSON de vez en cuando para guardar una copia de seguridad.</div>
-        <br>
         <div class="actions">
           <button id="exportJsonBtn" type="button" class="btn-main">Exportar JSON</button>
           <button id="importJsonBtn" type="button">Importar JSON</button>
@@ -2783,7 +2995,7 @@
     </section>
   </main>
 
-  <div class="footer">CUPS · control de ventas</div>
+  <div class="footer">Ventas Pro</div>
 </div>
 </div>
 
@@ -2791,8 +3003,8 @@
   <div class="mainMenuPanel" role="dialog" aria-label="Menú de apartados">
     <div class="menuPanelTop">
       <div>
-        <div class="menuEyebrow">Ventas SPH</div>
-        <h2>Menú</h2>
+        <div class="menuEyebrow">Ventas Pro</div>
+        <h2>Navegación</h2>
       </div>
       <button type="button" id="closeMenuBtn" class="closeMenuBtn" aria-label="Cerrar menú">×</button>
     </div>
@@ -2854,13 +3066,18 @@
 
   var APPEARANCE_MODES = ["system","dark","light"];
   var ACCENT_COLORS = ["turquesa","rosa","lila","azul","verde","naranja"];
+  var SECONDARY_COLORS = ["naranja","azul","turquesa","lila","rosa","verde","grafito"];
 
   function safeAppearance(v){
     return APPEARANCE_MODES.indexOf(v) >= 0 ? v : "system";
   }
 
   function safeAccent(v){
-    return ACCENT_COLORS.indexOf(v) >= 0 ? v : "turquesa";
+    return ACCENT_COLORS.indexOf(v) >= 0 ? v : "azul";
+  }
+
+  function safeSecondary(v){
+    return SECONDARY_COLORS.indexOf(v) >= 0 ? v : "naranja";
   }
 
   function resolvedAppearance(){
@@ -2877,13 +3094,15 @@
 
   function applyTheme(){
     var mode = resolvedAppearance();
-    var accent = safeAccent(state && state.settings ? state.settings.accentColor : "turquesa");
+    var accent = safeAccent(state && state.settings ? state.settings.accentColor : "azul");
+    var secondary = safeSecondary(state && state.settings ? state.settings.secondaryColor : "naranja");
     var root = document.documentElement;
     root.classList.toggle("theme-light", mode === "light");
     root.classList.toggle("theme-dark", mode !== "light");
     root.setAttribute("data-accent", accent);
+    root.setAttribute("data-secondary", secondary);
     var meta = document.querySelector('meta[name="theme-color"]');
-    if(meta) meta.setAttribute("content", mode === "light" ? "#f8fafc" : "#080b10");
+    if(meta) meta.setAttribute("content", mode === "light" ? "#f3f5f8" : "#0b1120");
     var apple = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
     if(apple) apple.setAttribute("content", mode === "light" ? "default" : "black-translucent");
   }
@@ -2968,7 +3187,7 @@
 
   function defaultState(){
     return {
-      version:10,
+      version:12,
       records:[],
       settings:{
         month:currentMonth(),
@@ -2980,7 +3199,8 @@
         channelThresholds:{waylet:0.120,dualizacion:0.200,digital:0.120,marca_blanca:0.120,nurturing:0.120,foto_factura:0.120,colectivos:0.120,otro:0.120},
         taxes:Object.assign({}, TAX_DEFAULTS),
         appearanceMode:"system",
-        accentColor:"turquesa"
+        accentColor:"azul",
+        secondaryColor:"naranja"
       }
     };
   }
@@ -3013,7 +3233,7 @@
   function normalizeState(s){
     var base = defaultState();
     s = s || {};
-    s.version = 10;
+    s.version = 12;
     s.records = Array.isArray(s.records) ? s.records : [];
     s.settings = Object.assign({}, base.settings, s.settings || {});
     s.settings.workHours = Object.assign({}, base.settings.workHours, s.settings.workHours || {});
@@ -3024,6 +3244,7 @@
     if(!s.settings.journeyType) s.settings.journeyType = "39";
     s.settings.appearanceMode = safeAppearance(s.settings.appearanceMode);
     s.settings.accentColor = safeAccent(s.settings.accentColor);
+    s.settings.secondaryColor = safeSecondary(s.settings.secondaryColor);
     s.records.forEach(function(r){
       r.sales = Array.isArray(r.sales) ? r.sales : [];
       r.channelMode = r.channelMode || s.settings.defaultChannelMode || "fixed";
@@ -3484,42 +3705,62 @@
     };
   }
 
-  function activeMinSph(){
-    if((state.settings.defaultChannelMode || "fixed") !== "fixed") return 0.120;
-    var channel = state.settings.defaultChannel || "waylet";
-    var found = CHANNELS.find(function(c){ return c.id === channel; });
-    return Number(state.settings.channelThresholds[channel] || (found && found.min) || 0.120);
+  function channelMinimum(channelId){
+    var found = CHANNELS.find(function(c){ return c.id === channelId; });
+    return Number(state.settings.channelThresholds[channelId] || (found && found.min) || 0.120);
+  }
+
+  function activeSphContext(records){
+    var source = Array.isArray(records) ? records : cutoffRecords();
+    var stats = channelStats(source);
+    var active = CHANNELS.map(function(c){
+      var st = stats[c.id] || {hours:0,sales:0};
+      return {id:c.id,name:c.name,hours:Number(st.hours || 0),minimum:channelMinimum(c.id)};
+    }).filter(function(c){ return c.hours > 0; });
+
+    if(!active.length){
+      var fallbackId = state.settings.defaultChannel || "waylet";
+      return {type:"single",channelId:fallbackId,name:channelName(fallbackId),minimum:channelMinimum(fallbackId),hours:0};
+    }
+
+    if(active.length === 1){
+      return {type:"single",channelId:active[0].id,name:active[0].name,minimum:active[0].minimum,hours:active[0].hours};
+    }
+
+    var totalHours = active.reduce(function(sum,c){ return sum + c.hours; },0);
+    var weighted = totalHours > 0 ? active.reduce(function(sum,c){ return sum + c.hours * c.minimum; },0) / totalHours : 0.120;
+    return {type:"mixed",name:"Canales combinados",minimum:weighted,hours:totalHours,channels:active};
+  }
+
+  function activeMinSph(records){
+    return activeSphContext(records).minimum;
   }
 
   function recordMinSph(r){
-    if(!r || r.channelMode === "mixed") return 0.120;
-    var channel = r.fixedChannel || state.settings.defaultChannel || "waylet";
-    var found = CHANNELS.find(function(c){ return c.id === channel; });
-    return Number(state.settings.channelThresholds[channel] || (found && found.min) || 0.120);
+    if(!r) return activeMinSph();
+    return activeMinSph([r]);
   }
 
   function sphClass(sph, minimum){
-    var min = Number(minimum || activeMinSph());
-    if(min >= 0.200) return sph >= min ? "good" : sph > 0 ? "bad" : "gray";
-    if(sph >= 0.140) return "good";
-    if(sph >= 0.120) return "warn";
-    if(sph > 0) return "bad";
-    return "gray";
+    var min = Number(minimum == null ? activeMinSph() : minimum);
+    if(!(sph > 0)) return "gray";
+    if(sph < min) return "bad";
+    if(min > 0.120 || sph >= 0.140) return "good";
+    return "warn";
   }
 
-  function sphText(sph){
-    var min = activeMinSph();
-    if(min >= 0.200){
-      if(sph >= min) return "Mínimo de Dualización conseguido.";
-      if(sph > 0) return "Por debajo del mínimo 0,200.";
-      return "Sin datos.";
-    }
+  function sphText(sph, records){
+    var context = activeSphContext(records);
+    var min = context.minimum;
+    var target = fmtSph(min);
+    if(!(context.hours > 0)) return context.name + " · mínimo " + target;
+    if(sph < min) return "Por debajo del mínimo · " + target;
+    if(context.type === "mixed") return "Objetivo ponderado superado · " + target;
+    if(min > 0.120) return context.name + " · mínimo " + target + " superado";
     if(sph >= 0.180) return "Tramo top.";
     if(sph >= 0.160) return "Tramo alto.";
-    if(sph >= 0.140) return "Vas bien.";
-    if(sph >= 0.120) return "Mínimo de variable.";
-    if(sph > 0) return "Por debajo de variable.";
-    return "Sin datos.";
+    if(sph >= 0.140) return "Tramo bueno.";
+    return context.name + " · mínimo " + target;
   }
 
   function monthRange(ym){
@@ -3560,7 +3801,8 @@
   function renderKpis(){
     var records = cutoffRecords();
     var totals = calc(records);
-    var cls = sphClass(totals.sph);
+    var minimum = activeMinSph(records);
+    var cls = sphClass(totals.sph, minimum);
     var bd = saleBreakdown(records);
 
     $("kpiSales").textContent = totals.sales;
@@ -3570,7 +3812,7 @@
     $("kpiGift").textContent = fmtHours(totals.gift);
 
     var msg = $("sphMessage");
-    msg.textContent = sphText(totals.sph);
+    msg.textContent = sphText(totals.sph, records);
     msg.className = "sphStatus " + cls;
 
     if($("v9HomeBreakdown")){
@@ -3591,7 +3833,8 @@
         var st = stats[c.id] || {hours:0,sales:0};
         if(st.hours > 0){
           var sph = st.sales / st.hours;
-          html += '<div class="rate-card"><div class="rate-top"><div><div class="rate-title">' + escapeHtml(c.name) + '</div><div class="rate-meta">' + st.sales + ' CUPS · ' + fmtHours(st.hours) + '</div></div><span class="badge ' + (sph >= (state.settings.channelThresholds[c.id] || c.min || .12) ? 'good' : 'warn') + '">' + fmtSph(sph) + '</span></div></div>';
+          var min = channelMinimum(c.id);
+          html += '<div class="rate-card"><div class="rate-top"><div><div class="rate-title">' + escapeHtml(c.name) + '</div><div class="rate-meta">' + st.sales + ' CUPS · ' + fmtHours(st.hours) + ' · mínimo ' + fmtSph(min) + '</div></div><span class="badge ' + sphClass(sph,min) + '">' + fmtSph(sph) + '</span></div></div>';
         }
       });
       $("v9ChannelSph").innerHTML = html || '<div class="empty">No hay horas por canal en este periodo.</div>';
@@ -3599,7 +3842,23 @@
   }
 
   function automaticObjectivesAllowed(){
-    return (state.settings.defaultChannelMode || "fixed") === "fixed" && (state.settings.defaultChannel || "waylet") === "waylet";
+    return (state.settings.defaultChannelMode || "fixed") === "fixed";
+  }
+
+  function objectiveContext(){
+    var channelId = state.settings.defaultChannel || "waylet";
+    return {id:channelId,name:channelName(channelId),minimum:channelMinimum(channelId)};
+  }
+
+  function objectiveThresholds(context){
+    var values = [context.minimum,0.140,0.160,0.180].filter(function(v){ return v >= context.minimum; });
+    var unique = [];
+    values.forEach(function(v){ if(!unique.some(function(x){ return Math.abs(x-v) < 0.0005; })) unique.push(v); });
+    if(context.minimum >= 0.180) unique = [context.minimum];
+    return unique.map(function(value,index){
+      var label = fmtSph(value) + (index === 0 ? " mínimo" : value >= 0.180 ? " top" : value >= 0.160 ? " alto" : " bueno");
+      return {value:value,label:label};
+    });
   }
 
   function renderObjectives(){
@@ -3616,15 +3875,15 @@
     var cutoff = getCutoff();
     var mode = $("homeMode").value || "real";
     var hoursBase = mode === "estimado" ? estimatedHoursForMonth(month) : totals.hours;
-    var title = mode === "estimado" ? "Objetivo estimado del mes completo" : "Objetivo según horas reales";
+    var context = objectiveContext();
 
-    var html = '<div class="hint">' + title + ': se calculan los CUPS necesarios para Waylet fijo.</div>';
+    var html = '<div class="settingsInfoText">' + escapeHtml(context.name) + ' · ' + (mode === "estimado" ? "mes completo" : "horas registradas") + '</div>';
 
-    THRESHOLDS.forEach(function(th){
+    objectiveThresholds(context).forEach(function(th){
       var needed = Math.ceil(hoursBase * th.value);
       var missing = Math.max(0, needed - totals.sales);
       var pct = needed > 0 ? Math.min(100, totals.sales / needed * 100) : 0;
-      var cls = missing === 0 ? "good" : th.value < 0.14 ? "warn" : "gray";
+      var cls = missing === 0 ? "good" : th.value === context.minimum ? "warn" : "gray";
 
       html += '<div class="day-card">' +
         '<div class="day-head">' +
@@ -3653,18 +3912,21 @@
     var cutoff = getCutoff();
     var estMonth = estimatedHoursForMonth(month);
     var remaining = workDaysRemaining(month, cutoff);
-    var target014 = Math.ceil(estMonth * 0.140);
-    var missing014 = Math.max(0, target014 - totals.sales);
-    var avgDay = remaining.days > 0 ? missing014 / remaining.days : 0;
+    var context = objectiveContext();
+    var paceTarget = context.minimum > 0.140 ? context.minimum : 0.140;
+    var targetSales = Math.ceil(estMonth * paceTarget);
+    var missingSales = Math.max(0, targetSales - totals.sales);
+    var avgDay = remaining.days > 0 ? missingSales / remaining.days : 0;
+    var paceLabel = fmtSph(paceTarget);
 
     $("paceBox").innerHTML =
       '<div class="mini-grid">' +
         '<div class="mini"><span>Horas estimadas mes</span><b>' + fmtHours(estMonth) + '</b></div>' +
-        '<div class="mini"><span>Objetivo 0,140 mes</span><b>' + target014 + ' CUPS</b></div>' +
-        '<div class="mini"><span>Faltan para 0,140</span><b>' + missing014 + '</b></div>' +
+        '<div class="mini"><span>Objetivo ' + paceLabel + '</span><b>' + targetSales + ' CUPS</b></div>' +
+        '<div class="mini"><span>Faltan para ' + paceLabel + '</span><b>' + missingSales + '</b></div>' +
         '<div class="mini"><span>Media necesaria</span><b>' + fmtNum(avgDay,2) + '/día</b></div>' +
       '</div>' +
-      '<div class="small">Quedan ' + remaining.days + ' días laborables estimados y ' + fmtHours(remaining.hours) + '. Objetivo automático solo visible con canal fijo Waylet.</div>';
+      '<div class="small">' + escapeHtml(context.name) + ' · ' + remaining.days + ' días laborables restantes · ' + fmtHours(remaining.hours) + '</div>';
   }
 
   function renderSummary(){
@@ -4373,6 +4635,7 @@ function updateCalcVisibility(){
     if($("wayletMinSph")) $("wayletMinSph").value = state.settings.channelThresholds.waylet || 0.120;
     if($("appearanceMode")) $("appearanceMode").value = safeAppearance(state.settings.appearanceMode);
     if($("accentColor")) $("accentColor").value = safeAccent(state.settings.accentColor);
+    if($("secondaryColor")) $("secondaryColor").value = safeSecondary(state.settings.secondaryColor);
     [0,1,2,3,4,5,6].forEach(function(d){ if($("h" + d)) $("h" + d).value = state.settings.workHours[d] || 0; });
     if($("customHoursBox")) $("customHoursBox").classList.toggle("hidden", ($("journeyType") && $("journeyType").value !== "custom"));
     var tx = taxSettings();
@@ -4575,7 +4838,7 @@ function updateCalcVisibility(){
       calc30:"Calc 3.0TD",
       doc:"Documentación",
       ajustes:"Ajustes"
-    }[id] || "Ventas SPH";
+    }[id] || "Ventas Pro";
   }
 
   function showMainMenu(){
@@ -4721,7 +4984,7 @@ function updateCalcVisibility(){
       '<div class="mini"><span>SVAs</span><b>' + bd.sva + '</b></div>' +
       '<div class="mini"><span>Reposicionamientos</span><b>' + bd.repositioning + '</b></div>' +
       '<div class="mini"><span>Horas SPH</span><b>' + fmtHours(totals.hours) + '</b></div>' +
-      '<div class="mini ' + sphClass(totals.sph) + '"><span>SPH</span><b>' + fmtSph(totals.sph) + '</b></div>' +
+      '<div class="mini ' + sphClass(totals.sph, activeMinSph(recs)) + '"><span>SPH</span><b>' + fmtSph(totals.sph) + '</b></div>' +
       '<div class="mini"><span>Tarifa top</span><b>' + escapeHtml(topTariffName(recs)) + '</b></div>' +
     '</div>';
     var counts = bd.tariffs;
@@ -4733,7 +4996,8 @@ function updateCalcVisibility(){
     var daysHtml = "";
     recs.filter(function(r){ return saleCount(r)>0; }).forEach(function(r){
       var h = workedHoursForRecord(r); var sph = h>0 ? saleCount(r)/h : 0;
-      daysHtml += '<div class="salesDayCard openDayDetail" data-date="' + r.date + '"><div class="day-head"><div><div class="day-title">' + fmtDate(r.date) + '</div><div class="day-sub">' + saleCount(r) + ' CUPS · ' + fmtHours(h) + ' · ' + escapeHtml(channelName(r.fixedChannel || state.settings.defaultChannel)) + '</div></div><span class="badge ' + sphClass(sph, recordMinSph(r)) + '">' + fmtSph(sph) + '</span></div></div>';
+      var dayChannelLabel = r.channelMode === "mixed" ? "Canales combinados" : channelName(r.fixedChannel || state.settings.defaultChannel);
+      daysHtml += '<div class="salesDayCard openDayDetail" data-date="' + r.date + '"><div class="day-head"><div><div class="day-title">' + fmtDate(r.date) + '</div><div class="day-sub">' + saleCount(r) + ' CUPS · ' + fmtHours(h) + ' · ' + escapeHtml(dayChannelLabel) + '</div></div><span class="badge ' + sphClass(sph, recordMinSph(r)) + '">' + fmtSph(sph) + '</span></div></div>';
     });
     $("salesByDayBox").innerHTML = daysHtml || '<div class="empty">Aún no hay ventas por día.</div>';
     document.querySelectorAll(".openDayDetail").forEach(function(el){ el.onclick = function(){ showDayDetail(el.dataset.date); }; });
@@ -5072,6 +5336,7 @@ function updateCalcVisibility(){
     if($("journeyType")) $("journeyType").onchange = function(){ if($("customHoursBox")) $("customHoursBox").classList.toggle("hidden", $("journeyType").value !== "custom"); };
     if($("appearanceMode")) $("appearanceMode").onchange = function(){ state.settings.appearanceMode = safeAppearance($("appearanceMode").value); saveState(); };
     if($("accentColor")) $("accentColor").onchange = function(){ state.settings.accentColor = safeAccent($("accentColor").value); saveState(); };
+    if($("secondaryColor")) $("secondaryColor").onchange = function(){ state.settings.secondaryColor = safeSecondary($("secondaryColor").value); saveState(); };
     try{
       var themeMedia = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)");
       if(themeMedia){
@@ -5089,7 +5354,8 @@ function updateCalcVisibility(){
       state.settings.defaultChannel = $("defaultChannel") ? $("defaultChannel").value : "waylet";
       state.settings.defaultChannelMode = $("defaultChannelMode") ? $("defaultChannelMode").value : "fixed";
       state.settings.appearanceMode = safeAppearance($("appearanceMode") ? $("appearanceMode").value : "system");
-      state.settings.accentColor = safeAccent($("accentColor") ? $("accentColor").value : "turquesa");
+      state.settings.accentColor = safeAccent($("accentColor") ? $("accentColor").value : "azul");
+      state.settings.secondaryColor = safeSecondary($("secondaryColor") ? $("secondaryColor").value : "naranja");
       state.settings.channelThresholds.waylet = Number($("wayletMinSph") ? $("wayletMinSph").value || 0.120 : 0.120);
       state.settings.taxes = {
         iva:Number($("taxIva") ? $("taxIva").value || TAX_DEFAULTS.iva : TAX_DEFAULTS.iva),
