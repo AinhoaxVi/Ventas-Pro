@@ -2188,6 +2188,96 @@
       }
     }
 
+    /* v11 · Acabado limpio y controles de reposicionamiento */
+    body{
+      background:
+        radial-gradient(circle at 12% -8%,color-mix(in srgb,var(--primarySolid) 13%,transparent),transparent 28rem),
+        linear-gradient(180deg,var(--bg),var(--bg2))!important;
+    }
+
+    .app{width:min(1120px,100%)!important;}
+
+    .panel,.card,.day-card,.sale-box,.rate-card,.doc-card{
+      border-color:color-mix(in srgb,var(--controlBorder) 82%,transparent)!important;
+      box-shadow:0 10px 34px rgba(0,0,0,.12)!important;
+    }
+
+    .panel{border-radius:22px!important;}
+    .card,.day-card,.sale-box,.rate-card,.doc-card{border-radius:18px!important;}
+
+    input,select,textarea,button{
+      transition:border-color .18s ease,box-shadow .18s ease,background .18s ease,transform .18s ease;
+    }
+
+    button:active{transform:scale(.985);}
+
+    .sale-box{position:relative;overflow:hidden;}
+    .sale-box:before{
+      content:"";
+      position:absolute;
+      inset:0 auto 0 0;
+      width:3px;
+      background:var(--primarySolid);
+      opacity:.86;
+    }
+
+    .checkField{
+      min-height:48px;
+      display:flex!important;
+      flex-direction:row!important;
+      align-items:center;
+      gap:11px!important;
+      padding:10px 12px;
+      border:1px solid var(--controlBorder);
+      border-radius:14px;
+      background:var(--fieldBg);
+      color:var(--text)!important;
+      font-weight:850!important;
+      cursor:pointer;
+    }
+
+    .checkField input[type="checkbox"]{
+      appearance:none;
+      -webkit-appearance:none;
+      width:22px;
+      height:22px;
+      min-width:22px;
+      margin:0;
+      padding:0!important;
+      border:1px solid var(--controlBorder)!important;
+      border-radius:7px;
+      background:var(--fieldBg)!important;
+      display:grid;
+      place-content:center;
+    }
+
+    .checkField input[type="checkbox"]:checked{
+      background:var(--primarySolid)!important;
+      border-color:var(--primarySolid)!important;
+    }
+
+    .checkField input[type="checkbox"]:checked:after{
+      content:"✓";
+      color:#fff;
+      font-size:15px;
+      font-weight:950;
+      line-height:1;
+    }
+
+    .docAlert{
+      border-color:color-mix(in srgb,#f59e0b 52%,var(--controlBorder))!important;
+      background:color-mix(in srgb,#f59e0b 9%,var(--glass1))!important;
+    }
+
+    html.theme-light .panel,
+    html.theme-light .card,
+    html.theme-light .day-card,
+    html.theme-light .sale-box,
+    html.theme-light .rate-card,
+    html.theme-light .doc-card{
+      box-shadow:0 10px 28px rgba(15,23,42,.07)!important;
+    }
+
   </style>
 </head>
 
@@ -2653,7 +2743,7 @@
           <label class="field">Sábado<input id="h6" type="number" min="0" step="0.25"></label>
           <label class="field">Domingo<input id="h0" type="number" min="0" step="0.25"></label>
         </div>
-        <div class="hint">Si usas canal fijo, las horas se asignan solas. En combinados puedes poner bloques de 15 minutos y la app asigna lo que falte al canal fijo.</div>
+        <div class="hint">Si usas canal fijo, las horas se asignan solas. En combinados puedes poner bloques de 15 minutos y la app asigna lo que falte al canal fijo. Dualización tiene un mínimo fijo de 0,200 SPH.</div>
         <br>
         <button id="saveHoursBtn" type="button" class="btn-main">Guardar ajustes</button>
       </div>
@@ -2745,6 +2835,7 @@
 
   var CHANNELS = [
     {id:"waylet", name:"Waylet", min:0.120},
+    {id:"dualizacion", name:"Dualización", min:0.200},
     {id:"digital", name:"Digital", min:0.120},
     {id:"marca_blanca", name:"Marca blanca", min:0.120},
     {id:"nurturing", name:"Nurturing", min:0.120},
@@ -2816,10 +2907,11 @@
   ];
 
   var DOCS_TT = [
+    {title:"Recuperación de TT", email:"No enviar documentación manualmente", docs:["La documentación que solicite el correo de Repsol."], note:"Repsol envía al cliente el correo para adjuntar la documentación y recuperar el cambio de titular."},
     {title:"Compraventa", email:"No enviar doc manualmente", docs:["Escritura.","DNI."], note:"Al cliente le llega correo para adjuntar documentación."},
     {title:"Alquiler / arrendatario", email:"No enviar doc manualmente", docs:["Contrato de alquiler.","DNI."], note:"Al cliente le llega correo para adjuntar documentación."},
     {title:"Defunción", email:"area.digital@repsolluzygas.com", docs:["Certificado de defunción.","Declaración de herederos."], note:"Enviar a la atención del agente."},
-    {title:"Entre cónyuges", email:"area.digital@repsolluzygas.com", docs:["Libro de familia.","DNI."], note:"Enviar a la atención del agente."},
+    {title:"Entre cónyuges", email:"area.digital@repsolluzygas.com", docs:["Libro de familia.","DNI."], note:"Solo si siguen siendo cónyuges y no están en proceso de separación. Si se están separando o ya están separados, no se realiza."},
     {title:"Pareja de hecho", email:"area.digital@repsolluzygas.com", docs:["Documento del registro de pareja de hecho."], note:"Enviar a la atención del agente."},
     {title:"Particular a empresa", email:"area.digital@repsolluzygas.com", docs:["DNI obligatorio.","Poderes obligatorios."], note:"No finalizar si falta documentación: guardar oportunidad, acción comercial y CUPS; avisar a superior."}
   ];
@@ -2876,7 +2968,7 @@
 
   function defaultState(){
     return {
-      version:9,
+      version:10,
       records:[],
       settings:{
         month:currentMonth(),
@@ -2885,7 +2977,7 @@
         workHours:{0:0,1:8,2:8,3:8,4:8,5:7,6:0},
         defaultChannel:"waylet",
         defaultChannelMode:"fixed",
-        channelThresholds:{waylet:0.120,digital:0.120,marca_blanca:0.120,nurturing:0.120,foto_factura:0.120,colectivos:0.120,otro:0.120},
+        channelThresholds:{waylet:0.120,dualizacion:0.200,digital:0.120,marca_blanca:0.120,nurturing:0.120,foto_factura:0.120,colectivos:0.120,otro:0.120},
         taxes:Object.assign({}, TAX_DEFAULTS),
         appearanceMode:"system",
         accentColor:"turquesa"
@@ -2921,7 +3013,7 @@
   function normalizeState(s){
     var base = defaultState();
     s = s || {};
-    s.version = 9;
+    s.version = 10;
     s.records = Array.isArray(s.records) ? s.records : [];
     s.settings = Object.assign({}, base.settings, s.settings || {});
     s.settings.workHours = Object.assign({}, base.settings.workHours, s.settings.workHours || {});
@@ -2941,6 +3033,7 @@
         if(!v.saleType) v.saleType = v.dual ? "luzgas" : (v.type || "luz");
         if(v.saleType === "luzgas") v.dual = true;
         if(!v.channel) v.channel = r.fixedChannel || s.settings.defaultChannel || "waylet";
+        if(typeof v.repositioning !== "boolean") v.repositioning = false;
       });
     });
     return s;
@@ -3152,10 +3245,11 @@
   }
 
   function saleBreakdown(records){
-    var out = {luz:0, gas:0, dual:0, sva:0, total:0, tariffs:{}};
+    var out = {luz:0, gas:0, dual:0, sva:0, repositioning:0, total:0, tariffs:{}};
     records.forEach(function(r){
       (r.sales || []).forEach(function(v){
         var isDual = v.saleType === "luzgas" || v.dual;
+        if(v.repositioning) out.repositioning += 1;
         if(isDual){
           out.dual += 1; out.luz += 1; out.gas += 1;
           if(v.light && v.light.sva) out.sva += 1;
@@ -3390,7 +3484,23 @@
     };
   }
 
-  function sphClass(sph){
+  function activeMinSph(){
+    if((state.settings.defaultChannelMode || "fixed") !== "fixed") return 0.120;
+    var channel = state.settings.defaultChannel || "waylet";
+    var found = CHANNELS.find(function(c){ return c.id === channel; });
+    return Number(state.settings.channelThresholds[channel] || (found && found.min) || 0.120);
+  }
+
+  function recordMinSph(r){
+    if(!r || r.channelMode === "mixed") return 0.120;
+    var channel = r.fixedChannel || state.settings.defaultChannel || "waylet";
+    var found = CHANNELS.find(function(c){ return c.id === channel; });
+    return Number(state.settings.channelThresholds[channel] || (found && found.min) || 0.120);
+  }
+
+  function sphClass(sph, minimum){
+    var min = Number(minimum || activeMinSph());
+    if(min >= 0.200) return sph >= min ? "good" : sph > 0 ? "bad" : "gray";
     if(sph >= 0.140) return "good";
     if(sph >= 0.120) return "warn";
     if(sph > 0) return "bad";
@@ -3398,6 +3508,12 @@
   }
 
   function sphText(sph){
+    var min = activeMinSph();
+    if(min >= 0.200){
+      if(sph >= min) return "Mínimo de Dualización conseguido.";
+      if(sph > 0) return "Por debajo del mínimo 0,200.";
+      return "Sin datos.";
+    }
     if(sph >= 0.180) return "Tramo top.";
     if(sph >= 0.160) return "Tramo alto.";
     if(sph >= 0.140) return "Vas bien.";
@@ -3463,6 +3579,7 @@
         '<div class="mini"><span>Gas</span><b>' + bd.gas + '</b></div>' +
         '<div class="mini"><span>Duales</span><b>' + bd.dual + '</b></div>' +
         '<div class="mini"><span>SVAs</span><b>' + bd.sva + '</b></div>' +
+        '<div class="mini"><span>Reposicionamientos</span><b>' + bd.repositioning + '</b></div>' +
         '<div class="mini"><span>Tarifa top</span><b>' + escapeHtml(topTariffName(records)) + '</b></div>' +
       '</div>';
     }
@@ -3592,7 +3709,7 @@
         '<div class="day-head">' +
           '<div><div class="day-title">' + fmtDate(r.date) + '</div>' +
           '<div class="day-sub">' + fmtHours(h) + ' trabajadas' + (recoveryWorked > 0 ? ' (incl. recuperación ' + fmtHours(recoveryWorked) + ')' : '') + ' · ' + s + ' venta' + (s === 1 ? "" : "s") + ' · regalo ' + fmtHours(r.giftHours || 0) + (specialHoursTotal(r) > 0 ? ' · especial ' + fmtHours(specialHoursTotal(r)) : '') + '</div></div>' +
-          '<span class="badge ' + sphClass(daySph) + '">SPH día ' + fmtSph(daySph) + '</span>' +
+          '<span class="badge ' + sphClass(daySph, recordMinSph(r)) + '">SPH día ' + fmtSph(daySph) + '</span>' +
         '</div>' +
         '<div class="mini-grid">' +
           '<div class="mini"><span>Ventas acum.</span><b>' + accS + '</b></div>' +
@@ -3625,7 +3742,7 @@
       var body = isDual
         ? '<div class="mini-grid"><div class="mini"><span>Luz</span><b>' + escapeHtml((v.light && v.light.tariffName) || "-") + '</b></div><div class="mini"><span>SVA luz</span><b>' + ((v.light && v.light.sva) ? "Sí" : "No") + '</b></div><div class="mini"><span>Gas</span><b>' + escapeHtml((v.gas && v.gas.tariffName) || "-") + '</b></div><div class="mini"><span>SVA gas</span><b>' + ((v.gas && v.gas.sva) ? "Sí" : "No") + '</b></div></div>'
         : '<div class="mini-grid"><div class="mini"><span>Tarifa</span><b>' + escapeHtml(v.tariffName || "Sin tarifa") + '</b></div><div class="mini"><span>Tipo</span><b>' + escapeHtml((v.saleType || "luz").toUpperCase()) + '</b></div><div class="mini"><span>SVA</span><b>' + (v.sva ? "Sí" : "No") + '</b></div><div class="mini"><span>Motivo sin SVA</span><b>' + escapeHtml(v.noSvaReason || "-") + '</b></div></div>';
-      return '<div class="sale-box"><div class="sale-head"><div><div class="sale-title">Venta ' + (idx+1) + '</div><div class="sale-sub">' + escapeHtml(v.client || "Sin cliente") + ' · ' + escapeHtml(channelName(v.channel || r.fixedChannel)) + '</div></div><span class="badge ' + (isDual ? "pink" : "turq") + '">' + (isDual ? "Dual" : saleCups(v)+" CUPS") + '</span></div><div class="mini-grid"><div class="mini"><span>ID</span><b>' + escapeHtml(v.id || "SIN ID") + '</b></div><div class="mini"><span>CUPS</span><b>' + saleCups(v) + '</b></div></div>' + body + '</div>';
+      return '<div class="sale-box"><div class="sale-head"><div><div class="sale-title">Venta ' + (idx+1) + '</div><div class="sale-sub">' + escapeHtml(v.client || "Sin cliente") + ' · ' + escapeHtml(channelName(v.channel || r.fixedChannel)) + '</div></div><span class="badge ' + (isDual ? "pink" : "turq") + '">' + (isDual ? "Dual" : saleCups(v)+" CUPS") + '</span></div><div class="mini-grid"><div class="mini"><span>ID</span><b>' + escapeHtml(v.id || "SIN ID") + '</b></div><div class="mini"><span>CUPS</span><b>' + saleCups(v) + '</b></div><div class="mini"><span>Reposicionamiento</span><b>' + (v.repositioning ? "Sí" : "No") + '</b></div></div>' + body + '</div>';
     }).join("") : '<div class="empty">Este día no tiene ventas guardadas.</div>';
     $("dayDetailContent").innerHTML = '<div class="day-head"><div><h2 style="margin:0">' + fmtDate(r.date) + '</h2><div class="small">Detalle del día</div></div><button type="button" id="closeDayDetail" class="btn-small">Cerrar</button></div><br>' +
       '<div class="mini-grid"><div class="mini"><span>Horas SPH</span><b>' + fmtHours(h) + '</b></div><div class="mini"><span>Horas regalo</span><b>' + fmtHours(r.giftHours || 0) + '</b></div><div class="mini"><span>CUPS</span><b>' + s + '</b></div><div class="mini"><span>SPH día</span><b>' + fmtSph(daySph) + '</b></div><div class="mini"><span>Canales</span><b>' + escapeHtml(channelText) + '</b></div></div>' +
@@ -3659,7 +3776,7 @@
         '<label class="field">ID<input class="saleId" type="text" placeholder="Ej. 4862394"></label>' +
         '<label class="field">Cliente<input class="saleClient" type="text" placeholder="Ej. Manuela"></label>' +
       '</div>' +
-      '<div class="row cols2"><label class="field">Canal de la venta<select class="saleChannel">' + channelOptions(data.channel || state.settings.defaultChannel || "waylet") + '</select></label></div>' +
+      '<div class="row cols2"><label class="field">Canal de la venta<select class="saleChannel">' + channelOptions(data.channel || state.settings.defaultChannel || "waylet") + '</select></label><label class="checkField"><input class="saleRepositioning" type="checkbox"><span>Lleva reposicionamiento</span></label></div>' +
       '<div class="singleSaleBox">' +
         '<div class="row cols3">' +
           '<label class="field singleTariffLabel">Tarifa<select class="saleTariff"></select></label>' +
@@ -3684,6 +3801,7 @@
     div.querySelector(".saleId").value = data.id || "";
     div.querySelector(".saleClient").value = data.client || "";
     div.querySelector(".saleChannel").value = data.channel || state.settings.defaultChannel || "waylet";
+    div.querySelector(".saleRepositioning").checked = !!data.repositioning;
     div.querySelector(".saleSva").value = data.sva ? "1" : "0";
     div.querySelector(".saleNoSvaReason").value = data.noSvaReason || "";
     div.querySelector(".dualLightSva").value = light.sva ? "1" : "0";
@@ -3817,6 +3935,7 @@
         id:div.querySelector(".saleId").value.trim(),
         client:div.querySelector(".saleClient").value.trim(),
         channel:channel,
+        repositioning:div.querySelector(".saleRepositioning").checked,
         cashback:0
       };
       if(type === "luzgas"){
@@ -4212,7 +4331,8 @@ function updateCalcVisibility(){
 
   function docCard(d, type){
     var emailBtn = d.email.indexOf("@") >= 0 ? '<button type="button" class="btn-small copyEmail" data-email="' + d.email + '">Copiar correo</button>' : '';
-    return '<div class="doc-card docItem" data-search="' + escapeHtml((d.title + " " + d.email + " " + d.docs.join(" ") + " " + (d.when || []).join(" ") + " " + d.note).toLowerCase()) + '">' +
+    var alertClass = d.title === "Recuperación de TT" || d.title === "Entre cónyuges" ? " docAlert" : "";
+    return '<div class="doc-card docItem' + alertClass + '" data-search="' + escapeHtml((d.title + " " + d.email + " " + d.docs.join(" ") + " " + (d.when || []).join(" ") + " " + d.note).toLowerCase()) + '">' +
       '<div class="day-head"><div><div class="day-title">' + escapeHtml(d.title) + '</div><div class="day-sub">' + escapeHtml(d.email) + '</div></div><span class="badge ' + (type === "alta" ? "turq" : "pink") + '">' + (type === "alta" ? "Alta" : "TT") + '</span></div>' +
       (d.when ? '<div><b>Cuándo aplica</b><ul>' + d.when.map(function(x){ return '<li>' + escapeHtml(x) + '</li>'; }).join("") + '</ul></div>' : '') +
       '<div><b>Documentación</b><ul>' + d.docs.map(function(x){ return '<li>' + escapeHtml(x) + '</li>'; }).join("") + '</ul></div>' +
@@ -4599,6 +4719,7 @@ function updateCalcVisibility(){
       '<div class="mini"><span>Gas</span><b>' + bd.gas + '</b></div>' +
       '<div class="mini"><span>Duales</span><b>' + bd.dual + '</b></div>' +
       '<div class="mini"><span>SVAs</span><b>' + bd.sva + '</b></div>' +
+      '<div class="mini"><span>Reposicionamientos</span><b>' + bd.repositioning + '</b></div>' +
       '<div class="mini"><span>Horas SPH</span><b>' + fmtHours(totals.hours) + '</b></div>' +
       '<div class="mini ' + sphClass(totals.sph) + '"><span>SPH</span><b>' + fmtSph(totals.sph) + '</b></div>' +
       '<div class="mini"><span>Tarifa top</span><b>' + escapeHtml(topTariffName(recs)) + '</b></div>' +
@@ -4612,7 +4733,7 @@ function updateCalcVisibility(){
     var daysHtml = "";
     recs.filter(function(r){ return saleCount(r)>0; }).forEach(function(r){
       var h = workedHoursForRecord(r); var sph = h>0 ? saleCount(r)/h : 0;
-      daysHtml += '<div class="salesDayCard openDayDetail" data-date="' + r.date + '"><div class="day-head"><div><div class="day-title">' + fmtDate(r.date) + '</div><div class="day-sub">' + saleCount(r) + ' CUPS · ' + fmtHours(h) + ' · ' + escapeHtml(channelName(r.fixedChannel || state.settings.defaultChannel)) + '</div></div><span class="badge ' + sphClass(sph) + '">' + fmtSph(sph) + '</span></div></div>';
+      daysHtml += '<div class="salesDayCard openDayDetail" data-date="' + r.date + '"><div class="day-head"><div><div class="day-title">' + fmtDate(r.date) + '</div><div class="day-sub">' + saleCount(r) + ' CUPS · ' + fmtHours(h) + ' · ' + escapeHtml(channelName(r.fixedChannel || state.settings.defaultChannel)) + '</div></div><span class="badge ' + sphClass(sph, recordMinSph(r)) + '">' + fmtSph(sph) + '</span></div></div>';
     });
     $("salesByDayBox").innerHTML = daysHtml || '<div class="empty">Aún no hay ventas por día.</div>';
     document.querySelectorAll(".openDayDetail").forEach(function(el){ el.onclick = function(){ showDayDetail(el.dataset.date); }; });
@@ -4652,7 +4773,7 @@ function updateCalcVisibility(){
       var accSph = accH > 0 ? accS / accH : 0;
 
       var salesText = (r.sales || []).map(function(v){
-        return (v.id || "SIN ID") + " · " + (v.tariffName || "Sin tarifa") + " · " + (v.sva ? "con SVA" : "sin SVA") + (v.client ? " · " + v.client : "");
+        return (v.id || "SIN ID") + " · " + (v.tariffName || "Sin tarifa") + " · " + (v.sva ? "con SVA" : "sin SVA") + " · reposicionamiento " + (v.repositioning ? "sí" : "no") + (v.client ? " · " + v.client : "");
       }).join(" | ");
 
       rows.push({
@@ -4755,17 +4876,17 @@ function updateCalcVisibility(){
   }
 
   function exportCsv(){
-    var rows = [["fecha","horas_base","horas_recuperacion","horas_trabajadas_sph","horas_regalo","horas_libre","horas_vacaciones","horas_medicas","horas_incidencia","horas_cursos","horas_no_sph","ventas_cups","sph_dia","id","cliente","tarifa","tipo","sva"]];
+    var rows = [["fecha","horas_base","horas_recuperacion","horas_trabajadas_sph","horas_regalo","horas_libre","horas_vacaciones","horas_medicas","horas_incidencia","horas_cursos","horas_no_sph","ventas_cups","sph_dia","id","cliente","tarifa","tipo","sva","canal","reposicionamiento"]];
     monthRecords().forEach(function(r){
       var worked = workedHoursForRecord(r);
       var sp = Object.assign({free:0, vacation:0, medical:0, incident:0, course:0, customNoSph:0, recovery:0}, r.specialHours || {});
       var sph = worked > 0 ? saleCount(r)/worked : 0;
       var base = [r.date, Number(r.hours || 0), Number(sp.recovery || 0), worked, Number(r.giftHours || 0), Number(sp.free || 0), Number(sp.vacation || 0), Number(sp.medical || 0), Number(sp.incident || 0), Number(sp.course || 0), Number(sp.customNoSph || 0), saleCount(r), fmtSph(sph)];
       if(!(r.sales || []).length){
-        rows.push(base.concat(["","","","",""]));
+        rows.push(base.concat(["","","","","","",""]));
       }else{
         (r.sales || []).forEach(function(s){
-          rows.push(base.concat([s.id || "", s.client || "", s.tariffName || "", s.saleType || "", s.sva ? "sí" : "no"]));
+          rows.push(base.concat([s.id || "", s.client || "", s.tariffName || "", s.saleType || "", s.sva ? "sí" : "no", channelName(s.channel || r.fixedChannel), s.repositioning ? "sí" : "no"]));
         });
       }
     });
