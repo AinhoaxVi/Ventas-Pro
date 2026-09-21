@@ -2669,6 +2669,166 @@
       #v9HomeBreakdown .mini-grid,#paceBox .mini-grid{grid-template-columns:1fr 1fr!important;}
     }
 
+    /* v14 · Command Center */
+    :root,html.theme-dark{
+      --nav:#080f1f;
+      --navText:#dbe7f6;
+      --navMuted:#8290a6;
+      --success:#16a36a;
+      --warning:#d89013;
+    }
+    html.theme-light{
+      --nav:#0b1324;
+      --navText:#e8eef8;
+      --navMuted:#8f9bb0;
+      --success:#087a4e;
+      --warning:#a85d00;
+    }
+    body{
+      background:
+        radial-gradient(circle at 76% -10%,color-mix(in srgb,var(--primarySolid) 9%,transparent),transparent 34rem),
+        linear-gradient(180deg,var(--bg),var(--bg2))!important;
+    }
+    .desktopNav{background:var(--nav)!important;border-right-color:rgba(255,255,255,.08)!important;color:var(--navText)!important;}
+    .desktopNavHead{border-bottom-color:rgba(255,255,255,.09)!important;}
+    .desktopNavHead strong{color:#fff!important;font-size:.96rem!important;}
+    .desktopNavHead span,.sideNavDivider{color:var(--navMuted)!important;}
+    .sideNavItem{color:var(--navMuted)!important;position:relative;overflow:hidden;}
+    .sideNavItem:hover{color:var(--navText)!important;background:rgba(255,255,255,.055)!important;}
+    .sideNavItem.active{
+      color:#fff!important;
+      background:linear-gradient(90deg,color-mix(in srgb,var(--primarySolid) 26%,transparent),rgba(255,255,255,.035))!important;
+      box-shadow:inset 3px 0 0 var(--primarySolid)!important;
+    }
+    .desktopNav:after{
+      content:"Datos guardados en este dispositivo";
+      margin-top:auto;
+      padding:14px 10px 2px;
+      border-top:1px solid rgba(255,255,255,.08);
+      color:var(--navMuted);
+      font-size:.65rem;
+      line-height:1.4;
+    }
+    header:before{height:1px!important;opacity:.75!important;}
+    .headerDate{display:block;color:var(--muted);font-size:.66rem;font-weight:600;line-height:1.2;}
+    #headerTitle{line-height:1.12!important;}
+    .controlBar{display:grid!important;grid-template-columns:minmax(0,1fr) auto;gap:14px!important;align-items:end;background:var(--panel)!important;}
+    .controlBar .row{margin:0!important;}
+    .quickAddBtn{white-space:nowrap;background:var(--primarySolid)!important;border-color:var(--primarySolid)!important;color:#fff!important;min-height:44px!important;}
+
+    .executiveKpis{grid-template-columns:repeat(6,minmax(0,1fr))!important;}
+    .executiveKpis .card{grid-column:span 1;}
+    .executiveKpis .kpiPrimary{
+      grid-column:span 2;
+      align-items:flex-start;
+      background:
+        linear-gradient(135deg,color-mix(in srgb,var(--primarySolid) 18%,var(--panel)),var(--panel) 68%)!important;
+      border-color:color-mix(in srgb,var(--primarySolid) 48%,var(--line))!important;
+    }
+    .executiveKpis .kpiPrimary .value{font-size:2.15rem!important;}
+    .executiveKpis .kpiPrimary .sphStatus{margin-top:5px!important;padding:0!important;border:0!important;background:transparent!important;}
+    .kpiTrack{width:100%;height:5px;margin-top:13px;border-radius:999px;background:var(--soft);overflow:hidden;}
+    .kpiTrack span{display:block;width:0;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--primarySolid),var(--secondarySolid));transition:width .35s ease;}
+    #kpiIncentive{color:var(--success)!important;}
+
+    .panelHeading{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:14px;}
+    .panelHeading h2{margin:2px 0 0!important;}
+    .eyebrow{display:block;color:var(--primarySolid);font-size:.62rem;font-weight:850;letter-spacing:.11em;text-transform:uppercase;}
+    .textButton{min-height:34px!important;padding:6px 9px!important;border:0!important;background:transparent!important;color:var(--primarySolid)!important;font-size:.74rem;}
+    .statusChip{padding:5px 8px;border-radius:6px;background:var(--primarySoft);color:var(--primarySolid);font-size:.65rem;font-weight:800;white-space:nowrap;}
+    .incentiveTotal{
+      display:flex;align-items:flex-end;justify-content:space-between;gap:12px;
+      padding:15px;border:1px solid color-mix(in srgb,var(--success) 28%,var(--line));border-radius:10px;
+      background:color-mix(in srgb,var(--success) 7%,var(--panel2));
+    }
+    .incentiveTotal span{color:var(--muted);font-size:.72rem;font-weight:700;}
+    .incentiveTotal b{font-size:1.55rem;color:var(--success);font-variant-numeric:tabular-nums;letter-spacing:-.04em;}
+    .incentiveLine{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 2px;border-bottom:1px solid var(--line);}
+    .incentiveLine:last-child{border-bottom:0;}
+    .incentiveLine strong{font-size:.82rem;}
+    .incentiveLine small{display:block;margin-top:2px;color:var(--muted);font-size:.7rem;}
+    .incentiveLine > b{font-size:.9rem;font-variant-numeric:tabular-nums;}
+    .incentiveEmpty{padding:18px 10px;text-align:center;color:var(--muted);font-size:.78rem;line-height:1.5;}
+
+    .incentiveToolbar{align-items:end!important;margin-bottom:12px;}
+    .incentiveHelp{padding:11px 12px;border-left:3px solid var(--primarySolid);background:var(--soft);border-radius:8px;margin-bottom:14px;}
+    .tierHeader,.tierRow{display:grid;grid-template-columns:minmax(110px,1fr) minmax(130px,1fr) 42px;gap:10px;align-items:end;}
+    .tierHeader{padding:0 2px 7px;color:var(--muted);font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.055em;}
+    .tierList{display:grid;gap:9px;margin-bottom:13px;}
+    .tierRow{padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--panel2);}
+    .tierRow label{margin:0!important;}
+    .tierRow input{font-variant-numeric:tabular-nums;}
+    .removeTierBtn{width:42px!important;min-width:42px!important;padding:0!important;color:#dc2626!important;background:var(--dangerSoft)!important;border-color:rgba(220,38,38,.2)!important;}
+    .widgetSettingsList{display:grid;gap:8px;margin-bottom:14px;}
+    .widgetSettingRow{
+      display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;
+      padding:10px 11px;border:1px solid var(--line);border-radius:10px;background:var(--panel2);
+    }
+    .widgetSettingRow .checkField{border:0!important;background:transparent!important;padding:0!important;min-height:36px!important;}
+    .widgetOrderActions{display:flex;gap:6px;}
+    .widgetOrderBtn{width:36px!important;min-width:36px!important;height:36px!important;min-height:36px!important;padding:0!important;font-size:.85rem;}
+    .widgetOrderBtn:disabled{opacity:.28;cursor:not-allowed;}
+    .logicHidden{display:none!important;}
+    .profileRow,.weatherSearchRow{align-items:end!important;}
+    .profileRow > button,.weatherSearchRow > button{min-height:44px!important;}
+
+    .weatherWidget{min-height:120px;}
+    .weatherNow{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:14px;align-items:center;}
+    .weatherSymbol{width:58px;height:58px;display:grid;place-items:center;border-radius:14px;background:var(--primarySoft);font-size:2rem;line-height:1;}
+    .weatherPlace{font-size:.75rem;color:var(--muted);font-weight:700;}
+    .weatherCondition{margin-top:3px;font-size:1rem;font-weight:800;letter-spacing:-.02em;}
+    .weatherTemp{text-align:right;font-size:2rem;font-weight:780;letter-spacing:-.05em;font-variant-numeric:tabular-nums;}
+    .weatherMeta{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px;padding-top:12px;border-top:1px solid var(--line);}
+    .weatherMeta span{padding:5px 7px;border-radius:6px;background:var(--soft);color:var(--muted);font-size:.68rem;font-weight:700;}
+    .weatherCredit{margin-left:auto;align-self:center;color:var(--muted);font-size:.65rem;text-decoration:none;}
+    .weatherCredit:hover{color:var(--primarySolid);}
+    .weatherDays{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px;}
+    .weatherDay{padding:9px;border:1px solid var(--line);border-radius:8px;background:var(--panel2);text-align:center;}
+    .weatherDay span{display:block;color:var(--muted);font-size:.65rem;font-weight:700;}
+    .weatherDay b{display:block;margin-top:4px;font-size:.78rem;}
+    .weatherLocationResults{display:grid;gap:7px;margin:12px 0;}
+    .locationResult{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;text-align:left;background:var(--panel2)!important;}
+    .locationResult span{display:grid;gap:2px;}
+    .locationResult strong{font-size:.8rem;}
+    .locationResult small{color:var(--muted);font-size:.69rem;}
+    .locationResult:after{content:"Elegir";color:var(--primarySolid);font-size:.7rem;font-weight:800;}
+
+    #objectiveCards .day-card,#v9ChannelSph .rate-card{transition:border-color .18s ease,transform .18s ease;}
+    #objectiveCards .day-card:hover,#v9ChannelSph .rate-card:hover{border-color:color-mix(in srgb,var(--primarySolid) 38%,var(--line))!important;transform:translateY(-1px);}
+    .panel{box-shadow:0 10px 28px rgba(2,8,23,.10)!important;}
+    html.theme-light .panel{box-shadow:0 9px 25px rgba(15,23,42,.065)!important;}
+    .value,.mini b,.incentiveTotal b,.incentiveLine > b{font-variant-numeric:tabular-nums;}
+
+    @media(min-width:1100px){
+      #inicio.dashboardHome > .controlBar{grid-column:1/-1;}
+      #inicio.dashboardHome{grid-auto-flow:row dense;}
+      #inicio.dashboardHome > [data-widget]{grid-column:span 6!important;grid-row:auto!important;}
+      #inicio.dashboardHome > [data-widget="kpis"]{grid-column:1/-1!important;}
+      #ajustes > .panel{grid-column:auto!important;}
+      #ajustes > #profileSettingsPanel,#ajustes > #incentiveSettingsPanel,#ajustes > #homeWidgetSettingsPanel,#ajustes > #weatherSettingsPanel,#ajustes > .panel:nth-child(8){grid-column:1/-1!important;}
+    }
+    @media(max-width:1099px){
+      .executiveKpis{grid-template-columns:repeat(4,minmax(0,1fr))!important;}
+      .executiveKpis .kpiPrimary{grid-column:span 2;}
+    }
+    @media(max-width:760px){
+      .controlBar{grid-template-columns:1fr!important;}
+      .quickAddBtn{width:100%;}
+      .executiveKpis{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+      .executiveKpis .kpiPrimary{grid-column:1/-1;min-height:130px!important;}
+      .panelHeading{align-items:center;}
+    }
+    @media(max-width:460px){
+      .tierHeader{display:none;}
+      .tierRow{grid-template-columns:minmax(0,1fr) 42px;}
+      .tierRow label:nth-child(2){grid-column:1;}
+      .tierRow .removeTierBtn{grid-column:2;grid-row:1/span 2;align-self:stretch;height:auto!important;}
+      .executiveKpis .card{min-height:98px!important;}
+      .weatherNow{grid-template-columns:auto minmax(0,1fr);}
+      .weatherTemp{grid-column:2;text-align:left;font-size:1.7rem;}
+      .weatherDays{grid-template-columns:repeat(3,minmax(0,1fr));}
+    }
+
   </style>
 </head>
 
@@ -2681,6 +2841,7 @@
         <div class="brandCopy">
           <span class="brandName">Ventas Pro</span>
           <h1 id="headerTitle">Inicio</h1>
+          <span class="headerDate" id="headerDate"></span>
         </div>
       </div>
       <div class="topActions">
@@ -2697,7 +2858,7 @@
   <aside class="desktopNav" aria-label="Navegación principal">
     <div class="desktopNavHead">
       <span class="desktopNavMark" aria-hidden="true"></span>
-      <div><strong>Ventas Pro</strong><span>Control comercial</span></div>
+      <div><strong>Ventas Pro</strong><span>Control comercial · v14</span></div>
     </div>
     <nav class="desktopNavList">
       <button type="button" class="sideNavItem active" data-tab="inicio">Inicio</button>
@@ -2715,7 +2876,7 @@
 
   <main class="mainContent">
     <section id="inicio" class="active dashboardHome">
-      <div class="panel">
+      <div class="panel controlBar">
         <div class="row cols3">
           <label class="field">Mes
             <input id="monthFilter" type="month">
@@ -2730,9 +2891,16 @@
             </select>
           </label>
         </div>
+        <button type="button" class="quickAddBtn" data-tab="venta">+ Registrar jornada</button>
       </div>
 
-      <div class="cards five">
+      <div class="cards five executiveKpis" data-widget="kpis">
+        <div class="card kpiPrimary">
+          <div class="label">Rendimiento SPH</div>
+          <div class="value" id="kpiSph">0,000</div>
+          <div class="small" id="sphMessage">Sin datos.</div>
+          <div class="kpiTrack" aria-hidden="true"><span id="sphProgress"></span></div>
+        </div>
         <div class="card">
           <div class="label">Ventas</div>
           <div class="value" id="kpiSales">0</div>
@@ -2744,9 +2912,9 @@
           <div class="small">Computables para SPH</div>
         </div>
         <div class="card">
-          <div class="label">SPH acumulado</div>
-          <div class="value" id="kpiSph">0,000</div>
-          <div class="small" id="sphMessage">Sin datos.</div>
+          <div class="label">Incentivo estimado</div>
+          <div class="value" id="kpiIncentive">0,00€</div>
+          <div class="small" id="incentiveKpiMeta">Según tramos configurados</div>
         </div>
         <div class="card">
           <div class="label">Horas regalo</div>
@@ -2756,29 +2924,38 @@
 
       </div>
 
+      <div class="panel weatherPanel" id="weatherPanel" data-widget="weather">
+        <div class="panelHeading"><div><span class="eyebrow">Hoy</span><h2>Tiempo</h2></div><button type="button" class="textButton" data-tab="ajustes" data-target="weatherSettingsPanel">Cambiar ubicación</button></div>
+        <div id="weatherWidget" class="weatherWidget"><div class="incentiveEmpty">Configura una ubicación para ver el tiempo.</div></div>
+      </div>
 
-      <div class="panel compactPanel" id="pendingPanel">
+      <div class="panel compactPanel" id="pendingPanel" data-widget="pending">
         <h2>Pendientes por revisar</h2>
         <div id="pendingWarningsBox" class="grid"></div>
       </div>
-      <div class="panel compactPanel" id="homeSummaryPanel">
+      <div class="panel compactPanel" id="homeSummaryPanel" data-widget="summary">
         <h2>Resumen ventas</h2>
         <div id="v9HomeBreakdown" class="grid"></div>
       </div>
 
-      <div class="panel compactPanel" id="homeChannelPanel">
+      <div class="panel compactPanel" id="homeChannelPanel" data-widget="channels">
         <h2>SPH por canal</h2>
         <div id="v9ChannelSph" class="grid"></div>
       </div>
 
-      <div class="panel" id="objectivePanel">
+      <div class="panel" id="objectivePanel" data-widget="objectives">
         <h2>Objetivos automáticos</h2>
         <div id="objectiveCards" class="grid"></div>
       </div>
 
-      <div class="panel" id="pacePanel">
+      <div class="panel" id="pacePanel" data-widget="pace">
         <h2>Ritmo del mes</h2>
         <div id="paceBox" class="grid"></div>
+      </div>
+
+      <div class="panel" id="incentivePanel" data-widget="incentives">
+        <div class="panelHeading"><div><span class="eyebrow">Variable</span><h2>Incentivos</h2></div><button type="button" class="textButton" data-tab="ajustes" data-target="incentiveSettingsPanel">Configurar</button></div>
+        <div id="incentiveBreakdown" class="grid"></div>
       </div>
 
     </section>
@@ -3078,6 +3255,16 @@
 
     <section id="ajustes">
 
+      <div class="panel" id="profileSettingsPanel">
+        <div class="panelHeading"><div><span class="eyebrow">Personalización</span><h2>Tu perfil</h2></div><span class="statusChip">Local</span></div>
+        <div class="row cols2 profileRow">
+          <label class="field">Nombre para el saludo
+            <input id="displayName" type="text" maxlength="24" placeholder="Ej. Ainhoa">
+          </label>
+          <button id="saveProfileBtn" type="button" class="btn-main">Guardar nombre</button>
+        </div>
+      </div>
+
       <div class="panel">
         <h2>Apariencia</h2>
         <div class="row cols3">
@@ -3163,6 +3350,45 @@
         <button id="saveThresholdsBtn" type="button" class="btn-main">Guardar mínimos</button>
       </div>
 
+      <div class="panel" id="incentiveSettingsPanel">
+        <div class="panelHeading"><div><span class="eyebrow">Retribución variable</span><h2>Incentivos por canal</h2></div><span class="statusChip">Personalizable</span></div>
+        <div class="row cols2 incentiveToolbar">
+          <label class="field">Canal
+            <select id="incentiveChannel"></select>
+          </label>
+          <label class="checkField"><input id="incentiveEnabled" type="checkbox"><span>Calcular incentivos para este canal</span></label>
+        </div>
+        <div class="settingsInfoText incentiveHelp">Añade los tramos reales de tu campaña. La app aplica el tramo más alto alcanzado y multiplica su importe por los CUPS del canal.</div>
+        <div class="tierHeader" aria-hidden="true"><span>Desde SPH</span><span>Importe por CUPS</span><span></span></div>
+        <div id="incentiveTiers" class="tierList"></div>
+        <div class="actions">
+          <button id="addIncentiveTierBtn" type="button">+ Añadir tramo</button>
+          <button id="saveIncentivesBtn" type="button" class="btn-main">Guardar incentivos</button>
+        </div>
+      </div>
+
+      <div class="panel" id="homeWidgetSettingsPanel">
+        <div class="panelHeading"><div><span class="eyebrow">Panel personal</span><h2>Widgets de Inicio</h2></div><span class="statusChip">Por dispositivo</span></div>
+        <div class="settingsInfoText incentiveHelp">Elige qué información aparece en Inicio y ordénala como te resulte más útil.</div>
+        <div id="homeWidgetSettings" class="widgetSettingsList"></div>
+        <div class="actions">
+          <button id="resetWidgetsBtn" type="button">Restablecer</button>
+          <button id="saveWidgetsBtn" type="button" class="btn-main">Guardar panel</button>
+        </div>
+      </div>
+
+      <div class="panel" id="weatherSettingsPanel">
+        <div class="panelHeading"><div><span class="eyebrow">Widget de Inicio</span><h2>Ubicación del tiempo</h2></div><span class="statusChip">Sin GPS</span></div>
+        <div class="row cols2 weatherSearchRow">
+          <label class="field">Ciudad o municipio
+            <input id="weatherLocationQuery" type="search" placeholder="Ej. Sabadell, Zaragoza, Madrid...">
+          </label>
+          <button id="searchWeatherLocationBtn" type="button">Buscar ubicación</button>
+        </div>
+        <div id="weatherLocationResults" class="weatherLocationResults"></div>
+        <div id="savedWeatherLocation" class="settingsInfoText"></div>
+      </div>
+
       <div class="panel">
         <h2>Impuestos y cargos de calculadora</h2>
         <div class="row cols3">
@@ -3229,7 +3455,7 @@
   </div>
 </div>
 
-<div id="toast" class="toast"></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
 
 <script>
 (function(){
@@ -3256,6 +3482,29 @@
     {id:"colectivos", name:"Colectivos", min:0.120},
     {id:"otro", name:"Otro", min:0.120}
   ];
+
+  var HOME_WIDGETS = [
+    {id:"kpis", name:"Rendimiento principal"},
+    {id:"weather", name:"Tiempo en mi ubicación"},
+    {id:"pending", name:"Pendientes por revisar"},
+    {id:"summary", name:"Resumen de ventas"},
+    {id:"channels", name:"SPH por canal"},
+    {id:"objectives", name:"Objetivos automáticos"},
+    {id:"pace", name:"Ritmo del mes"},
+    {id:"incentives", name:"Incentivos"}
+  ];
+
+  function defaultIncentives(){
+    var out = {};
+    CHANNELS.forEach(function(c){ out[c.id] = {enabled:false, tiers:[]}; });
+    return out;
+  }
+
+  function defaultWidgetVisibility(){
+    var out = {};
+    HOME_WIDGETS.forEach(function(w){ out[w.id] = true; });
+    return out;
+  }
 
   var TAX_DEFAULTS = {
     iva:0.21,
@@ -3318,7 +3567,7 @@
 
   var SERVICES = [{"id":"none","name":"Sin SVA","basePrice":0,"price":0,"promo":""},{"id":"ta24","name":"TA24H","basePrice":4.12,"price":4.12,"promo":"Para todos"},{"id":"ta24plus","name":"TA24H Plus","basePrice":5.78,"price":5.78,"promo":"Para todos"},{"id":"ta24pyme20","name":"TA24H Pyme 2.0","basePrice":8.26,"price":8.26,"promo":"Para todos"},{"id":"ta24pyme30","name":"TA24H Pyme 3.0","basePrice":10.73,"price":10.73,"promo":"Para todos"},{"id":"sihconfort","name":"SIHConfort","basePrice":8.26,"price":8.26,"promo":"Para todos"},{"id":"sig","name":"SIG","basePrice":11.15,"price":11.15,"promo":"Para todos"},{"id":"tag","name":"TAG","basePrice":9.08,"price":9.08,"promo":"Para todos"}];
 
-  var TARIFFS = [{"id":"v35-10","name":"V35","group":"Precio fijo","type":"luz","maxPower":10,"p1":0.090137,"p2":0.090137,"energy":0.0999,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 10 kW. TA24H Plus obligatorio.","exc":0,"isBvSolar":false,"energyIva":0.120879,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V35"},{"id":"v34-15","name":"V34","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1099,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW. TA24H Plus obligatorio.","exc":0,"isBvSolar":false,"energyIva":0.132979,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V34"},{"id":"v33-15","name":"V33","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1199,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW. SVA obligatorio.","exc":0,"isBvSolar":false,"energyIva":0.145079,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V33"},{"id":"v32-10","name":"V32","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":true,"svaLabel":"Sin SVA con permiso","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. Puede ir sin SVA con permiso.","exc":0,"isBvSolar":false,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V32"},{"id":"v31-15","name":"V31","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1499,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.181379,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V31"},{"id":"v30-15","name":"V30","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1599,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.193479,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V30"},{"id":"pyme-v34-15","name":"Pyme V34","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1099,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW. Ahorro pyme.","exc":0,"isBvSolar":false,"energyIva":0.132979,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Pyme V34"},{"id":"pyme-v33-15","name":"Pyme V33","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1199,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW. Ahorro pyme.","exc":0,"isBvSolar":false,"energyIva":0.145079,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Pyme V33"},{"id":"pyme-v32-15","name":"Pyme V32","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":true,"svaLabel":"Sin SVA con permiso","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. Puede ir sin SVA con permiso.","exc":0,"isBvSolar":false,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Pyme V32"},{"id":"pyme-v31-15","name":"Pyme V31","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1499,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.181379,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Pyme V31"},{"id":"pyme-v30-15","name":"Pyme V30","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1599,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.193479,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Pyme V30"},{"id":"tap-v32-10","name":"TAP V32","group":"TAP","type":"luz","maxPower":10,"p1":0.084431,"p2":0.001987,"energy":0.1699,"svaMandatory":false,"permissionSva":true,"svaLabel":"Sin SVA con permiso","cashbackEligible":true,"notes":"Potencia permitida: hasta 10 kW. Ahorro potencia. Sin SVA con permiso.","exc":0,"isBvSolar":false,"energyIva":0.205579,"p1Iva":0.102162,"p2Iva":0.002404,"shortName":"TAP V32"},{"id":"tap-hogar-v34-10","name":"TAP V34 Hogar","group":"TAP","type":"luz","maxPower":10,"p1":0.084431,"p2":0.001987,"energy":0.1649,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 10 kW. Ahorro potencia hogar.","exc":0,"isBvSolar":false,"energyIva":0.199529,"p1Iva":0.102162,"p2Iva":0.002404,"shortName":"TAP V34 Hogar"},{"id":"solar-v30-15","name":"Solar V30","group":"Solar","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1399,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. Excedente 0,06 €/kWh.","exc":0.06,"isBvSolar":false,"energyIva":0.169279,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Solar V30"},{"id":"bv-v26-15","name":"Tarifa Solar BV V26","group":"Solar","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. Batería virtual solar. Excedente 0,06 €/kWh.","exc":0.06,"isBvSolar":true,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"BV V26"},{"id":"dh-v33-15","name":"Discriminación Horaria V33","group":"Discriminación horaria","type":"luz","maxPower":15,"p1":0.120274,"p2":0.06,"energy":0.1659,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW. Consumo punta, llano y valle.","exc":0,"isBvSolar":false,"energyIva":0.200739,"p1Iva":0.145532,"p2Iva":0.0726,"shortName":"Discriminación Horaria V33","isDh":true,"energyPeriods":[0.1659,0.1159,0.0969]},{"id":"luz-mplus-v31-15","name":"Movistar+ V31","group":"Movistar+","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW. Precio energía V32. TVMovistarPlus+ obligatorio.","exc":0,"isBvSolar":false,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Movistar+ V31"},{"id":"tranquilisima-10","name":"Tranquilísima","group":"Tranquilísima","type":"luz","maxPower":10,"p1":0.081918,"p2":0.081918,"energy":0.1399,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 10 kW. SVA obligatorio.","exc":0,"isBvSolar":false,"energyIva":0.169279,"p1Iva":0.099121,"p2Iva":0.099121,"shortName":"Tranquilísima"},{"id":"smart-10h-v33-15","name":"Tarifa Smart 10h V33","group":"Smart","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1699,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. 50% durante 10h. No aparece en calculadora porque no se puede calcular.","exc":0,"isBvSolar":false,"energyIva":0.205579,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Tarifa Smart 10h V33","excludeFromCalculator":true},{"id":"empresa30-l2","name":"Empresa 3.0 L2","group":"3.0TD","type":"luz30","energy":0.1549,"energyPeriods":[0.1549,0.1549,0.1549,0.1549,0.1549,0.1549],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":false,"notes":"Consumo único.","energyIva":0.187429,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Empresa 3.0 L2"},{"id":"empresa30-l4","name":"Empresa 3.0 L4","group":"3.0TD","type":"luz30","energy":0.1449,"energyPeriods":[0.1449,0.1449,0.1449,0.1449,0.1449,0.1449],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":false,"notes":"Consumo único.","energyIva":0.175329,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Empresa 3.0 L4"},{"id":"empresa30-l8","name":"Empresa 3.0 L8","group":"3.0TD DH","type":"luz30","energy":0.1649,"energyPeriods":[0.1649,0.1609,0.1569,0.1549,0.1259,0.1159],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":false,"notes":"Consumo por periodos P1-P6.","energyIva":0.199529,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Empresa 3.0 L8","isDh30":true},{"id":"dh30-l4","name":"Discriminación Horaria 3.0 L4","group":"3.0TD DH","type":"luz30","energy":0.1699,"energyPeriods":[0.1699,0.1659,0.1619,0.1599,0.1309,0.1209],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":false,"notes":"Consumo por periodos P1-P6.","energyIva":0.205579,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Discriminación Horaria 3.0 L4","isDh30":true},{"id":"comercio30-l4","name":"Comercio 3.0 L4","group":"3.0TD DH","type":"luz30","energy":0.11495,"energyPeriods":[0.11495,0.11495,0.11495,0.11495,0.11495,0.2299],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":false,"notes":"Consumo por periodos P1-P6.","energyIva":0.13909,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Comercio 3.0 L4","isDh30":true},{"id":"gas-rl1-v10","name":"Gas RL.1 V10","group":"Gas","type":"gas","gasFixed":6.9,"energy":0.0899,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL1. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.108779,"gasFixedIva":8.349,"shortName":"Gas RL.1 V10"},{"id":"gas-rl1-v11","name":"Gas RL.1 V11","group":"Gas","type":"gas","gasFixed":6.9,"energy":0.0799,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL1. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.096679,"gasFixedIva":8.349,"shortName":"Gas RL.1 V11"},{"id":"gas-rl1-v12","name":"Gas ahorro RL.1 V12","group":"Gas","type":"gas","gasFixed":6.9,"energy":0.0699,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL1. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.084579,"gasFixedIva":8.349,"shortName":"Gas ahorro RL.1 V12"},{"id":"gas-rl2-v10","name":"Gas RL.2 V10","group":"Gas","type":"gas","gasFixed":13.9,"energy":0.0899,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL2. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.108779,"gasFixedIva":16.819,"shortName":"Gas RL.2 V10"},{"id":"gas-rl2-v11","name":"Gas RL.2 V11","group":"Gas","type":"gas","gasFixed":13.9,"energy":0.0799,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL2. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.096679,"gasFixedIva":16.819,"shortName":"Gas RL.2 V11"},{"id":"gas-rl2-v12","name":"Gas ahorro RL.2 V12","group":"Gas","type":"gas","gasFixed":13.9,"energy":0.0699,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL2. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.084579,"gasFixedIva":16.819,"shortName":"Gas ahorro RL.2 V12"},{"id":"gas-rl3-v10","name":"Gas RL.3 V10","group":"Gas","type":"gas","gasFixed":22.9,"energy":0.0899,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL3. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.108779,"gasFixedIva":27.709,"shortName":"Gas RL.3 V10"},{"id":"gas-rl3-v11","name":"Gas RL.3 V11","group":"Gas","type":"gas","gasFixed":22.9,"energy":0.0799,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL3. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.096679,"gasFixedIva":27.709,"shortName":"Gas RL.3 V11"},{"id":"gas-rl3-v12","name":"Gas ahorro RL.3 V12","group":"Gas","type":"gas","gasFixed":22.9,"energy":0.0699,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL3. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.084579,"gasFixedIva":27.709,"shortName":"Gas ahorro RL.3 V12"}];
+  var TARIFFS = [{"id":"v35-10","name":"V35","group":"Precio fijo","type":"luz","maxPower":10,"p1":0.090137,"p2":0.090137,"energy":0.0999,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 10 kW. TA24H Plus obligatorio.","exc":0,"isBvSolar":false,"energyIva":0.120879,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V35"},{"id":"v34-15","name":"V34","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1099,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW. TA24H Plus obligatorio.","exc":0,"isBvSolar":false,"energyIva":0.132979,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V34"},{"id":"v33-15","name":"V33","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1199,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW. SVA obligatorio.","exc":0,"isBvSolar":false,"energyIva":0.145079,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V33"},{"id":"v32-10","name":"V32","group":"Precio fijo","type":"luz","maxPower":10,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":true,"svaLabel":"Sin SVA con permiso","cashbackEligible":true,"notes":"Potencia permitida: hasta 10 kW. Puede ir sin SVA con permiso.","exc":0,"isBvSolar":false,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V32"},{"id":"v31-15","name":"V31","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1499,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.181379,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V31"},{"id":"v30-15","name":"V30","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1599,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.193479,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"V30"},{"id":"pyme-v34-15","name":"Pyme V34","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1099,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW. Ahorro pyme.","exc":0,"isBvSolar":false,"energyIva":0.132979,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Pyme V34"},{"id":"pyme-v33-15","name":"Pyme V33","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1199,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW. Ahorro pyme.","exc":0,"isBvSolar":false,"energyIva":0.145079,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Pyme V33"},{"id":"pyme-v32-15","name":"Pyme V32","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":true,"svaLabel":"Sin SVA con permiso","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. Puede ir sin SVA con permiso.","exc":0,"isBvSolar":false,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Pyme V32"},{"id":"pyme-v31-15","name":"Pyme V31","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1499,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.181379,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Pyme V31"},{"id":"pyme-v30-15","name":"Pyme V30","group":"Precio fijo Pyme","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1599,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW.","exc":0,"isBvSolar":false,"energyIva":0.193479,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Pyme V30"},{"id":"tap-v32-10","name":"TAP V32","group":"TAP","type":"luz","maxPower":10,"p1":0.084431,"p2":0.001987,"energy":0.1699,"svaMandatory":false,"permissionSva":true,"svaLabel":"Sin SVA con permiso","cashbackEligible":true,"notes":"Potencia permitida: hasta 10 kW. Ahorro potencia. Sin SVA con permiso.","exc":0,"isBvSolar":false,"energyIva":0.205579,"p1Iva":0.102162,"p2Iva":0.002404,"shortName":"TAP V32"},{"id":"tap-hogar-v34-10","name":"TAP V34 Hogar","group":"TAP","type":"luz","maxPower":10,"p1":0.084431,"p2":0.001987,"energy":0.1649,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 10 kW. Ahorro potencia hogar.","exc":0,"isBvSolar":false,"energyIva":0.199529,"p1Iva":0.102162,"p2Iva":0.002404,"shortName":"TAP V34 Hogar"},{"id":"solar-v30-15","name":"Solar V30","group":"Solar","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1399,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. Excedente 0,06 €/kWh.","exc":0.06,"isBvSolar":false,"energyIva":0.169279,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Solar V30"},{"id":"bv-v26-15","name":"Tarifa Solar BV V26","group":"Solar","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. Batería virtual solar. Excedente 0,06 €/kWh.","exc":0.06,"isBvSolar":true,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"BV V26"},{"id":"dh-v33-15","name":"Discriminación Horaria V33","group":"Discriminación horaria","type":"luz","maxPower":15,"p1":0.120274,"p2":0.06,"energy":0.1659,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW. Consumo punta, llano y valle.","exc":0,"isBvSolar":false,"energyIva":0.200739,"p1Iva":0.145532,"p2Iva":0.0726,"shortName":"Discriminación Horaria V33","isDh":true,"energyPeriods":[0.1659,0.1159,0.0969]},{"id":"luz-mplus-v31-15","name":"Movistar+ V31","group":"Movistar+","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1299,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 15 kW. Precio energía V32. TVMovistarPlus+ obligatorio.","exc":0,"isBvSolar":false,"energyIva":0.157179,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Movistar+ V31"},{"id":"tranquilisima-10","name":"Tranquilísima","group":"Tranquilísima","type":"luz","maxPower":10,"p1":0.081918,"p2":0.081918,"energy":0.1399,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"Potencia permitida: hasta 10 kW. SVA obligatorio.","exc":0,"isBvSolar":false,"energyIva":0.169279,"p1Iva":0.099121,"p2Iva":0.099121,"shortName":"Tranquilísima"},{"id":"smart-10h-v33-15","name":"Tarifa Smart 10h V33","group":"Smart","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1699,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":true,"notes":"Potencia permitida: hasta 15 kW. 50% durante 10h. No aparece en calculadora porque no se puede calcular.","exc":0,"isBvSolar":false,"energyIva":0.205579,"p1Iva":0.109066,"p2Iva":0.109066,"shortName":"Tarifa Smart 10h V33","excludeFromCalculator":true},{"id":"empresa30-l2","name":"Empresa 3.0 L2","group":"3.0TD","type":"luz30","energy":0.1549,"energyPeriods":[0.1549,0.1549,0.1549,0.1549,0.1549,0.1549],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":false,"notes":"Consumo único.","energyIva":0.187429,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Empresa 3.0 L2"},{"id":"empresa30-l4","name":"Empresa 3.0 L4","group":"3.0TD","type":"luz30","energy":0.1449,"energyPeriods":[0.1449,0.1449,0.1449,0.1449,0.1449,0.1449],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":false,"notes":"Consumo único.","energyIva":0.175329,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Empresa 3.0 L4"},{"id":"empresa30-l8","name":"Empresa 3.0 L8","group":"3.0TD DH","type":"luz30","energy":0.1649,"energyPeriods":[0.1649,0.1609,0.1569,0.1549,0.1259,0.1159],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":false,"notes":"Consumo por periodos P1-P6.","energyIva":0.199529,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Empresa 3.0 L8","isDh30":true},{"id":"dh30-l4","name":"Discriminación Horaria 3.0 L4","group":"3.0TD DH","type":"luz30","energy":0.1699,"energyPeriods":[0.1699,0.1659,0.1619,0.1599,0.1309,0.1209],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":false,"notes":"Consumo por periodos P1-P6.","energyIva":0.205579,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Discriminación Horaria 3.0 L4","isDh30":true},{"id":"comercio30-l4","name":"Comercio 3.0 L4","group":"3.0TD DH","type":"luz30","energy":0.11495,"energyPeriods":[0.11495,0.11495,0.11495,0.11495,0.11495,0.2299],"powers":[0.05726,0.035342,0.016164,0.013425,0.010685,0.007945],"maxPower":null,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":false,"notes":"Consumo por periodos P1-P6.","energyIva":0.13909,"p1Iva":0.0,"p2Iva":0.0,"shortName":"Comercio 3.0 L4","isDh30":true},{"id":"gas-rl1-v10","name":"Gas RL.1 V10","group":"Gas","type":"gas","gasFixed":6.9,"energy":0.0899,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL1. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.108779,"gasFixedIva":8.349,"shortName":"Gas RL.1 V10"},{"id":"gas-rl1-v11","name":"Gas RL.1 V11","group":"Gas","type":"gas","gasFixed":6.9,"energy":0.0799,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL1. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.096679,"gasFixedIva":8.349,"shortName":"Gas RL.1 V11"},{"id":"gas-rl1-v12","name":"Gas ahorro RL.1 V12","group":"Gas","type":"gas","gasFixed":6.9,"energy":0.0699,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL1. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.084579,"gasFixedIva":8.349,"shortName":"Gas ahorro RL.1 V12"},{"id":"gas-rl2-v10","name":"Gas RL.2 V10","group":"Gas","type":"gas","gasFixed":13.9,"energy":0.0899,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL2. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.108779,"gasFixedIva":16.819,"shortName":"Gas RL.2 V10"},{"id":"gas-rl2-v11","name":"Gas RL.2 V11","group":"Gas","type":"gas","gasFixed":13.9,"energy":0.0799,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL2. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.096679,"gasFixedIva":16.819,"shortName":"Gas RL.2 V11"},{"id":"gas-rl2-v12","name":"Gas ahorro RL.2 V12","group":"Gas","type":"gas","gasFixed":13.9,"energy":0.0699,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL2. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.084579,"gasFixedIva":16.819,"shortName":"Gas ahorro RL.2 V12"},{"id":"gas-rl3-v10","name":"Gas RL.3 V10","group":"Gas","type":"gas","gasFixed":22.9,"energy":0.0899,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL3. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.108779,"gasFixedIva":27.709,"shortName":"Gas RL.3 V10"},{"id":"gas-rl3-v11","name":"Gas RL.3 V11","group":"Gas","type":"gas","gasFixed":22.9,"energy":0.0799,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL3. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.096679,"gasFixedIva":27.709,"shortName":"Gas RL.3 V11"},{"id":"gas-rl3-v12","name":"Gas ahorro RL.3 V12","group":"Gas","type":"gas","gasFixed":22.9,"energy":0.0699,"maxPower":null,"svaMandatory":true,"permissionSva":false,"svaLabel":"SVA obligatorio","cashbackEligible":false,"notes":"RL3. Fijo mensual y energía. SVA gas obligatorio.","energyIva":0.084579,"gasFixedIva":27.709,"shortName":"Gas ahorro RL.3 V12"}];
 
   var DOCS_ALTAS = [
     {title:"Alta 1ª ocupación", email:"doc.altas@repsolluzygas.com", when:["Suministro que nunca ha tenido luz/gas.","Suministro con mucha antigüedad que necesita nuevo boletín eléctrico.","Gas con más de 3 años de antigüedad."], docs:["DNI.","Escritura de propiedad hasta apartado exponen o contrato de alquiler.","Boletín eléctrico/gas."], note:"Documentación antes de hacer la venta en portal."},
@@ -3388,7 +3637,7 @@
 
   function defaultState(){
     return {
-      version:13,
+      version:14,
       records:[],
       settings:{
         month:currentMonth(),
@@ -3397,7 +3646,13 @@
         workHours:{0:0,1:8,2:8,3:8,4:8,5:7,6:0},
         defaultChannel:"waylet",
         defaultChannelMode:"fixed",
+        displayName:"",
+        weatherLocation:null,
+        weatherCache:null,
         channelThresholds:{waylet:0.120,dualizacion:0.200,digital:0.120,marca_blanca:0.120,nurturing:0.120,foto_factura:0.120,colectivos:0.120,otro:0.120},
+        incentives:defaultIncentives(),
+        homeWidgetOrder:HOME_WIDGETS.map(function(w){ return w.id; }),
+        homeWidgetVisibility:defaultWidgetVisibility(),
         taxes:Object.assign({}, TAX_DEFAULTS),
         appearanceMode:"system",
         accentColor:"azul",
@@ -3434,15 +3689,31 @@
   function normalizeState(s){
     var base = defaultState();
     s = s || {};
-    s.version = 13;
+    s.version = 14;
     s.records = Array.isArray(s.records) ? s.records : [];
     s.settings = Object.assign({}, base.settings, s.settings || {});
     s.settings.workHours = Object.assign({}, base.settings.workHours, s.settings.workHours || {});
     s.settings.taxes = Object.assign({}, base.settings.taxes, s.settings.taxes || {});
     s.settings.channelThresholds = Object.assign({}, base.settings.channelThresholds, s.settings.channelThresholds || {});
+    var rawIncentives = s.settings.incentives || {};
+    s.settings.incentives = defaultIncentives();
+    CHANNELS.forEach(function(c){
+      var source = rawIncentives[c.id] || {};
+      var tiers = Array.isArray(source.tiers) ? source.tiers.map(function(t){
+        return {sph:Number(t.sph || 0), rate:Number(t.rate || 0)};
+      }).filter(function(t){ return t.sph > 0 && t.rate >= 0; }).sort(function(a,b){ return a.sph-b.sph; }) : [];
+      s.settings.incentives[c.id] = {enabled:!!source.enabled, tiers:tiers};
+    });
+    var savedOrder = Array.isArray(s.settings.homeWidgetOrder) ? s.settings.homeWidgetOrder : [];
+    s.settings.homeWidgetOrder = savedOrder.filter(function(id){ return HOME_WIDGETS.some(function(w){ return w.id === id; }); });
+    HOME_WIDGETS.forEach(function(w){ if(s.settings.homeWidgetOrder.indexOf(w.id) < 0) s.settings.homeWidgetOrder.push(w.id); });
+    s.settings.homeWidgetVisibility = Object.assign({}, defaultWidgetVisibility(), s.settings.homeWidgetVisibility || {});
     if(!s.settings.defaultChannel) s.settings.defaultChannel = "waylet";
     if(!s.settings.defaultChannelMode) s.settings.defaultChannelMode = "fixed";
     if(!s.settings.journeyType) s.settings.journeyType = "39";
+    s.settings.displayName = String(s.settings.displayName || "").trim().slice(0,24);
+    if(!s.settings.weatherLocation || !Number.isFinite(Number(s.settings.weatherLocation.latitude)) || !Number.isFinite(Number(s.settings.weatherLocation.longitude))) s.settings.weatherLocation = null;
+    if(!s.settings.weatherCache || !s.settings.weatherCache.data) s.settings.weatherCache = null;
     s.settings.appearanceMode = safeAppearance(s.settings.appearanceMode);
     s.settings.accentColor = safeAccent(s.settings.accentColor);
     s.settings.secondaryColor = safeSecondary(s.settings.secondaryColor);
@@ -3725,6 +3996,36 @@
       });
     });
     return out;
+  }
+
+  function incentiveResultForChannel(channelId, stats){
+    var config = (state.settings.incentives && state.settings.incentives[channelId]) || {enabled:false,tiers:[]};
+    var hours = Number(stats && stats.hours || 0);
+    var sales = Number(stats && stats.sales || 0);
+    var sph = hours > 0 ? sales / hours : 0;
+    var tiers = (config.tiers || []).slice().sort(function(a,b){ return Number(a.sph)-Number(b.sph); });
+    var achieved = null;
+    if(config.enabled && hours > 0){
+      tiers.forEach(function(t){ if(sph + 0.0000001 >= Number(t.sph || 0)) achieved = t; });
+    }
+    var rate = achieved ? Number(achieved.rate || 0) : 0;
+    return {enabled:!!config.enabled,hours:hours,sales:sales,sph:sph,rate:rate,total:sales*rate,achieved:achieved,tiers:tiers};
+  }
+
+  function incentiveSummary(records){
+    var stats = channelStats(records || []);
+    var lines = [];
+    var total = 0;
+    CHANNELS.forEach(function(c){
+      var result = incentiveResultForChannel(c.id, stats[c.id] || {hours:0,sales:0});
+      if(result.enabled){
+        result.id = c.id;
+        result.name = c.name;
+        lines.push(result);
+        total += result.total;
+      }
+    });
+    return {total:total,lines:lines};
   }
 
   function cashbackForRecords(records){
@@ -4047,6 +4348,165 @@
       });
       $("v9ChannelSph").innerHTML = html || '<div class="empty">No hay horas por canal en este periodo.</div>';
     }
+
+    if($("sphProgress")){
+      var progressBase = minimum > 0 ? totals.sph / minimum * 100 : 0;
+      $("sphProgress").style.width = Math.max(0,Math.min(100,progressBase)) + "%";
+    }
+  }
+
+  function renderIncentives(){
+    var summary = incentiveSummary(cutoffRecords());
+    if($("kpiIncentive")) $("kpiIncentive").textContent = fmtEuro(summary.total);
+    if($("incentiveKpiMeta")){
+      var achievedCount = summary.lines.filter(function(line){ return !!line.achieved; }).length;
+      $("incentiveKpiMeta").textContent = summary.lines.length ? (achievedCount + " de " + summary.lines.length + " canal(es) en tramo") : "Configúralo desde Ajustes";
+    }
+    if(!$("incentiveBreakdown")) return;
+    if(!summary.lines.length){
+      $("incentiveBreakdown").innerHTML = '<div class="incentiveEmpty">Activa tus tramos en Ajustes para ver aquí el incentivo estimado del mes.</div>';
+      return;
+    }
+    var html = '<div class="incentiveTotal"><span>Estimación acumulada</span><b>' + fmtEuro(summary.total) + '</b></div><div>';
+    summary.lines.forEach(function(line){
+      var detail = line.hours > 0 ? (fmtSph(line.sph) + ' SPH · ' + line.sales + ' CUPS') : 'Sin horas registradas';
+      if(line.achieved) detail += ' · ' + fmtEuro(line.rate) + '/CUPS';
+      else if(line.tiers.length) detail += ' · tramo pendiente';
+      else detail += ' · sin tramos';
+      html += '<div class="incentiveLine"><div><strong>' + escapeHtml(line.name) + '</strong><small>' + escapeHtml(detail) + '</small></div><b>' + fmtEuro(line.total) + '</b></div>';
+    });
+    $("incentiveBreakdown").innerHTML = html + '</div>';
+  }
+
+  function applyHomeWidgets(){
+    var order = state.settings.homeWidgetOrder || HOME_WIDGETS.map(function(w){ return w.id; });
+    var visible = state.settings.homeWidgetVisibility || defaultWidgetVisibility();
+    order.forEach(function(id,index){
+      var el = document.querySelector('#inicio [data-widget="' + id + '"]');
+      if(!el) return;
+      el.style.order = String(index + 1);
+      el.classList.toggle("hidden", visible[id] === false);
+    });
+  }
+
+  function greetingText(){
+    var hour = new Date().getHours();
+    if(hour < 12) return "Buenos días";
+    if(hour < 20) return "Buenas tardes";
+    return "Buenas noches";
+  }
+
+  function updateHeaderContext(tabId){
+    var active = tabId || (document.querySelector("main section.active") || {}).id || "inicio";
+    var name = String(state.settings.displayName || "").trim();
+    if($("headerTitle")) $("headerTitle").textContent = active === "inicio" ? greetingText() + (name ? ", " + name : "") : tabTitle(active);
+    if($("headerDate")){
+      var label = new Date().toLocaleDateString("es-ES", {weekday:"long",day:"numeric",month:"long"});
+      $("headerDate").textContent = label.charAt(0).toUpperCase() + label.slice(1);
+    }
+  }
+
+  function weatherCodeInfo(code,isDay){
+    code = Number(code);
+    if(code === 0) return {label:"Despejado",symbol:isDay === 0 ? "☾" : "☀"};
+    if(code === 1) return {label:"Mayormente despejado",symbol:"🌤"};
+    if(code === 2) return {label:"Parcialmente nublado",symbol:"⛅"};
+    if(code === 3) return {label:"Nublado",symbol:"☁"};
+    if(code === 45 || code === 48) return {label:"Niebla",symbol:"🌫"};
+    if(code >= 51 && code <= 57) return {label:"Llovizna",symbol:"🌦"};
+    if(code >= 61 && code <= 67) return {label:"Lluvia",symbol:"🌧"};
+    if(code >= 71 && code <= 77) return {label:"Nieve",symbol:"🌨"};
+    if(code >= 80 && code <= 82) return {label:"Chubascos",symbol:"🌦"};
+    if(code >= 85 && code <= 86) return {label:"Chubascos de nieve",symbol:"🌨"};
+    if(code >= 95) return {label:"Tormenta",symbol:"⛈"};
+    return {label:"Tiempo variable",symbol:"◌"};
+  }
+
+  var weatherRequestKey = "";
+  var weatherSearchResults = [];
+
+  function weatherLocationKey(location){
+    return location ? Number(location.latitude).toFixed(4) + "," + Number(location.longitude).toFixed(4) : "";
+  }
+
+  function renderWeatherData(data,location,stale){
+    if(!$("weatherWidget") || !data || !data.current) return;
+    var current = data.current;
+    var info = weatherCodeInfo(current.weather_code,current.is_day);
+    var place = location.name + (location.admin1 && location.admin1 !== location.name ? " · " + location.admin1 : "");
+    var days = "";
+    if(data.daily && Array.isArray(data.daily.time)){
+      data.daily.time.slice(0,3).forEach(function(date,index){
+        var dayLabel = index === 0 ? "Hoy" : new Date(date + "T12:00:00").toLocaleDateString("es-ES",{weekday:"short"});
+        var dayInfo = weatherCodeInfo(data.daily.weather_code[index],1);
+        days += '<div class="weatherDay"><span>' + escapeHtml(dayLabel) + ' · ' + dayInfo.symbol + '</span><b>' + Math.round(Number(data.daily.temperature_2m_min[index])) + '° / ' + Math.round(Number(data.daily.temperature_2m_max[index])) + '°</b></div>';
+      });
+    }
+    $("weatherWidget").innerHTML = '<div class="weatherNow">' +
+      '<div class="weatherSymbol" aria-hidden="true">' + info.symbol + '</div>' +
+      '<div><div class="weatherPlace">' + escapeHtml(place) + '</div><div class="weatherCondition">' + escapeHtml(info.label) + '</div></div>' +
+      '<div class="weatherTemp">' + Math.round(Number(current.temperature_2m)) + '°</div>' +
+      '</div><div class="weatherMeta"><span>Sensación ' + Math.round(Number(current.apparent_temperature)) + '°</span><span>Prob. lluvia ' + Math.round(Number(data.daily && data.daily.precipitation_probability_max ? data.daily.precipitation_probability_max[0] : 0)) + '%</span><span>Viento ' + Math.round(Number(current.wind_speed_10m)) + ' km/h</span>' + (stale ? '<span>Últimos datos guardados</span>' : '') + '<a class="weatherCredit" href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a></div>' +
+      '<div class="weatherDays">' + days + '</div>';
+  }
+
+  function fetchWeather(location){
+    var key = weatherLocationKey(location);
+    if(!key || weatherRequestKey === key) return;
+    weatherRequestKey = key;
+    var url = "https://api.open-meteo.com/v1/forecast?latitude=" + encodeURIComponent(location.latitude) + "&longitude=" + encodeURIComponent(location.longitude) + "&current=temperature_2m,apparent_temperature,weather_code,is_day,precipitation,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto&forecast_days=3";
+    fetch(url).then(function(response){ if(!response.ok) throw new Error("weather"); return response.json(); }).then(function(data){
+      state.settings.weatherCache = {key:key,updatedAt:Date.now(),data:data};
+      persist();
+      renderWeatherData(data,location,false);
+    }).catch(function(){
+      if(!state.settings.weatherCache && $("weatherWidget")) $("weatherWidget").innerHTML = '<div class="incentiveEmpty">No se ha podido cargar el tiempo. Volverá a intentarlo cuando haya conexión.</div>';
+    }).finally(function(){ weatherRequestKey = ""; });
+  }
+
+  function renderWeather(){
+    if(!$("weatherWidget")) return;
+    var location = state.settings.weatherLocation;
+    if(!location){
+      $("weatherWidget").innerHTML = '<div class="incentiveEmpty">Elige una ciudad en Ajustes para activar este widget.</div>';
+      return;
+    }
+    var cache = state.settings.weatherCache;
+    var validCache = cache && cache.key === weatherLocationKey(location) && cache.data;
+    if(validCache) renderWeatherData(cache.data,location,Date.now()-Number(cache.updatedAt || 0) > 1800000);
+    else $("weatherWidget").innerHTML = '<div class="incentiveEmpty">Cargando el tiempo de ' + escapeHtml(location.name) + '…</div>';
+    if(!validCache || Date.now()-Number(cache.updatedAt || 0) > 1800000) fetchWeather(location);
+  }
+
+  function searchWeatherLocation(){
+    var query = String($("weatherLocationQuery").value || "").trim();
+    if(query.length < 2){ toast("Escribe al menos dos letras."); return; }
+    var button = $("searchWeatherLocationBtn");
+    button.disabled = true;
+    button.textContent = "Buscando…";
+    $("weatherLocationResults").innerHTML = '<div class="incentiveEmpty">Buscando ubicaciones…</div>';
+    fetch("https://geocoding-api.open-meteo.com/v1/search?name=" + encodeURIComponent(query) + "&count=5&language=es&format=json").then(function(response){ if(!response.ok) throw new Error("geocoding"); return response.json(); }).then(function(data){
+      weatherSearchResults = Array.isArray(data.results) ? data.results : [];
+      if(!weatherSearchResults.length){ $("weatherLocationResults").innerHTML = '<div class="incentiveEmpty">No encuentro esa ubicación. Prueba con el municipio o la provincia.</div>'; return; }
+      $("weatherLocationResults").innerHTML = weatherSearchResults.map(function(result,index){
+        var detail = [result.admin1,result.country].filter(Boolean).join(" · ");
+        return '<button type="button" class="locationResult" data-location-index="' + index + '"><span><strong>' + escapeHtml(result.name) + '</strong><small>' + escapeHtml(detail) + '</small></span></button>';
+      }).join("");
+      document.querySelectorAll(".locationResult[data-location-index]").forEach(function(resultButton){
+        resultButton.onclick = function(){
+          var result = weatherSearchResults[Number(resultButton.dataset.locationIndex)];
+          state.settings.weatherLocation = {name:result.name,admin1:result.admin1 || "",country:result.country || "",latitude:Number(result.latitude),longitude:Number(result.longitude),timezone:result.timezone || "auto"};
+          state.settings.weatherCache = null;
+          persist();
+          $("weatherLocationResults").innerHTML = "";
+          renderSettings();
+          renderWeather();
+          toast("Ubicación del tiempo guardada.");
+        };
+      });
+    }).catch(function(){
+      $("weatherLocationResults").innerHTML = '<div class="incentiveEmpty">No se ha podido buscar ahora. Revisa la conexión e inténtalo de nuevo.</div>';
+    }).finally(function(){ button.disabled = false; button.textContent = "Buscar ubicación"; });
   }
 
   function automaticObjectivesAllowed(){
@@ -4072,11 +4532,11 @@
   function renderObjectives(){
     var panel = $("objectivePanel");
     if(!automaticObjectivesAllowed()){
-      if(panel) panel.classList.add("hidden");
+      if(panel) panel.classList.add("logicHidden");
       if($("objectiveCards")) $("objectiveCards").innerHTML = "";
       return;
     }
-    if(panel) panel.classList.remove("hidden");
+    if(panel) panel.classList.remove("logicHidden");
 
     var totals = calc(cutoffRecords());
     var month = getMonth();
@@ -4091,13 +4551,14 @@
       var needed = Math.ceil(hoursBase * th.value);
       var missing = Math.max(0, needed - totals.sales);
       var pct = needed > 0 ? Math.min(100, totals.sales / needed * 100) : 0;
-      var cls = missing === 0 ? "good" : th.value === context.minimum ? "warn" : "gray";
+      var hasHours = hoursBase > 0;
+      var cls = hasHours && missing === 0 ? "good" : hasHours && th.value === context.minimum ? "warn" : "gray";
 
       html += '<div class="day-card">' +
         '<div class="day-head">' +
           '<div><div class="day-title">' + th.label + '</div>' +
-          '<div class="day-sub">Necesitas ' + needed + ' CUPS · llevas ' + totals.sales + '</div></div>' +
-          '<span class="badge ' + cls + '">' + (missing === 0 ? "Conseguido" : "Faltan " + missing) + '</span>' +
+          '<div class="day-sub">' + (hasHours ? ('Necesitas ' + needed + ' CUPS · llevas ' + totals.sales) : 'Registra horas para calcularlo') + '</div></div>' +
+          '<span class="badge ' + cls + '">' + (!hasHours ? "Sin datos" : missing === 0 ? "Conseguido" : "Faltan " + missing) + '</span>' +
         '</div>' +
         '<div class="goalbar"><div style="width:' + pct + '%"></div></div>' +
       '</div>';
@@ -4109,11 +4570,11 @@
   function renderPace(){
     var panel = $("pacePanel");
     if(!automaticObjectivesAllowed()){
-      if(panel) panel.classList.add("hidden");
+      if(panel) panel.classList.add("logicHidden");
       if($("paceBox")) $("paceBox").innerHTML = "";
       return;
     }
-    if(panel) panel.classList.remove("hidden");
+    if(panel) panel.classList.remove("logicHidden");
 
     var totals = calc(cutoffRecords());
     var month = getMonth();
@@ -4835,8 +5296,107 @@ function updateCalcVisibility(){
     });
   }
 
+  function incentiveTierRow(tier){
+    tier = tier || {sph:"",rate:""};
+    var row = document.createElement("div");
+    row.className = "tierRow";
+    row.innerHTML = '<label class="field">SPH<input class="incentiveTierSph" type="number" min="0.001" step="0.001" placeholder="0.140" value="' + (tier.sph === "" ? "" : Number(tier.sph).toFixed(3)) + '"></label>' +
+      '<label class="field">€/CUPS<input class="incentiveTierRate" type="number" min="0" step="0.01" placeholder="1.50" value="' + (tier.rate === "" ? "" : Number(tier.rate).toFixed(2)) + '"></label>' +
+      '<button type="button" class="removeTierBtn" aria-label="Eliminar tramo">×</button>';
+    row.querySelector(".removeTierBtn").onclick = function(){ row.remove(); };
+    return row;
+  }
+
+  function renderIncentiveEditor(){
+    if(!$("incentiveChannel") || !$("incentiveTiers")) return;
+    var selected = $("incentiveChannel").value || state.settings.defaultChannel || "waylet";
+    $("incentiveChannel").innerHTML = channelOptions(selected);
+    $("incentiveChannel").value = selected;
+    var config = state.settings.incentives[selected] || {enabled:false,tiers:[]};
+    $("incentiveEnabled").checked = !!config.enabled;
+    $("incentiveTiers").innerHTML = "";
+    (config.tiers || []).forEach(function(t){ $("incentiveTiers").appendChild(incentiveTierRow(t)); });
+    if(!(config.tiers || []).length) $("incentiveTiers").appendChild(incentiveTierRow({sph:channelMinimum(selected),rate:""}));
+  }
+
+  function saveIncentiveSettings(){
+    var channelId = $("incentiveChannel").value || "waylet";
+    var tiers = [];
+    document.querySelectorAll("#incentiveTiers .tierRow").forEach(function(row){
+      var sph = Number(row.querySelector(".incentiveTierSph").value);
+      var rate = Number(row.querySelector(".incentiveTierRate").value);
+      if(Number.isFinite(sph) && sph > 0 && Number.isFinite(rate) && rate >= 0) tiers.push({sph:sph,rate:rate});
+    });
+    tiers.sort(function(a,b){ return a.sph-b.sph; });
+    var unique = [];
+    tiers.forEach(function(t){
+      var existing = unique.find(function(x){ return Math.abs(x.sph-t.sph) < 0.0005; });
+      if(existing) existing.rate = t.rate;
+      else unique.push(t);
+    });
+    if($("incentiveEnabled").checked && !unique.length){
+      toast("Añade al menos un tramo completo.");
+      return;
+    }
+    state.settings.incentives[channelId] = {enabled:$("incentiveEnabled").checked,tiers:unique};
+    saveState();
+    $("incentiveChannel").value = channelId;
+    renderIncentiveEditor();
+    toast("Incentivos de " + channelName(channelId) + " guardados.");
+  }
+
+  function renderWidgetSettings(){
+    if(!$("homeWidgetSettings")) return;
+    var order = state.settings.homeWidgetOrder || HOME_WIDGETS.map(function(w){ return w.id; });
+    var visibility = state.settings.homeWidgetVisibility || defaultWidgetVisibility();
+    $("homeWidgetSettings").innerHTML = order.map(function(id,index){
+      var widget = HOME_WIDGETS.find(function(w){ return w.id === id; });
+      if(!widget) return "";
+      return '<div class="widgetSettingRow" data-widget-setting="' + id + '">' +
+        '<label class="checkField"><input class="widgetVisible" type="checkbox"' + (visibility[id] === false ? '' : ' checked') + '><span>' + escapeHtml(widget.name) + '</span></label>' +
+        '<div class="widgetOrderActions"><button type="button" class="widgetOrderBtn moveWidgetUp" aria-label="Subir widget"' + (index === 0 ? ' disabled' : '') + '>↑</button><button type="button" class="widgetOrderBtn moveWidgetDown" aria-label="Bajar widget"' + (index === order.length-1 ? ' disabled' : '') + '>↓</button></div>' +
+      '</div>';
+    }).join("");
+    document.querySelectorAll(".moveWidgetUp,.moveWidgetDown").forEach(function(btn){
+      btn.onclick = function(){
+        var row = btn.closest(".widgetSettingRow");
+        var sibling = btn.classList.contains("moveWidgetUp") ? row.previousElementSibling : row.nextElementSibling;
+        if(!sibling) return;
+        if(btn.classList.contains("moveWidgetUp")) row.parentNode.insertBefore(row,sibling);
+        else row.parentNode.insertBefore(sibling,row);
+        refreshWidgetOrderButtons();
+      };
+    });
+  }
+
+  function refreshWidgetOrderButtons(){
+    var rows = Array.from(document.querySelectorAll("#homeWidgetSettings .widgetSettingRow"));
+    rows.forEach(function(row,index){
+      row.querySelector(".moveWidgetUp").disabled = index === 0;
+      row.querySelector(".moveWidgetDown").disabled = index === rows.length-1;
+    });
+  }
+
+  function saveWidgetSettings(){
+    var rows = Array.from(document.querySelectorAll("#homeWidgetSettings .widgetSettingRow"));
+    var visibleCount = rows.filter(function(row){ return row.querySelector(".widgetVisible").checked; }).length;
+    if(!visibleCount){
+      toast("Deja al menos un widget visible.");
+      return;
+    }
+    state.settings.homeWidgetOrder = rows.map(function(row){ return row.dataset.widgetSetting; });
+    rows.forEach(function(row){ state.settings.homeWidgetVisibility[row.dataset.widgetSetting] = row.querySelector(".widgetVisible").checked; });
+    saveState();
+    toast("Panel de Inicio actualizado.");
+  }
+
   function renderSettings(){
     renderChannelSelects();
+    if($("displayName")) $("displayName").value = state.settings.displayName || "";
+    if($("savedWeatherLocation")){
+      var loc = state.settings.weatherLocation;
+      $("savedWeatherLocation").textContent = loc ? ("Ubicación actual: " + loc.name + (loc.admin1 ? " · " + loc.admin1 : "") + (loc.country ? " · " + loc.country : "")) : "Todavía no hay una ubicación guardada.";
+    }
     if($("journeyType")) $("journeyType").value = state.settings.journeyType || "39";
     if($("defaultChannel")) $("defaultChannel").value = state.settings.defaultChannel || "waylet";
     if($("defaultChannelMode")) $("defaultChannelMode").value = state.settings.defaultChannelMode || "fixed";
@@ -4855,6 +5415,9 @@ function updateCalcVisibility(){
     if($("taxHydro")) $("taxHydro").value = tx.hydrocarbons;
     if($("taxMeter")) $("taxMeter").value = tx.meterRentDay;
     if($("taxBono")) $("taxBono").value = tx.bonoSocialDay;
+    if($("incentiveChannel") && !$("incentiveChannel").value) $("incentiveChannel").innerHTML = channelOptions(state.settings.defaultChannel || "waylet");
+    renderIncentiveEditor();
+    renderWidgetSettings();
   }
 
   function saveChannelThresholds(){
@@ -5092,7 +5655,7 @@ function updateCalcVisibility(){
       sec.classList.toggle("active", sec.id === id);
     });
 
-    if($("headerTitle")) $("headerTitle").textContent = tabTitle(id);
+    updateHeaderContext(id);
 
     document.querySelectorAll(".mainMenuItem[data-tab]").forEach(function(btn){
       btn.classList.toggle("active", btn.dataset.tab === id);
@@ -5232,6 +5795,8 @@ function updateCalcVisibility(){
 
     if($("calendarMonth")) $("calendarMonth").value = getMonth();
     renderKpis();
+    renderIncentives();
+    renderWeather();
     renderObjectives();
     renderPace();
     renderPendingWarnings();
@@ -5242,6 +5807,8 @@ function updateCalcVisibility(){
     renderDocs();
     renderSettings();
     renderChannelSelects();
+    applyHomeWidgets();
+    updateHeaderContext();
   }
 
 
@@ -5578,6 +6145,30 @@ function updateCalcVisibility(){
         else if(themeMedia.addListener) themeMedia.addListener(themeListener);
       }
     }catch(e){}
+
+    document.querySelectorAll(".quickAddBtn[data-tab],.textButton[data-tab]").forEach(function(btn){
+      btn.onclick = function(){
+        switchTab(btn.dataset.tab);
+        if(btn.dataset.target) setTimeout(function(){ var target = $(btn.dataset.target); if(target) target.scrollIntoView({behavior:"smooth",block:"start"}); },80);
+      };
+    });
+    if($("saveProfileBtn")) $("saveProfileBtn").onclick = function(){
+      state.settings.displayName = String($("displayName").value || "").trim().slice(0,24);
+      saveState();
+      toast(state.settings.displayName ? "Nombre guardado." : "Saludo sin nombre guardado.");
+    };
+    if($("searchWeatherLocationBtn")) $("searchWeatherLocationBtn").onclick = searchWeatherLocation;
+    if($("weatherLocationQuery")) $("weatherLocationQuery").onkeydown = function(e){ if(e.key === "Enter"){ e.preventDefault(); searchWeatherLocation(); } };
+    if($("incentiveChannel")) $("incentiveChannel").onchange = renderIncentiveEditor;
+    if($("addIncentiveTierBtn")) $("addIncentiveTierBtn").onclick = function(){ $("incentiveTiers").appendChild(incentiveTierRow()); };
+    if($("saveIncentivesBtn")) $("saveIncentivesBtn").onclick = saveIncentiveSettings;
+    if($("saveWidgetsBtn")) $("saveWidgetsBtn").onclick = saveWidgetSettings;
+    if($("resetWidgetsBtn")) $("resetWidgetsBtn").onclick = function(){
+      state.settings.homeWidgetOrder = HOME_WIDGETS.map(function(w){ return w.id; });
+      state.settings.homeWidgetVisibility = defaultWidgetVisibility();
+      saveState();
+      toast("Panel restablecido.");
+    };
 
 
     $("saveHoursBtn").onclick = function(){
