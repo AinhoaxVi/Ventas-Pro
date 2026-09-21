@@ -2829,6 +2829,189 @@
       .weatherDays{grid-template-columns:repeat(3,minmax(0,1fr));}
     }
 
+    /* v15 · Executive workspace */
+    :root,html.theme-dark{
+      --bg:#111318;
+      --bg2:#111318;
+      --panel:#191c22;
+      --panel2:#20242c;
+      --panel3:#282d36;
+      --text:#f4f5f7;
+      --muted:#9ca3af;
+      --line:#303641;
+      --soft:#232831;
+      --fieldBg:#15181e;
+      --buttonBg:#20242c;
+      --controlBorder:#39414d;
+      --shadow:0 1px 2px rgba(0,0,0,.14),0 14px 36px rgba(0,0,0,.14);
+    }
+    html.theme-light{
+      --bg:#f5f6f8;
+      --bg2:#f5f6f8;
+      --panel:#ffffff;
+      --panel2:#f7f8fa;
+      --panel3:#eef1f4;
+      --text:#171a21;
+      --muted:#68707d;
+      --line:#e1e5ea;
+      --soft:#f0f2f5;
+      --fieldBg:#fbfcfd;
+      --buttonBg:#ffffff;
+      --controlBorder:#d5dae1;
+      --shadow:0 1px 2px rgba(16,24,40,.025),0 12px 34px rgba(16,24,40,.05);
+    }
+    html,body{background:var(--bg)!important;}
+    body{background:var(--bg)!important;font-size:16px!important;letter-spacing:-.01em!important;}
+    header{
+      background:color-mix(in srgb,var(--bg) 93%,transparent)!important;
+      border-bottom:1px solid var(--line)!important;
+      min-height:68px;
+      display:flex;
+      align-items:center;
+    }
+    html.theme-light header{background:rgba(245,246,248,.92)!important;}
+    header:before{display:none!important;}
+    #headerTitle{font-size:1.18rem!important;font-weight:760!important;letter-spacing:-.035em!important;}
+    .headerDate{font-size:.74rem!important;margin-top:3px;color:var(--muted)!important;}
+    .pill{background:var(--panel)!important;border-color:var(--line)!important;border-radius:999px!important;padding:8px 12px!important;}
+
+    .desktopNav{
+      background:var(--bg)!important;
+      color:var(--text)!important;
+      border-right:1px solid var(--line)!important;
+      padding:20px 16px!important;
+    }
+    .desktopNavHead{border-bottom:1px solid var(--line)!important;padding:0 8px 20px!important;}
+    .desktopNavHead strong{color:var(--text)!important;font-size:1rem!important;}
+    .desktopNavHead span,.sideNavDivider{color:var(--muted)!important;}
+    .desktopNavList{gap:3px!important;padding-top:18px!important;}
+    .sideNavItem{
+      min-height:44px!important;
+      color:var(--muted)!important;
+      border:0!important;
+      border-radius:10px!important;
+      padding:10px 12px!important;
+      background:transparent!important;
+      font-size:.86rem!important;
+      transition:background .16s ease,color .16s ease,transform .16s ease!important;
+    }
+    .sideNavItem:hover{color:var(--text)!important;background:var(--soft)!important;transform:translateX(2px);}
+    .sideNavItem.active{
+      color:var(--text)!important;
+      background:var(--panel)!important;
+      box-shadow:inset 0 0 0 1px var(--line),0 4px 14px rgba(16,24,40,.04)!important;
+    }
+    .sideNavItem.active:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--primarySolid);margin-right:9px;flex:0 0 auto;}
+    .desktopNav:after{border-top:1px solid var(--line)!important;color:var(--muted)!important;}
+
+    .mainContent{max-width:1320px!important;padding-top:26px!important;}
+    main section.active{gap:20px!important;}
+    .panel,.card,.day-card,.sale-box,.rate-card,.doc-card,.salesDayCard,.weekBlock{
+      border:1px solid var(--line)!important;
+      border-radius:16px!important;
+      background:var(--panel)!important;
+      box-shadow:var(--shadow)!important;
+    }
+    .panel{padding:24px!important;}
+    .panel > h2{font-size:1.05rem!important;margin-bottom:18px!important;padding-bottom:14px;border-bottom:1px solid var(--line);}
+    .panelHeading{margin-bottom:18px!important;padding-bottom:14px;border-bottom:1px solid var(--line);}
+    .panelHeading h2{font-size:1.05rem!important;margin-bottom:0!important;}
+    .eyebrow{font-size:.68rem!important;letter-spacing:.13em!important;}
+    .textButton{border:1px solid var(--line)!important;background:var(--panel2)!important;border-radius:999px!important;padding:7px 11px!important;}
+
+    input,select,textarea{
+      min-height:48px!important;
+      border-radius:11px!important;
+      background:var(--fieldBg)!important;
+      border-color:var(--controlBorder)!important;
+      font-size:.94rem!important;
+    }
+    label.field,.label{font-size:.78rem!important;letter-spacing:.01em!important;}
+    button,.tab,.mainMenuItem,.closeMenuBtn{border-radius:11px!important;min-height:44px!important;}
+    .btn-main,.quickAddBtn{background:#171a21!important;border-color:#171a21!important;color:#fff!important;}
+    html.theme-dark .btn-main,html.theme-dark .quickAddBtn{background:#f4f5f7!important;border-color:#f4f5f7!important;color:#171a21!important;}
+    .btn-turq{background:var(--primarySolid)!important;border-color:var(--primarySolid)!important;}
+    .hint{border-left:0!important;border-radius:12px!important;padding:14px 16px!important;}
+    .badge,.chip,.sphStatus,.statusChip{border-radius:999px!important;}
+
+    #inicio > .controlBar{
+      padding:18px!important;
+      background:var(--panel)!important;
+      border-radius:16px!important;
+      box-shadow:var(--shadow)!important;
+    }
+    .controlActions{display:flex;gap:9px;align-items:center;}
+    .arrangeWidgetsBtn{white-space:nowrap;background:var(--panel2)!important;border-color:var(--line)!important;color:var(--text)!important;}
+    .arrangeWidgetsBtn.active{background:var(--primarySoft)!important;border-color:color-mix(in srgb,var(--primarySolid) 40%,var(--line))!important;color:var(--primarySolid)!important;}
+    .executiveKpis{gap:12px!important;}
+    .executiveKpis .card{min-height:128px!important;border-radius:16px!important;padding:20px!important;}
+    .executiveKpis .kpiPrimary{background:var(--panel)!important;border-color:var(--line)!important;}
+    .executiveKpis .kpiPrimary:after{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:var(--primarySolid);}
+    .executiveKpis .kpiPrimary{position:relative;overflow:hidden;}
+    .value{font-size:1.8rem!important;}
+
+    #pendingWarningsBox{border-radius:12px!important;border-color:var(--line)!important;}
+    .pendingRow{background:transparent!important;min-height:58px!important;padding:11px 12px!important;}
+    .pendingRow:hover{background:var(--panel2)!important;}
+    .mini,.result-row{border-radius:12px!important;padding:14px!important;}
+    .rate-card,.doc-card,.day-card,.sale-box,.salesDayCard{padding:16px!important;}
+    .weatherSymbol{border-radius:16px!important;}
+    .weatherDay{border-radius:11px!important;padding:11px!important;}
+
+    [data-widget]{position:relative;transition:opacity .18s ease,transform .18s ease,border-color .18s ease;}
+    .homeWidgetHandle{display:none;position:absolute;z-index:8;right:12px;top:10px;align-items:center;gap:6px;padding:5px 6px 5px 10px;border:1px solid var(--line);border-radius:999px;background:var(--panel);box-shadow:0 8px 20px rgba(16,24,40,.12);}
+    .homeWidgetHandle span{color:var(--muted);font-size:.72rem;font-weight:750;cursor:grab;user-select:none;}
+    .homeWidgetHandle button{width:30px!important;min-width:30px!important;height:30px!important;min-height:30px!important;padding:0!important;border-radius:50%!important;background:var(--panel2)!important;}
+    #inicio.widgetArrangeMode [data-widget]{outline:2px dashed color-mix(in srgb,var(--primarySolid) 50%,var(--line));outline-offset:4px;cursor:grab;}
+    #inicio.widgetArrangeMode .homeWidgetHandle{display:flex;}
+    #inicio.widgetArrangeMode [data-widget].dragging{opacity:.42;transform:scale(.985);}
+    #inicio.widgetArrangeMode [data-widget].dragTarget{outline-style:solid;outline-color:var(--primarySolid);}
+    #inicio.widgetArrangeMode .panelHeading{padding-right:164px;}
+    #inicio.widgetArrangeMode [data-widget="kpis"]{padding-top:48px;}
+
+    .widgetSettingRow{grid-template-columns:auto minmax(0,1fr) auto!important;padding:12px 13px!important;border-radius:12px!important;}
+    .widgetDragGrip{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:.7rem;font-weight:750;cursor:grab;user-select:none;}
+    .widgetDragGrip b{font-size:1.1rem;letter-spacing:-.15em;color:var(--text);}
+    .widgetSettingRow.dragging{opacity:.45;}
+    .widgetSettingRow.dragTarget{border-color:var(--primarySolid)!important;background:var(--primarySoft)!important;}
+
+    @media(min-width:1100px){
+      header{left:248px!important;padding-left:32px!important;padding-right:32px!important;}
+      .desktopNav{width:248px!important;}
+      .app{padding-left:280px!important;padding-right:32px!important;}
+      #ventas{grid-template-columns:repeat(2,minmax(0,1fr));}
+      #ventas > .panel:nth-child(1),#ventas > .panel:nth-child(2){grid-column:1/-1;}
+      #calendario{grid-template-columns:minmax(0,1.1fr) minmax(360px,.9fr);}
+      #tarifas{grid-template-columns:repeat(2,minmax(0,1fr));}
+      #tarifas > .panel:first-child{grid-column:1/-1;}
+      #calc,#calc30{grid-template-columns:minmax(0,1.25fr) minmax(360px,.75fr);align-items:start;}
+      #calc > .panel:last-child,#calc30 > .panel:last-child{position:sticky;top:94px;}
+      #doc{grid-template-columns:repeat(2,minmax(0,1fr));}
+      #doc > .panel:first-child{grid-column:1/-1;}
+      #ajustes{gap:20px!important;}
+    }
+    @media(max-width:1099px){
+      .controlActions{width:100%;}
+      .controlActions > button{flex:1;}
+    }
+    @media(max-width:760px){
+      .mainContent{padding-top:14px!important;}
+      .panel{padding:18px!important;border-radius:14px!important;}
+      .controlActions{display:grid;grid-template-columns:1fr 1fr;}
+      .widgetSettingRow{grid-template-columns:minmax(0,1fr) auto!important;}
+      .widgetDragGrip{display:none;}
+      #inicio.widgetArrangeMode .panelHeading{padding-right:0;padding-top:48px;}
+      #inicio.widgetArrangeMode [data-widget]:not([data-widget="kpis"]){padding-top:64px!important;}
+    }
+    @media(max-width:520px){
+      body{font-size:15px!important;}
+      .panel{padding:16px!important;}
+      #inicio > .controlBar{padding:14px!important;}
+      .controlActions{grid-template-columns:1fr;}
+      .executiveKpis .card{padding:16px!important;}
+      .widgetOrderActions{gap:4px;}
+    }
+
   </style>
 </head>
 
@@ -2858,7 +3041,7 @@
   <aside class="desktopNav" aria-label="Navegación principal">
     <div class="desktopNavHead">
       <span class="desktopNavMark" aria-hidden="true"></span>
-      <div><strong>Ventas Pro</strong><span>Control comercial · v14</span></div>
+          <div><strong>Ventas Pro</strong><span>Workspace comercial · v15</span></div>
     </div>
     <nav class="desktopNavList">
       <button type="button" class="sideNavItem active" data-tab="inicio">Inicio</button>
@@ -2891,7 +3074,10 @@
             </select>
           </label>
         </div>
-        <button type="button" class="quickAddBtn" data-tab="venta">+ Registrar jornada</button>
+        <div class="controlActions">
+          <button type="button" id="arrangeWidgetsBtn" class="arrangeWidgetsBtn">Ordenar widgets</button>
+          <button type="button" class="quickAddBtn" data-tab="venta">+ Registrar jornada</button>
+        </div>
       </div>
 
       <div class="cards five executiveKpis" data-widget="kpis">
@@ -3256,9 +3442,9 @@
     <section id="ajustes">
 
       <div class="panel" id="profileSettingsPanel">
-        <div class="panelHeading"><div><span class="eyebrow">Personalización</span><h2>Tu perfil</h2></div><span class="statusChip">Local</span></div>
+        <div class="panelHeading"><div><span class="eyebrow">Personalización</span><h2>Perfil del agente</h2></div><span class="statusChip">Local</span></div>
         <div class="row cols2 profileRow">
-          <label class="field">Nombre para el saludo
+          <label class="field">Nombre del agente
             <input id="displayName" type="text" maxlength="24" placeholder="Ej. Ainhoa">
           </label>
           <button id="saveProfileBtn" type="button" class="btn-main">Guardar nombre</button>
@@ -4389,6 +4575,100 @@
     });
   }
 
+  var draggedHomeWidget = null;
+
+  function commitHomeWidgetOrder(order,message){
+    state.settings.homeWidgetOrder = order.slice();
+    persist();
+    applyHomeWidgets();
+    renderWidgetSettings();
+    if(message) toast(message);
+  }
+
+  function moveHomeWidget(widgetId,direction){
+    var order = (state.settings.homeWidgetOrder || HOME_WIDGETS.map(function(w){ return w.id; })).slice();
+    var current = order.indexOf(widgetId);
+    var next = current + direction;
+    if(current < 0 || next < 0 || next >= order.length) return;
+    var swap = order[next];
+    order[next] = widgetId;
+    order[current] = swap;
+    commitHomeWidgetOrder(order,"Orden de widgets actualizado.");
+    refreshHomeWidgetHandles();
+  }
+
+  function refreshHomeWidgetHandles(){
+    var order = state.settings.homeWidgetOrder || HOME_WIDGETS.map(function(w){ return w.id; });
+    document.querySelectorAll('#inicio [data-widget]').forEach(function(widget){
+      var id = widget.dataset.widget;
+      var index = order.indexOf(id);
+      var up = widget.querySelector(".homeWidgetMoveUp");
+      var down = widget.querySelector(".homeWidgetMoveDown");
+      if(up) up.disabled = index <= 0;
+      if(down) down.disabled = index < 0 || index >= order.length - 1;
+    });
+  }
+
+  function setHomeWidgetArrangeMode(enabled){
+    var home = $("inicio");
+    var button = $("arrangeWidgetsBtn");
+    if(!home || !button) return;
+    home.classList.toggle("widgetArrangeMode",enabled);
+    button.classList.toggle("active",enabled);
+    button.textContent = enabled ? "Listo" : "Ordenar widgets";
+    button.setAttribute("aria-pressed",enabled ? "true" : "false");
+    document.querySelectorAll('#inicio [data-widget]').forEach(function(widget){ widget.draggable = enabled; });
+    refreshHomeWidgetHandles();
+  }
+
+  function setupHomeWidgetOrganizer(){
+    var button = $("arrangeWidgetsBtn");
+    if(!button || button.dataset.bound === "1") return;
+    button.dataset.bound = "1";
+    button.setAttribute("aria-pressed","false");
+    button.onclick = function(){ setHomeWidgetArrangeMode(!$("inicio").classList.contains("widgetArrangeMode")); };
+
+    document.querySelectorAll('#inicio [data-widget]').forEach(function(widget){
+      var handle = document.createElement("div");
+      handle.className = "homeWidgetHandle";
+      handle.innerHTML = '<span title="Arrastra para mover">⠿ Arrastrar</span><button type="button" class="homeWidgetMoveUp" aria-label="Mover widget arriba">↑</button><button type="button" class="homeWidgetMoveDown" aria-label="Mover widget abajo">↓</button>';
+      widget.appendChild(handle);
+      handle.querySelector(".homeWidgetMoveUp").onclick = function(e){ e.stopPropagation(); moveHomeWidget(widget.dataset.widget,-1); };
+      handle.querySelector(".homeWidgetMoveDown").onclick = function(e){ e.stopPropagation(); moveHomeWidget(widget.dataset.widget,1); };
+      widget.addEventListener("dragstart",function(e){
+        if(!$("inicio").classList.contains("widgetArrangeMode")){ e.preventDefault(); return; }
+        draggedHomeWidget = widget.dataset.widget;
+        widget.classList.add("dragging");
+        if(e.dataTransfer){ e.dataTransfer.effectAllowed = "move"; e.dataTransfer.setData("text/plain",draggedHomeWidget); }
+      });
+      widget.addEventListener("dragover",function(e){
+        if(!draggedHomeWidget || draggedHomeWidget === widget.dataset.widget) return;
+        e.preventDefault();
+        widget.classList.add("dragTarget");
+      });
+      widget.addEventListener("dragleave",function(){ widget.classList.remove("dragTarget"); });
+      widget.addEventListener("drop",function(e){
+        e.preventDefault();
+        var targetId = widget.dataset.widget;
+        var order = (state.settings.homeWidgetOrder || HOME_WIDGETS.map(function(w){ return w.id; })).slice();
+        var from = order.indexOf(draggedHomeWidget);
+        var to = order.indexOf(targetId);
+        if(from >= 0 && to >= 0 && from !== to){
+          order.splice(from,1);
+          order.splice(to,0,draggedHomeWidget);
+          commitHomeWidgetOrder(order,"Widget movido.");
+        }
+        widget.classList.remove("dragTarget");
+      });
+      widget.addEventListener("dragend",function(){
+        draggedHomeWidget = null;
+        document.querySelectorAll('#inicio [data-widget]').forEach(function(el){ el.classList.remove("dragging","dragTarget"); });
+        refreshHomeWidgetHandles();
+      });
+    });
+    refreshHomeWidgetHandles();
+  }
+
   function greetingText(){
     var hour = new Date().getHours();
     if(hour < 12) return "Buenos días";
@@ -5352,7 +5632,8 @@ function updateCalcVisibility(){
     $("homeWidgetSettings").innerHTML = order.map(function(id,index){
       var widget = HOME_WIDGETS.find(function(w){ return w.id === id; });
       if(!widget) return "";
-      return '<div class="widgetSettingRow" data-widget-setting="' + id + '">' +
+      return '<div class="widgetSettingRow" draggable="true" data-widget-setting="' + id + '">' +
+        '<span class="widgetDragGrip" title="Arrastra para cambiar el orden"><b>⠿</b> Arrastra</span>' +
         '<label class="checkField"><input class="widgetVisible" type="checkbox"' + (visibility[id] === false ? '' : ' checked') + '><span>' + escapeHtml(widget.name) + '</span></label>' +
         '<div class="widgetOrderActions"><button type="button" class="widgetOrderBtn moveWidgetUp" aria-label="Subir widget"' + (index === 0 ? ' disabled' : '') + '>↑</button><button type="button" class="widgetOrderBtn moveWidgetDown" aria-label="Bajar widget"' + (index === order.length-1 ? ' disabled' : '') + '>↓</button></div>' +
       '</div>';
@@ -5365,7 +5646,45 @@ function updateCalcVisibility(){
         if(btn.classList.contains("moveWidgetUp")) row.parentNode.insertBefore(row,sibling);
         else row.parentNode.insertBefore(sibling,row);
         refreshWidgetOrderButtons();
+        persistWidgetOrderFromSettings();
       };
+    });
+    bindWidgetSettingsDrag();
+  }
+
+  function persistWidgetOrderFromSettings(){
+    var rows = Array.from(document.querySelectorAll("#homeWidgetSettings .widgetSettingRow"));
+    state.settings.homeWidgetOrder = rows.map(function(row){ return row.dataset.widgetSetting; });
+    persist();
+    applyHomeWidgets();
+    refreshHomeWidgetHandles();
+  }
+
+  function bindWidgetSettingsDrag(){
+    var draggedRow = null;
+    document.querySelectorAll("#homeWidgetSettings .widgetSettingRow").forEach(function(row){
+      row.addEventListener("dragstart",function(e){
+        if(e.target.closest && e.target.closest("input,button")){ e.preventDefault(); return; }
+        draggedRow = row;
+        row.classList.add("dragging");
+        if(e.dataTransfer){ e.dataTransfer.effectAllowed = "move"; e.dataTransfer.setData("text/plain",row.dataset.widgetSetting); }
+      });
+      row.addEventListener("dragover",function(e){ if(draggedRow && draggedRow !== row){ e.preventDefault(); row.classList.add("dragTarget"); } });
+      row.addEventListener("dragleave",function(){ row.classList.remove("dragTarget"); });
+      row.addEventListener("drop",function(e){
+        e.preventDefault();
+        if(!draggedRow || draggedRow === row) return;
+        var rows = Array.from(row.parentNode.children);
+        if(rows.indexOf(draggedRow) < rows.indexOf(row)) row.after(draggedRow);
+        else row.before(draggedRow);
+        row.classList.remove("dragTarget");
+        refreshWidgetOrderButtons();
+        persistWidgetOrderFromSettings();
+      });
+      row.addEventListener("dragend",function(){
+        draggedRow = null;
+        document.querySelectorAll("#homeWidgetSettings .widgetSettingRow").forEach(function(el){ el.classList.remove("dragging","dragTarget"); });
+      });
     });
   }
 
@@ -6227,6 +6546,7 @@ function updateCalcVisibility(){
     if(!state.settings.cutoff) state.settings.cutoff = todayISO();
 
     renderAll();
+    setupHomeWidgetOrganizer();
   }
 
   if(document.readyState === "loading"){
