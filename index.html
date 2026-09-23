@@ -3017,6 +3017,77 @@
       .widgetOrderActions{gap:4px;}
     }
 
+    /* v16 · Coherencia visual, calendario operativo y widgets alineados */
+    .dailyMotivation{
+      grid-column:1/-1;display:flex;align-items:center;gap:12px;min-height:58px;padding:14px 18px;
+      border:1px solid var(--line);border-radius:14px;background:var(--panel);box-shadow:var(--shadow);
+      color:var(--text);font-size:.9rem;font-weight:650;line-height:1.4;
+    }
+    .dailyMotivation:before{content:"✦";display:grid;place-items:center;width:30px;height:30px;flex:0 0 30px;border-radius:9px;background:var(--primarySoft);color:var(--primarySolid);}
+    .dailyMotivation span{color:var(--muted);font-size:.7rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-right:4px;}
+    #inicio.dashboardHome{align-items:stretch!important;}
+    #inicio.dashboardHome > [data-widget]{height:100%;min-height:250px;display:flex;flex-direction:column;}
+    #inicio.dashboardHome > [data-widget] > .grid:last-child{flex:1;align-content:start;}
+    #inicio.dashboardHome > [data-widget="kpis"]{min-height:0;height:auto;}
+    #pendingWarningsBox{max-height:330px!important;overflow:auto!important;}
+    #weatherWidget{flex:1;}
+
+    .calendarToolbarPanel,.calendarViewPanel{grid-column:1/-1!important;}
+    .calendarControls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:end;}
+    .calendarNav{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;margin-top:14px;}
+    .calendarNav strong{text-align:center;font-size:.95rem;text-transform:capitalize;}
+    .calendarViewPanel{overflow-x:auto!important;}
+    .calendarMonthGrid{display:grid;grid-template-columns:repeat(7,minmax(92px,1fr));gap:8px;min-width:700px;}
+    .calendarWeekday{padding:7px;text-align:center;color:var(--muted);font-size:.68rem;font-weight:850;letter-spacing:.08em;text-transform:uppercase;}
+    .calendarCell{position:relative;min-height:116px;padding:11px;border:1px solid var(--line);border-radius:12px!important;background:var(--panel2)!important;cursor:pointer;text-align:left;transition:border-color .16s ease,transform .16s ease,background .16s ease;}
+    .calendarCell:hover{border-color:color-mix(in srgb,var(--primarySolid) 50%,var(--line));transform:translateY(-1px);}
+    .calendarCell.isOutside{opacity:.38;cursor:default;}
+    .calendarCell.isToday{box-shadow:inset 0 0 0 2px var(--primarySolid);}
+    .calendarCell.isRegistered{background:color-mix(in srgb,var(--primarySolid) 7%,var(--panel2))!important;}
+    .calendarCell.isPending:after{content:"";position:absolute;right:10px;top:12px;width:7px;height:7px;border-radius:50%;background:var(--amber);}
+    .calendarDayNumber{font-size:.86rem;font-weight:850;}
+    .calendarDayState{margin-top:16px;color:var(--muted);font-size:.7rem;font-weight:700;line-height:1.35;}
+    .calendarDayMetrics{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px;}
+    .calendarDayMetrics span{padding:4px 6px;border-radius:6px;background:var(--panel);color:var(--text);font-size:.65rem;font-weight:780;}
+    .calendarWeekGrid{display:grid;grid-template-columns:repeat(7,minmax(135px,1fr));gap:10px;min-width:990px;}
+    .calendarWeekDay{min-height:210px;padding:15px;border:1px solid var(--line);border-radius:14px!important;background:var(--panel2)!important;cursor:pointer;text-align:left;}
+    .calendarWeekDay.isToday{box-shadow:inset 0 0 0 2px var(--primarySolid);}
+    .calendarWeekDay .calendarDayNumber{font-size:1.15rem;}
+    .calendarWeekDay h3{margin:5px 0 18px!important;color:var(--muted);font-size:.72rem;text-transform:uppercase;}
+    .calendarDayDetail{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(260px,.8fr);gap:18px;}
+    .calendarDayHero{padding:24px;border:1px solid var(--line);border-radius:15px;background:var(--panel2);}
+    .calendarDayHero .bigDate{font-size:1.7rem;font-weight:820;letter-spacing:-.045em;text-transform:capitalize;}
+    .calendarMetrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:20px;}
+    .calendarMetric{padding:14px;border:1px solid var(--line);border-radius:11px;background:var(--panel);}
+    .calendarMetric span{display:block;color:var(--muted);font-size:.68rem;font-weight:760;}
+    .calendarMetric b{display:block;margin-top:5px;font-size:1.15rem;}
+    .calendarDayAction{display:flex;flex-direction:column;justify-content:center;gap:10px;padding:20px;border:1px solid var(--line);border-radius:15px;background:var(--panel);}
+    .incentivePreview{margin-top:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--panel2);font-size:.78rem;line-height:1.5;}
+    .incentivePreview strong{display:block;margin-bottom:3px;color:var(--text);}
+    .incentivePreview.ok{border-color:color-mix(in srgb,var(--success) 45%,var(--line));}
+    .incentivePreview.warn{border-color:color-mix(in srgb,var(--amber) 45%,var(--line));}
+
+    @media(min-width:1100px){
+      #ventas,#calendario,#tarifas,#doc,#ajustes,#calc,#calc30{grid-template-columns:1fr!important;}
+      #ventas > .panel,#calendario > .panel,#tarifas > .panel,#doc > .panel,#ajustes > .panel,#calc > .panel,#calc30 > .panel{grid-column:1/-1!important;position:static!important;}
+      #inicio.dashboardHome > [data-widget]{align-self:stretch;}
+    }
+    @media(max-width:760px){
+      .calendarControls{grid-template-columns:1fr;}
+      .calendarNav{grid-template-columns:1fr 1fr;}
+      .calendarNav strong{grid-column:1/-1;grid-row:1;}
+      .calendarMonthGrid{grid-template-columns:repeat(7,minmax(46px,1fr));min-width:0;gap:4px;}
+      .calendarCell{min-height:82px;padding:7px;border-radius:9px;}
+      .calendarDayState{margin-top:12px;font-size:.6rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+      .calendarDayMetrics span{font-size:.57rem;padding:3px 4px;}
+      .calendarDayMetrics span:nth-child(n+2){display:none;}
+      .calendarWeekGrid{grid-template-columns:1fr;min-width:0;}
+      .calendarWeekDay{min-height:0;}
+      .calendarDayDetail{grid-template-columns:1fr;}
+      .calendarMetrics{grid-template-columns:repeat(3,minmax(0,1fr));}
+      #inicio.dashboardHome > [data-widget]{min-height:0;height:auto;}
+    }
+
   </style>
 </head>
 
@@ -3046,7 +3117,7 @@
   <aside class="desktopNav" aria-label="Navegación principal">
     <div class="desktopNavHead">
       <span class="desktopNavMark" aria-hidden="true"></span>
-          <div><strong>Ventas Pro</strong><span>Workspace comercial · v15</span></div>
+          <div><strong>Ventas Pro</strong><span>Workspace comercial · v16</span></div>
     </div>
     <nav class="desktopNavList">
       <button type="button" class="sideNavItem active" data-tab="inicio">Inicio</button>
@@ -3084,6 +3155,8 @@
           <button type="button" class="quickAddBtn" data-tab="venta">+ Registrar jornada</button>
         </div>
       </div>
+
+      <div class="dailyMotivation" id="dailyMotivation" aria-live="polite"></div>
 
       <div class="cards five executiveKpis" data-widget="kpis">
         <div class="card kpiPrimary">
@@ -3272,24 +3345,28 @@
     </section>
 
     <section id="calendario">
-      <div class="panel">
-        <h2>Calendario</h2>
-        <div class="row cols2">
+      <div class="panel calendarToolbarPanel">
+        <div class="panelHeading"><div><span class="eyebrow">Planificación</span><h2>Calendario</h2></div><button id="calendarTodayBtn" type="button" class="textButton">Hoy</button></div>
+        <div class="calendarControls">
           <label class="field">Mes
             <input id="calendarMonth" type="month">
           </label>
+          <label class="field">Fecha de referencia
+            <input id="calendarFocusDate" type="date">
+          </label>
           <label class="field">Vista
-            <select id="calendarView">
-              <option value="all">Todos los días</option>
-              <option value="registered">Solo registrados</option>
+            <select id="calendarMode">
+              <option value="month">Mes completo</option>
+              <option value="week">Semana</option>
+              <option value="day">Día</option>
             </select>
           </label>
         </div>
+        <div class="calendarNav"><button id="calendarPrevBtn" type="button" aria-label="Periodo anterior">← Anterior</button><strong id="calendarFocusLabel"></strong><button id="calendarNextBtn" type="button">Siguiente →</button></div>
       </div>
 
-      <div class="panel">
-        <h2>Semanas del mes</h2>
-        <div id="calendarWeeks" class="grid"></div>
+      <div class="panel calendarViewPanel">
+        <div id="calendarWeeks"></div>
       </div>
     </section>
 
@@ -3552,6 +3629,7 @@
         <div class="settingsInfoText incentiveHelp">Añade los tramos reales de tu campaña. La app aplica el tramo más alto alcanzado y multiplica su importe por los CUPS del canal.</div>
         <div class="tierHeader" aria-hidden="true"><span>Desde SPH</span><span>Importe por CUPS</span><span></span></div>
         <div id="incentiveTiers" class="tierList"></div>
+        <div id="incentivePreview" class="incentivePreview"></div>
         <div class="actions">
           <button id="addIncentiveTierBtn" type="button">+ Añadir tramo</button>
           <button id="saveIncentivesBtn" type="button" class="btn-main">Guardar incentivos</button>
@@ -3820,6 +3898,12 @@
     return fmtNum(v, v % 1 === 0 ? 0 : 2) + "h";
   }
 
+  function parseLocaleNumber(value){
+    if(typeof value === "number") return Number.isFinite(value) ? value : NaN;
+    var clean = String(value == null ? "" : value).trim().replace(/\s/g,"").replace(",",".");
+    return clean === "" ? NaN : Number(clean);
+  }
+
   function escapeHtml(v){
     return String(v == null ? "" : v)
       .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
@@ -3828,7 +3912,7 @@
 
   function defaultState(){
     return {
-      version:14,
+      version:16,
       records:[],
       settings:{
         month:currentMonth(),
@@ -3880,7 +3964,7 @@
   function normalizeState(s){
     var base = defaultState();
     s = s || {};
-    s.version = 14;
+    s.version = 16;
     s.records = Array.isArray(s.records) ? s.records : [];
     s.settings = Object.assign({}, base.settings, s.settings || {});
     s.settings.workHours = Object.assign({}, base.settings.workHours, s.settings.workHours || {});
@@ -4194,10 +4278,12 @@
     var hours = Number(stats && stats.hours || 0);
     var sales = Number(stats && stats.sales || 0);
     var sph = hours > 0 ? sales / hours : 0;
-    var tiers = (config.tiers || []).slice().sort(function(a,b){ return Number(a.sph)-Number(b.sph); });
+    var tiers = (config.tiers || []).map(function(t){ return {sph:parseLocaleNumber(t.sph),rate:parseLocaleNumber(t.rate)}; })
+      .filter(function(t){ return Number.isFinite(t.sph) && t.sph > 0 && Number.isFinite(t.rate) && t.rate >= 0; })
+      .sort(function(a,b){ return a.sph-b.sph; });
     var achieved = null;
     if(config.enabled && hours > 0){
-      tiers.forEach(function(t){ if(sph + 0.0000001 >= Number(t.sph || 0)) achieved = t; });
+      tiers.forEach(function(t){ if(sph + 0.0000001 >= t.sph) achieved = t; });
     }
     var rate = achieved ? Number(achieved.rate || 0) : 0;
     return {enabled:!!config.enabled,hours:hours,sales:sales,sph:sph,rate:rate,total:sales*rate,achieved:achieved,tiers:tiers};
@@ -4567,6 +4653,26 @@
       html += '<div class="incentiveLine"><div><strong>' + escapeHtml(line.name) + '</strong><small>' + escapeHtml(detail) + '</small></div><b>' + fmtEuro(line.total) + '</b></div>';
     });
     $("incentiveBreakdown").innerHTML = html + '</div>';
+  }
+
+  var MOTIVATION_QUOTES = [
+    "Una llamada puede girar el día. La siguiente cuenta.",
+    "Constancia primero; el resultado llega después.",
+    "Cada conversación bien llevada acerca el objetivo.",
+    "Hoy no hace falta hacerlo perfecto: hace falta avanzar.",
+    "Escuchar bien también es vender bien.",
+    "El ritmo se construye una gestión cada vez.",
+    "Tu mejor argumento empieza por entender al cliente.",
+    "Un día sólido se compone de pequeñas victorias.",
+    "Claridad, confianza y siguiente llamada.",
+    "El objetivo no se persigue: se divide y se trabaja."
+  ];
+
+  function renderDailyMotivation(){
+    if(!$("dailyMotivation")) return;
+    var key = todayISO().replace(/-/g,"");
+    var seed = key.split("").reduce(function(sum,n,i){ return sum + Number(n) * (i + 3); },0);
+    $("dailyMotivation").innerHTML = '<div><span>Impulso del día</span>' + escapeHtml(MOTIVATION_QUOTES[seed % MOTIVATION_QUOTES.length]) + '</div>';
   }
 
   function applyHomeWidgets(){
@@ -5602,14 +5708,42 @@ function updateCalcVisibility(){
     $("incentiveTiers").innerHTML = "";
     (config.tiers || []).forEach(function(t){ $("incentiveTiers").appendChild(incentiveTierRow(t)); });
     if(!(config.tiers || []).length) $("incentiveTiers").appendChild(incentiveTierRow({sph:channelMinimum(selected),rate:""}));
+    renderIncentivePreview(selected);
+    document.querySelectorAll("#incentiveTiers input").forEach(function(input){ input.oninput = function(){ renderIncentivePreview(selected,true); }; });
+    $("incentiveEnabled").onchange = function(){ renderIncentivePreview(selected,true); };
+  }
+
+  function editorIncentiveConfig(){
+    var tiers = [];
+    document.querySelectorAll("#incentiveTiers .tierRow").forEach(function(row){
+      var sph = parseLocaleNumber(row.querySelector(".incentiveTierSph").value);
+      var rate = parseLocaleNumber(row.querySelector(".incentiveTierRate").value);
+      if(Number.isFinite(sph) && sph > 0 && Number.isFinite(rate) && rate >= 0) tiers.push({sph:sph,rate:rate});
+    });
+    return {enabled:!!$("incentiveEnabled").checked,tiers:tiers};
+  }
+
+  function renderIncentivePreview(channelId,useEditor){
+    if(!$("incentivePreview")) return;
+    var stats = channelStats(cutoffRecords())[channelId] || {hours:0,sales:0};
+    var original = state.settings.incentives[channelId];
+    if(useEditor) state.settings.incentives[channelId] = editorIncentiveConfig();
+    var result = incentiveResultForChannel(channelId,stats);
+    if(useEditor) state.settings.incentives[channelId] = original;
+    var cls = result.achieved ? "ok" : (result.sales > 0 && !result.hours ? "warn" : "");
+    var message = result.hours > 0
+      ? fmtSph(result.sph) + " SPH · " + result.sales + " CUPS · resultado: " + fmtEuro(result.total)
+      : (result.sales > 0 ? "Hay ventas, pero ninguna hora asignada a este canal. Revisa el canal del día o el reparto de horas." : "Aún no hay horas ni ventas de este canal en el periodo visible.");
+    $("incentivePreview").className = "incentivePreview " + cls;
+    $("incentivePreview").innerHTML = '<strong>Comprobación con tus datos actuales</strong>' + escapeHtml(message);
   }
 
   function saveIncentiveSettings(){
     var channelId = $("incentiveChannel").value || "waylet";
     var tiers = [];
     document.querySelectorAll("#incentiveTiers .tierRow").forEach(function(row){
-      var sph = Number(row.querySelector(".incentiveTierSph").value);
-      var rate = Number(row.querySelector(".incentiveTierRate").value);
+      var sph = parseLocaleNumber(row.querySelector(".incentiveTierSph").value);
+      var rate = parseLocaleNumber(row.querySelector(".incentiveTierRate").value);
       if(Number.isFinite(sph) && sph > 0 && Number.isFinite(rate) && rate >= 0) tiers.push({sph:sph,rate:rate});
     });
     tiers.sort(function(a,b){ return a.sph-b.sph; });
@@ -5992,90 +6126,59 @@ function updateCalcVisibility(){
     window.scrollTo(0,0);
   }
 
+  function dateFromISO(iso){ return new Date(iso + "T12:00:00"); }
+  function isoFromDate(d){
+    var local = new Date(d.getTime());
+    local.setMinutes(local.getMinutes() - local.getTimezoneOffset());
+    return local.toISOString().slice(0,10);
+  }
+  function shiftISO(iso,days){ var d=dateFromISO(iso); d.setDate(d.getDate()+days); return isoFromDate(d); }
+  function mondayISO(iso){ var d=dateFromISO(iso); var offset=(d.getDay()+6)%7; d.setDate(d.getDate()-offset); return isoFromDate(d); }
+  function calendarRecord(iso){ return state.records.find(function(r){ return r.date === iso; }) || null; }
+  function calendarOpenDate(iso){
+    var rec = calendarRecord(iso);
+    if(rec) showDayDetail(iso);
+    else{ clearForm(); $("dayDate").value=iso; setDefaultHoursForDate(); switchTab("venta"); }
+  }
+  function calendarDayData(iso){
+    var rec=calendarRecord(iso), hours=rec?workedHoursForRecord(rec):baseHoursForDate(iso), sales=rec?saleCount(rec):0;
+    return {rec:rec,hours:hours,sales:sales,sph:hours>0?sales/hours:0,status:rec?dayTypeLabel(rec):(hours>0?"Pendiente":"No laborable")};
+  }
+  function renderCalendarMonth(month){
+    var r=monthRange(month), first=dateFromISO(month+"-01"), leading=(first.getDay()+6)%7;
+    var html='<div class="calendarMonthGrid">'+["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"].map(function(n){return '<div class="calendarWeekday">'+n+'</div>';}).join("");
+    for(var i=0;i<42;i++){
+      var day=i-leading+1;
+      if(day<1||day>r.last){ html+='<div class="calendarCell isOutside" aria-hidden="true"></div>'; continue; }
+      var iso=month+'-'+String(day).padStart(2,'0'), data=calendarDayData(iso), pending=!data.rec&&data.hours>0&&iso<=todayISO();
+      html+='<button type="button" class="calendarCell '+(data.rec?'isRegistered ':'')+(pending?'isPending ':'')+(iso===todayISO()?'isToday ':'')+'" data-calendar-date="'+iso+'">'+
+        '<div class="calendarDayNumber">'+day+'</div><div class="calendarDayState">'+escapeHtml(data.status)+'</div>'+
+        '<div class="calendarDayMetrics">'+(data.rec?'<span>'+data.sales+' CUPS</span><span>'+fmtHours(data.hours)+'</span><span>'+fmtSph(data.sph)+'</span>':(data.hours>0?'<span>'+fmtHours(data.hours)+'</span>':''))+'</div></button>';
+    }
+    return html+'</div>';
+  }
+  function renderCalendarWeek(focus){
+    var monday=mondayISO(focus), html='<div class="calendarWeekGrid">';
+    for(var i=0;i<7;i++){
+      var iso=shiftISO(monday,i), d=dateFromISO(iso), data=calendarDayData(iso);
+      html+='<button type="button" class="calendarWeekDay '+(iso===todayISO()?'isToday':'')+'" data-calendar-date="'+iso+'"><div class="calendarDayNumber">'+d.getDate()+'</div><h3>'+d.toLocaleDateString('es-ES',{weekday:'long'})+'</h3><div class="calendarDayState">'+escapeHtml(data.status)+'</div><div class="calendarDayMetrics"><span>'+data.sales+' CUPS</span><span>'+fmtHours(data.hours)+'</span><span>'+fmtSph(data.sph)+' SPH</span></div></button>';
+    }
+    return html+'</div>';
+  }
+  function renderCalendarDay(focus){
+    var d=dateFromISO(focus), data=calendarDayData(focus), has=!!data.rec;
+    return '<div class="calendarDayDetail"><div class="calendarDayHero"><div class="eyebrow">'+(has?'Jornada registrada':'Planificación')+'</div><div class="bigDate">'+d.toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+'</div><div class="calendarMetrics"><div class="calendarMetric"><span>Horas</span><b>'+fmtHours(data.hours)+'</b></div><div class="calendarMetric"><span>CUPS</span><b>'+data.sales+'</b></div><div class="calendarMetric"><span>SPH</span><b>'+fmtSph(data.sph)+'</b></div></div></div><div class="calendarDayAction"><strong>'+escapeHtml(data.status)+'</strong><span class="small">'+(has?'Abre la jornada para revisar ventas, canal y observaciones.':'Registra el día para que compute en tus métricas.')+'</span><button type="button" class="btn-main" data-calendar-date="'+focus+'">'+(has?'Ver jornada':'Registrar jornada')+'</button></div></div>';
+  }
   function renderCalendar(){
     if(!$("calendarWeeks")) return;
-    var month = $("calendarMonth").value || getMonth();
-    $("calendarMonth").value = month;
-
-    var r = monthRange(month);
-    var recMap = {};
-    state.records.filter(function(x){ return x.date.indexOf(month) === 0; }).forEach(function(x){ recMap[x.date] = x; });
-
-    var view = $("calendarView") ? $("calendarView").value : "all";
-    var dayNames = ["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
-    var shortNames = ["D","L","M","X","J","V","S"];
-    var out = "";
-    var weekHtml = "";
-    var weekCount = 0;
-    var weekStartLabel = "";
-
-    function flushWeek(){
-      if(!weekHtml) return;
-      weekCount++;
-      out += '<div class="weekBlock">' +
-        '<div class="weekTitle">Semana ' + weekCount + (weekStartLabel ? ' · ' + weekStartLabel : '') + '</div>' +
-        '<div class="weekList">' + weekHtml + '</div>' +
-      '</div>';
-      weekHtml = "";
-      weekStartLabel = "";
-    }
-
-    for(var day=1; day<=r.last; day++){
-      var iso = month + '-' + String(day).padStart(2,'0');
-      var dateObj = new Date(iso + "T12:00:00");
-      var dow = dateObj.getDay();
-      var base = baseHoursForDate(iso);
-      var weekend = base <= 0;
-      var rec = recMap[iso];
-      var registered = !!rec;
-      var special = registered && specialHoursTotal(rec) > 0;
-
-      if(dow === 1 && weekHtml) flushWeek();
-      if(!weekStartLabel) weekStartLabel = String(day).padStart(2,"0") + "/" + String(r.month).padStart(2,"0");
-
-      // Fines de semana sin registro no salen como pendientes.
-      if(!registered && weekend) continue;
-      if(view === "registered" && !registered) continue;
-
-      var status = registered ? dayTypeLabel(rec) : "Pendiente";
-      var hours = registered ? workedHoursForRecord(rec) : base;
-      var sales = registered ? saleCount(rec) : 0;
-      var cls = "calBar " + (registered ? "registered " : "pending ") + (special ? "special " : "");
-
-      var meta = registered
-        ? (specialHoursText(rec) ? specialHoursText(rec) : "Día normal")
-        : "Falta cerrar este día";
-
-      var right = registered ? (sales + "v · " + fmtHours(hours)) : fmtHours(base);
-
-      weekHtml += '<div class="' + cls + '" data-date="' + iso + '" data-registered="' + (registered ? '1' : '0') + '">' +
-        '<div class="calDateBadge">' + shortNames[dow] + ' ' + day + '</div>' +
-        '<div class="calText">' +
-          '<div class="calTitle">' + dayNames[dow] + ' · ' + status + '</div>' +
-          '<div class="calMeta">' + escapeHtml(meta) + '</div>' +
-        '</div>' +
-        '<div class="calRight">' + right + '</div>' +
-      '</div>';
-
-      if(dow === 0) flushWeek();
-    }
-    flushWeek();
-
-    $("calendarWeeks").innerHTML = out || '<div class="empty">No hay días para mostrar.</div>';
-
-    document.querySelectorAll("#calendarWeeks .calBar[data-date]").forEach(function(el){
-      el.onclick = function(){
-        var date = el.dataset.date;
-        if(el.dataset.registered === "1"){
-          showDayDetail(date);
-        }else{
-          clearForm();
-          $("dayDate").value = date;
-          setDefaultHoursForDate();
-          switchTab("venta");
-        }
-      };
-    });
+    var month=$("calendarMonth").value||getMonth(), focus=$("calendarFocusDate").value||todayISO(), mode=$("calendarMode").value||"month";
+    $("calendarMonth").value=month; $("calendarFocusDate").value=focus;
+    var label="";
+    if(mode==="month"){ label=monthLabel(month); $("calendarWeeks").innerHTML=renderCalendarMonth(month); }
+    else if(mode==="week"){ var mon=mondayISO(focus), sun=shiftISO(mon,6); label="Semana del "+fmtDate(mon)+" al "+fmtDate(sun); $("calendarWeeks").innerHTML=renderCalendarWeek(focus); }
+    else{ label=dateFromISO(focus).toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long'}); $("calendarWeeks").innerHTML=renderCalendarDay(focus); }
+    $("calendarFocusLabel").textContent=label;
+    document.querySelectorAll("#calendarWeeks [data-calendar-date]").forEach(function(el){ el.onclick=function(){ calendarOpenDate(el.dataset.calendarDate); }; });
   }
 
   function renderSalesTab(){
@@ -6118,6 +6221,8 @@ function updateCalcVisibility(){
     $("monthPill").textContent = monthLabel(getMonth());
 
     if($("calendarMonth")) $("calendarMonth").value = getMonth();
+    if($("calendarFocusDate") && !$("calendarFocusDate").value) $("calendarFocusDate").value = todayISO();
+    renderDailyMotivation();
     renderKpis();
     renderIncentives();
     renderWeather();
@@ -6440,8 +6545,32 @@ function updateCalcVisibility(){
 
     $("homeMode").onchange = renderObjectives;
 
-    if($("calendarMonth")) $("calendarMonth").onchange = function(){ state.settings.month = $("calendarMonth").value || currentMonth(); saveState(); };
-    if($("calendarView")) $("calendarView").onchange = renderCalendar;
+    if($("calendarMonth")) $("calendarMonth").onchange = function(){
+      state.settings.month = $("calendarMonth").value || currentMonth();
+      $("calendarFocusDate").value = state.settings.month + "-01";
+      persist(); renderAll();
+    };
+    if($("calendarFocusDate")) $("calendarFocusDate").onchange = renderCalendar;
+    if($("calendarMode")) $("calendarMode").onchange = renderCalendar;
+    if($("calendarTodayBtn")) $("calendarTodayBtn").onclick = function(){
+      $("calendarFocusDate").value=todayISO(); $("calendarMonth").value=todayISO().slice(0,7); renderCalendar();
+    };
+    if($("calendarPrevBtn")) $("calendarPrevBtn").onclick = function(){
+      var mode=$("calendarMode").value;
+      if(mode==="month"){
+        var p=$("calendarMonth").value.split("-"), d=new Date(Number(p[0]),Number(p[1])-2,1);
+        $("calendarMonth").value=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");
+      }else $("calendarFocusDate").value=shiftISO($("calendarFocusDate").value,mode==="week"?-7:-1);
+      renderCalendar();
+    };
+    if($("calendarNextBtn")) $("calendarNextBtn").onclick = function(){
+      var mode=$("calendarMode").value;
+      if(mode==="month"){
+        var p=$("calendarMonth").value.split("-"), d=new Date(Number(p[0]),Number(p[1]),1);
+        $("calendarMonth").value=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");
+      }else $("calendarFocusDate").value=shiftISO($("calendarFocusDate").value,mode==="week"?7:1);
+      renderCalendar();
+    };
     $("rateSearch").oninput = renderRates;
     $("docSearch").oninput = filterDocs;
     $("calcBtn").onclick = calculateBill;
@@ -6484,7 +6613,11 @@ function updateCalcVisibility(){
     if($("searchWeatherLocationBtn")) $("searchWeatherLocationBtn").onclick = searchWeatherLocation;
     if($("weatherLocationQuery")) $("weatherLocationQuery").onkeydown = function(e){ if(e.key === "Enter"){ e.preventDefault(); searchWeatherLocation(); } };
     if($("incentiveChannel")) $("incentiveChannel").onchange = renderIncentiveEditor;
-    if($("addIncentiveTierBtn")) $("addIncentiveTierBtn").onclick = function(){ $("incentiveTiers").appendChild(incentiveTierRow()); };
+    if($("addIncentiveTierBtn")) $("addIncentiveTierBtn").onclick = function(){
+      var row=incentiveTierRow(); $("incentiveTiers").appendChild(row);
+      row.querySelectorAll("input").forEach(function(input){ input.oninput=function(){ renderIncentivePreview($("incentiveChannel").value,true); }; });
+      renderIncentivePreview($("incentiveChannel").value,true);
+    };
     if($("saveIncentivesBtn")) $("saveIncentivesBtn").onclick = saveIncentiveSettings;
     if($("saveWidgetsBtn")) $("saveWidgetsBtn").onclick = saveWidgetSettings;
     if($("resetWidgetsBtn")) $("resetWidgetsBtn").onclick = function(){
