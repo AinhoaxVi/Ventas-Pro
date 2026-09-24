@@ -1,4 +1,4 @@
-const CACHE_NAME = "ventas-pro-v16-calendar-incentives";
+const CACHE_NAME = "ventas-pro-v17-prices-20260924";
 const ASSETS = ["./", "./index.html", "./manifest.json", "./favicon.svg", "./icon-180.png", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", event => {
