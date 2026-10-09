@@ -3401,6 +3401,21 @@
           </label>
         </div>
 
+        <div id="calcPromoFields" class="row cols2 hidden">
+          <label class="field">Precio de energía
+            <select id="calcEnergyMode">
+              <option value="normal">Normal · 0,1427 €/kWh</option>
+              <option value="promo">Promoción primeros 3 meses · 0,0999 €/kWh</option>
+            </select>
+          </label>
+          <label class="field">Promoción SVA
+            <select id="calcSvaPromo">
+              <option value="0">TA24H Plus con coste</option>
+              <option value="1">Aplicar 2 primeros meses gratis</option>
+            </select>
+          </label>
+        </div>
+
         <div class="row cols3">
           <label id="calcKwhField" class="field">Consumo kWh
             <input id="calcKwh" type="number" min="0" step="0.01" value="0">
@@ -3837,6 +3852,7 @@
   var SERVICES = [{"id":"none","name":"Sin SVA","basePrice":0,"price":0,"promo":""},{"id":"ta24","name":"TA24H / TA24H ME","basePrice":4.12,"price":4.12,"promo":"Para todos"},{"id":"ta24plus","name":"TA24H Plus","basePrice":5.78,"price":5.78,"promo":"Para todos"},{"id":"ta24pyme20","name":"TA24H Pyme 2.0","basePrice":8.26,"price":8.26,"promo":"Para todos"},{"id":"ta24pyme30","name":"TA24H Pyme 3.0","basePrice":10.73,"price":10.73,"promo":"Para todos"},{"id":"sihconfort","name":"SIHConfort","basePrice":8.26,"price":8.26,"promo":"Para todos"},{"id":"sig","name":"SIG","basePrice":11.15,"price":11.15,"promo":"Para todos"},{"id":"tag","name":"TAG","basePrice":9.08,"price":9.08,"promo":"Para todos"}];
 
   var TARIFFS = [
+    {"id":"luz-3m-descuento","name":"Tarifa Luz 3 meses descuento","group":"Promociones","type":"luz","maxPower":10,"p1":0.0901,"p2":0.0901,"energy":0.1427,"promoEnergy":0.0999,"promoMonths":3,"svaMandatory":true,"permissionSva":false,"requiredService":"ta24plus","freeServiceMonths":2,"svaLabel":"TA24H Plus obligatorio","cashbackEligible":false,"notes":"TA24H Plus obligatorio. 30% de descuento en energía durante los 3 primeros meses (0,0999 €/kWh). Dos primeros meses de TA24H Plus gratis. Potencia máxima 10 kW.","shortName":"Luz 3 meses descuento"},
     {"id":"v29-15","name":"V29","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1599,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":true,"notes":"Precio vigente desde el 01/10/2026. Potencia hasta 15 kW.","shortName":"V29"},
     {"id":"v30-web-15","name":"V30 Web sin SVA","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1499,"svaMandatory":false,"permissionSva":false,"svaForbidden":true,"svaLabel":"Sin SVA","cashbackEligible":true,"notes":"Oferta web sin SVA. Potencia hasta 15 kW.","shortName":"V30 Web"},
     {"id":"v31-web-15","name":"V31 Web con SVA","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1399,"svaMandatory":true,"permissionSva":false,"requiredService":"ta24","svaLabel":"SVA obligatorio","cashbackEligible":true,"notes":"Oferta web con SVA. Potencia hasta 15 kW.","shortName":"V31 Web"},
@@ -5535,6 +5551,7 @@
                      (t.maxPower ? '<span class="chip">Hasta ' + t.maxPower + ' kW</span>' : '');
           }
         }
+        if(t.promoEnergy){ prices += '<span class="chip">Promo ' + fmtNum(t.promoEnergy,4) + ' €/kWh durante ' + Number(t.promoMonths || 0) + ' meses</span>'; }
         var badge = t.svaLabel || (t.svaMandatory ? "SVA obligatorio" : (t.permissionSva ? "Sin SVA con permiso" : "SVA opcional"));
         return '<div class="rate-card"><div class="rate-top"><div><div class="rate-title">' + escapeHtml(t.name) + '</div><div class="rate-meta">' + escapeHtml(groupDisplayTitle(t.group, t.type)) + '</div></div><span class="badge ' + (t.svaMandatory ? 'warn' : (t.permissionSva ? 'pink' : 'turq')) + '">' + escapeHtml(badge) + '</span></div><div class="chips">' + prices + (t.cashbackEligible ? '<span class="chip">Con cashback</span>' : '') + (Number(t.monthlyFee || 0) ? '<span class="chip">Cuota ' + fmtNum(t.monthlyFee,2) + ' €/mes</span>' : '') + (t.exc ? '<span class="chip">Excedentes ' + fmtNum(t.exc,2) + ' €/kWh</span>' : '') + '</div><div class="small">' + escapeHtml(t.notes || "") + '</div></div>';
       }).join("");
@@ -5578,12 +5595,7 @@ function updateCalcVisibility(){
     $("calcPeriod2Label").textContent = (labels[1] || "Periodo 2") + " kWh";
     $("calcPeriod3Label").textContent = (labels[2] || "Periodo 3") + " kWh";
     $("calcKwhP3Field").classList.toggle("calcHidden", isDh && Array.isArray(t.energyPeriods) && t.energyPeriods.length < 3);
-    var serviceSelect = $("calcService");
-    var serviceWasLocked = serviceSelect.disabled;
-    serviceSelect.disabled = false;
-    if(t.svaForbidden){ serviceSelect.value = "none"; serviceSelect.disabled = true; }
-    else if(t.requiredService){ serviceSelect.value = t.requiredService; serviceSelect.disabled = true; }
-    else if(serviceWasLocked){ serviceSelect.value = "none"; }
+    $("calcPromoFields").classList.toggle("hidden", !t.promoEnergy);
     if(!isLight){ $("calcP1").value = 0; $("calcP2").value = 0; }
     if(!isSolar){ $("calcExcess").value = 0; }
   }
@@ -5625,20 +5637,13 @@ function updateCalcVisibility(){
     var isGas = t.type === "gas";
     var isSolar = t.group === "Solar" || t.group === "Batería Virtual";
     var isBvSolar = !!t.isBvSolar;
-    if(t.svaMandatory && svc.id === "none"){
-      $("calcResult").innerHTML = '<div class="empty bad">Esta tarifa requiere SVA. Selecciona el servicio indicado para calcular.</div>';
-      return;
-    }
-    if(t.svaForbidden && svc.id !== "none"){
-      $("calcResult").innerHTML = '<div class="empty bad">Esta tarifa se comercializa sin SVA.</div>';
-      return;
-    }
     var maxp = powerLimit(t);
     if(isLight && maxp && (p1kw > maxp || p2kw > maxp)){
       $("calcResult").innerHTML = '<div class="empty bad">Esta tarifa permite hasta ' + maxp + ' kW. Baja la potencia para calcular.</div>';
       return;
     }
-    var grossEnergy = kwh * Number(t.energy || 0);
+    var energyRate = t.promoEnergy && $("calcEnergyMode").value === "promo" ? Number(t.promoEnergy) : Number(t.energy || 0);
+    var grossEnergy = kwh * energyRate;
     if(t.isDh && t.energyPeriods){
       var e1 = Number($("calcKwhP1").value || 0);
       var e2 = Number($("calcKwhP2").value || 0);
@@ -5654,7 +5659,8 @@ function updateCalcVisibility(){
     if(isSolar && !isBvSolar){ energy = Math.max(0, grossEnergy - Math.min(grossEnergy, excessCredit)); solarNote = "Excedente descuenta energía"; }
     if(isBvSolar){ solarNote = "La batería virtual descuenta del total"; }
     var supplyBase = energy + fixed + power;
-    var serviceBase = Number(svc.basePrice || 0) * days / 30;
+    var servicePromoFree = !!(t.freeServiceMonths && $("calcSvaPromo").value === "1" && svc.id === t.requiredService);
+    var serviceBase = servicePromoFree ? 0 : Number(svc.basePrice || 0) * days / 30;
     var iee = addTaxes && isLight ? supplyBase * Number(tax.iee || 0) : 0;
     var hydro = addTaxes && isGas ? kwh * Number(tax.hydrocarbons || 0) : 0;
     var meter = addTaxes && isLight ? days * Number(tax.meterRentDay || 0) : 0;
@@ -5664,8 +5670,8 @@ function updateCalcVisibility(){
     var subtotalFactura = ivaBase + iva;
     var bvCredit = isBvSolar ? excessCredit : 0;
     var total = subtotalFactura - bvCredit;
-    var energyNote = t.isDh ? (t.periodLabels || ["Punta","Llano","Valle"]).join(" / ") : solarNote;
-    var html = resultRow("Energía", energy, energyNote) + (fixed ? resultRow("Término fijo gas", fixed, "€/mes prorrateado") : "") + (productFee ? resultRow("Cuota del producto", productFee, "€/mes prorrateado") : "") + (power ? resultRow("Potencia", power, "Total P1/P2") : "") + (serviceBase ? resultRow("SVA", serviceBase, svc.name) : "");
+    var energyNote = t.promoEnergy ? (energyRate === Number(t.promoEnergy) ? "Precio promocional primeros " + t.promoMonths + " meses" : "Precio normal") : (t.isDh ? (t.periodLabels || ["Punta","Llano","Valle"]).join(" / ") : solarNote);
+    var html = resultRow("Energía", energy, energyNote) + (fixed ? resultRow("Término fijo gas", fixed, "€/mes prorrateado") : "") + (productFee ? resultRow("Cuota del producto", productFee, "€/mes prorrateado") : "") + (power ? resultRow("Potencia", power, "Total P1/P2") : "") + (serviceBase ? resultRow("SVA", serviceBase, svc.name) : (servicePromoFree ? resultRow("SVA", 0, svc.name + " · primeros 2 meses gratis") : ""));
     if(addTaxes){ html += (iee ? resultRow("IEE", iee, fmtNum(tax.iee*100,4) + "%") : "") + (hydro ? resultRow("Impuesto hidrocarburos", hydro, fmtNum(tax.hydrocarbons,6) + " €/kWh") : "") + (meter ? resultRow("Alquiler equipo", meter, fmtNum(tax.meterRentDay,5) + " €/día") : "") + (bono ? resultRow("Financiación bono social", bono, fmtNum(tax.bonoSocialDay,5) + " €/día") : "") + resultRow("IVA", iva, fmtNum(tax.iva*100,2) + "%"); }
     if(isBvSolar && bvCredit){ html += resultRow("Batería virtual", -bvCredit, "Descuento sobre total factura"); }
     html += '<div class="total-line"><span>Total estimado</span><b>' + fmtEuro(total) + '</b></div>';
@@ -6630,7 +6636,7 @@ function updateCalcVisibility(){
     $("rateSearch").oninput = renderRates;
     $("docSearch").oninput = filterDocs;
     $("calcBtn").onclick = calculateBill;
-    ["calcTariff","calcDays","calcKwh","calcKwhP1","calcKwhP2","calcKwhP3","calcExcess","calcP1","calcP2","calcService","calcTaxes"].forEach(function(id){
+    ["calcTariff","calcDays","calcKwh","calcKwhP1","calcKwhP2","calcKwhP3","calcExcess","calcP1","calcP2","calcService","calcTaxes","calcEnergyMode","calcSvaPromo"].forEach(function(id){
       if($(id)){ $(id).onchange = calculateBill; if($(id).tagName === "INPUT") $(id).oninput = calculateBill; }
     });
     ["calc30Tariff","calc30Days","calc30Kwh","calc30KwhP1","calc30KwhP2","calc30KwhP3","calc30KwhP4","calc30KwhP5","calc30KwhP6","calc30P1","calc30P2","calc30P3","calc30P4","calc30P5","calc30P6","calc30Taxes"].forEach(function(id){
@@ -6639,7 +6645,12 @@ function updateCalcVisibility(){
     if($("calc30Btn")) $("calc30Btn").onclick = calculateBill30;
     if($("calcNormalTab")) $("calcNormalTab").onclick = function(){ setCalcMode("normal"); };
     if($("calc30Tab")) $("calc30Tab").onclick = function(){ setCalcMode("30"); };
-    if($("calcTariff")) $("calcTariff").addEventListener("change", updateCalcVisibility);
+    if($("calcTariff")) $("calcTariff").addEventListener("change", function(){
+      var selectedTariff = getTariff($("calcTariff").value);
+      if(selectedTariff && selectedTariff.requiredService) $("calcService").value = selectedTariff.requiredService;
+      updateCalcVisibility();
+      calculateBill();
+    });
     if($("calc30Tariff")) $("calc30Tariff").addEventListener("change", updateCalc30Visibility);
     setCalcMode("normal");
     if($("journeyType")) $("journeyType").onchange = function(){ if($("customHoursBox")) $("customHoursBox").classList.toggle("hidden", $("journeyType").value !== "custom"); };

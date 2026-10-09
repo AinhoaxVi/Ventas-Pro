@@ -1,4 +1,4 @@
-const CACHE_NAME = "ventas-pro-v18-prices-20261001";
+const CACHE_NAME = "ventas-pro-v19-tarifa-luz-3m-descuento";
 const ASSETS = ["./", "./index.html", "./manifest.json", "./favicon.svg", "./icon-180.png", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", event => {
@@ -24,3 +24,4 @@ self.addEventListener("fetch", event => {
   }
   event.respondWith(caches.match(event.request).then(cached => cached || fetch(event.request)));
 });
+
