@@ -3372,9 +3372,9 @@
 
     <section id="tarifas">
       <div class="panel">
-        <div class="panelHeading"><div><span class="eyebrow">Oferta comercial</span><h2>Catálogo de tarifas</h2></div><span class="statusChip">Precios 01/10/2026</span></div>
+        <div class="panelHeading"><div><span class="eyebrow">Oferta comercial</span><h2>Catálogo de tarifas</h2></div><span class="statusChip">Actualizado 15/10/2026</span></div>
         <label class="field">Buscar tarifa
-          <input id="rateSearch" type="search" placeholder="Ej. V33, gas, RL1, TAP, Smart, Solar...">
+          <input id="rateSearch" type="search" placeholder="Ej. Te da más, V33, gas, RL1, TAP, Solar...">
         </label>
       </div>
 
@@ -3450,6 +3450,16 @@
               <option value="1">Añadir conceptos que aplican</option>
             </select>
           </label>
+        </div>
+
+        <div id="calcBundleFields" class="row cols2 hidden">
+          <label class="field">Contratación para cashback y Waylet
+            <select id="calcBundleGas">
+              <option value="0">Luz</option>
+              <option value="1">Luz + gas</option>
+            </select>
+          </label>
+          <div class="small">El SVA se toma de «Añadir SVA». El cashback es saldo en Waylet y se muestra aparte del importe de la factura de luz; el gas se calcula con su propia tarifa.</div>
         </div>
 
         <div class="actions">
@@ -3852,6 +3862,7 @@
   var SERVICES = [{"id":"none","name":"Sin SVA","basePrice":0,"price":0,"promo":""},{"id":"ta24","name":"TA24H / TA24H ME","basePrice":4.12,"price":4.12,"promo":"Para todos"},{"id":"ta24plus","name":"TA24H Plus","basePrice":5.78,"price":5.78,"promo":"Para todos"},{"id":"ta24pyme20","name":"TA24H Pyme 2.0","basePrice":8.26,"price":8.26,"promo":"Para todos"},{"id":"ta24pyme30","name":"TA24H Pyme 3.0","basePrice":10.73,"price":10.73,"promo":"Para todos"},{"id":"sihconfort","name":"SIHConfort","basePrice":8.26,"price":8.26,"promo":"Para todos"},{"id":"sig","name":"SIG","basePrice":11.15,"price":11.15,"promo":"Para todos"},{"id":"tag","name":"TAG","basePrice":9.08,"price":9.08,"promo":"Para todos"}];
 
   var TARIFFS = [
+    {"id":"te-da-mas","name":"Te da más","group":"Promociones","type":"luz","p1":0.0901,"p2":0.0901,"energy":0.1399,"showDailyPower":true,"svaMandatory":false,"permissionSva":false,"svaLabel":"Con o sin SVA","cashbackEligible":true,"cashbackByBundle":{"luz":100,"luz-sva":100,"luz-gas":100,"luz-gas-sva":150},"wayletPromo":{"multiplier":2,"months":12,"centsByBundle":{"luz":20,"luz-gas-sva":30}},"notes":"Precios sin impuestos. Cashback en saldo Waylet según contratación. Promoción Waylet x2 durante 12 meses: solo luz, 20 céntimos/litro; luz + gas + SVA, 30 céntimos/litro.","shortName":"Te da más"},
     {"id":"luz-3m-descuento","name":"Tarifa Luz 3 meses descuento","group":"Promociones","type":"luz","maxPower":10,"p1":0.0901,"p2":0.0901,"energy":0.1427,"promoEnergy":0.0999,"promoMonths":3,"svaMandatory":true,"permissionSva":false,"requiredService":"ta24plus","freeServiceMonths":2,"svaLabel":"TA24H Plus obligatorio","cashbackEligible":false,"notes":"TA24H Plus obligatorio. 30% de descuento en energía durante los 3 primeros meses (0,0999 €/kWh). Dos primeros meses de TA24H Plus gratis. Potencia máxima 10 kW.","shortName":"Luz 3 meses descuento"},
     {"id":"v29-15","name":"V29","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1599,"svaMandatory":false,"permissionSva":false,"svaLabel":"SVA opcional","cashbackEligible":true,"notes":"Precio vigente desde el 01/10/2026. Potencia hasta 15 kW.","shortName":"V29"},
     {"id":"v30-web-15","name":"V30 Web sin SVA","group":"Precio fijo","type":"luz","maxPower":15,"p1":0.090137,"p2":0.090137,"energy":0.1499,"svaMandatory":false,"permissionSva":false,"svaForbidden":true,"svaLabel":"Sin SVA","cashbackEligible":true,"notes":"Oferta web sin SVA. Potencia hasta 15 kW.","shortName":"V30 Web"},
@@ -5517,6 +5528,28 @@
     }).join("");
   }
 
+  var BUNDLE_LABELS = {"luz":"Luz", "luz-sva":"Luz + SVA", "luz-gas":"Luz + gas", "luz-gas-sva":"Luz + gas + SVA"};
+
+  function tariffBenefitsHtml(t){
+    if(!t.cashbackByBundle) return "";
+    var rows = Object.keys(t.cashbackByBundle).map(function(key){
+      return resultRow(BUNDLE_LABELS[key], t.cashbackByBundle[key]);
+    }).join("");
+    return '<div><h3>Cashback en saldo Waylet</h3>' + rows + '</div>';
+  }
+
+  function calcBenefitsHtml(t, svc){
+    if(!t.cashbackByBundle) return "";
+    var withGas = $("calcBundleGas").value === "1";
+    var key = "luz" + (withGas ? "-gas" : "") + (svc.id !== "none" ? "-sva" : "");
+    var promo = t.wayletPromo;
+    var cents = promo && promo.centsByBundle[key];
+    var waylet = cents != null ? '<div class="chips"><span class="chip">Saldo Waylet por repostar: ' + cents + ' céntimos/litro · ' + promo.months + ' meses</span></div>' : '';
+    return '<div class="rate-card"><h3>Ventajas · ' + escapeHtml(BUNDLE_LABELS[key]) + '</h3>' +
+      resultRow("Cashback en Waylet", t.cashbackByBundle[key], "Saldo en Waylet por contratación") + waylet +
+      '<div class="small">' + escapeHtml('Waylet x' + promo.multiplier + ' durante ' + promo.months + ' meses: solo luz, ' + promo.centsByBundle.luz + ' céntimos/litro; luz + gas + SVA, ' + promo.centsByBundle["luz-gas-sva"] + ' céntimos/litro.') + '</div></div>';
+  }
+
   function renderRates(){
     var q = ($("rateSearch").value || "").toLowerCase().trim();
     var list = TARIFFS.filter(function(t){
@@ -5551,9 +5584,15 @@
                      (t.maxPower ? '<span class="chip">Hasta ' + t.maxPower + ' kW</span>' : '');
           }
         }
+        if(t.showDailyPower){
+          prices = '<span class="chip">TE ' + fmtNum(t.energy,4) + ' €/kWh</span>' +
+                   '<span class="chip">P1 ' + fmtNum(t.p1,4) + ' €/kW·día</span>' +
+                   '<span class="chip">P2 ' + fmtNum(t.p2,4) + ' €/kW·día</span>' +
+                   '<span class="chip">Sin impuestos</span>';
+        }
         if(t.promoEnergy){ prices += '<span class="chip">Promo ' + fmtNum(t.promoEnergy,4) + ' €/kWh durante ' + Number(t.promoMonths || 0) + ' meses</span>'; }
         var badge = t.svaLabel || (t.svaMandatory ? "SVA obligatorio" : (t.permissionSva ? "Sin SVA con permiso" : "SVA opcional"));
-        return '<div class="rate-card"><div class="rate-top"><div><div class="rate-title">' + escapeHtml(t.name) + '</div><div class="rate-meta">' + escapeHtml(groupDisplayTitle(t.group, t.type)) + '</div></div><span class="badge ' + (t.svaMandatory ? 'warn' : (t.permissionSva ? 'pink' : 'turq')) + '">' + escapeHtml(badge) + '</span></div><div class="chips">' + prices + (t.cashbackEligible ? '<span class="chip">Con cashback</span>' : '') + (Number(t.monthlyFee || 0) ? '<span class="chip">Cuota ' + fmtNum(t.monthlyFee,2) + ' €/mes</span>' : '') + (t.exc ? '<span class="chip">Excedentes ' + fmtNum(t.exc,2) + ' €/kWh</span>' : '') + '</div><div class="small">' + escapeHtml(t.notes || "") + '</div></div>';
+        return '<div class="rate-card"><div class="rate-top"><div><div class="rate-title">' + escapeHtml(t.name) + '</div><div class="rate-meta">' + escapeHtml(groupDisplayTitle(t.group, t.type)) + '</div></div><span class="badge ' + (t.svaMandatory ? 'warn' : (t.permissionSva ? 'pink' : 'turq')) + '">' + escapeHtml(badge) + '</span></div><div class="chips">' + prices + (t.cashbackEligible ? '<span class="chip">Con cashback</span>' : '') + (Number(t.monthlyFee || 0) ? '<span class="chip">Cuota ' + fmtNum(t.monthlyFee,2) + ' €/mes</span>' : '') + (t.exc ? '<span class="chip">Excedentes ' + fmtNum(t.exc,2) + ' €/kWh</span>' : '') + '</div><div class="small">' + escapeHtml(t.notes || "") + '</div>' + tariffBenefitsHtml(t) + '</div>';
       }).join("");
       html += '</div></div>';
     });
@@ -5596,6 +5635,7 @@ function updateCalcVisibility(){
     $("calcPeriod3Label").textContent = (labels[2] || "Periodo 3") + " kWh";
     $("calcKwhP3Field").classList.toggle("calcHidden", isDh && Array.isArray(t.energyPeriods) && t.energyPeriods.length < 3);
     $("calcPromoFields").classList.toggle("hidden", !t.promoEnergy);
+    $("calcBundleFields").classList.toggle("hidden", !t.cashbackByBundle);
     if(!isLight){ $("calcP1").value = 0; $("calcP2").value = 0; }
     if(!isSolar){ $("calcExcess").value = 0; }
   }
@@ -5675,6 +5715,7 @@ function updateCalcVisibility(){
     if(addTaxes){ html += (iee ? resultRow("IEE", iee, fmtNum(tax.iee*100,4) + "%") : "") + (hydro ? resultRow("Impuesto hidrocarburos", hydro, fmtNum(tax.hydrocarbons,6) + " €/kWh") : "") + (meter ? resultRow("Alquiler equipo", meter, fmtNum(tax.meterRentDay,5) + " €/día") : "") + (bono ? resultRow("Financiación bono social", bono, fmtNum(tax.bonoSocialDay,5) + " €/día") : "") + resultRow("IVA", iva, fmtNum(tax.iva*100,2) + "%"); }
     if(isBvSolar && bvCredit){ html += resultRow("Batería virtual", -bvCredit, "Descuento sobre total factura"); }
     html += '<div class="total-line"><span>Total estimado</span><b>' + fmtEuro(total) + '</b></div>';
+    html += calcBenefitsHtml(t, svc);
     $("calcResult").innerHTML = html;
   }
 
@@ -6636,7 +6677,7 @@ function updateCalcVisibility(){
     $("rateSearch").oninput = renderRates;
     $("docSearch").oninput = filterDocs;
     $("calcBtn").onclick = calculateBill;
-    ["calcTariff","calcDays","calcKwh","calcKwhP1","calcKwhP2","calcKwhP3","calcExcess","calcP1","calcP2","calcService","calcTaxes","calcEnergyMode","calcSvaPromo"].forEach(function(id){
+    ["calcTariff","calcDays","calcKwh","calcKwhP1","calcKwhP2","calcKwhP3","calcExcess","calcP1","calcP2","calcService","calcTaxes","calcEnergyMode","calcSvaPromo","calcBundleGas"].forEach(function(id){
       if($(id)){ $(id).onchange = calculateBill; if($(id).tagName === "INPUT") $(id).oninput = calculateBill; }
     });
     ["calc30Tariff","calc30Days","calc30Kwh","calc30KwhP1","calc30KwhP2","calc30KwhP3","calc30KwhP4","calc30KwhP5","calc30KwhP6","calc30P1","calc30P2","calc30P3","calc30P4","calc30P5","calc30P6","calc30Taxes"].forEach(function(id){

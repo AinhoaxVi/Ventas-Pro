@@ -1,4 +1,4 @@
-const CACHE_NAME = "ventas-pro-v19-tarifa-luz-3m-descuento";
+const CACHE_NAME = "ventas-pro-v20-te-da-mas";
 const ASSETS = ["./", "./index.html", "./manifest.json", "./favicon.svg", "./icon-180.png", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", event => {
