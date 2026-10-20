@@ -1,4 +1,4 @@
-const CACHE_NAME = "ventas-pro-v20-te-da-mas";
+const CACHE_NAME = "ventas-pro-v21-catalog-calculadora";
 const ASSETS = ["./", "./index.html", "./manifest.json", "./favicon.svg", "./icon-180.png", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", event => {
@@ -24,4 +24,3 @@ self.addEventListener("fetch", event => {
   }
   event.respondWith(caches.match(event.request).then(cached => cached || fetch(event.request)));
 });
-
