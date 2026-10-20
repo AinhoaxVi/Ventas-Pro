@@ -3088,6 +3088,50 @@
       #inicio.dashboardHome > [data-widget]{min-height:0;height:auto;}
     }
 
+    /* Calculadoras: elimina separadores duplicados y da espacio al botón de desglose */
+    .calculatorResultPanel > h2{
+      border-bottom:0!important;
+      padding-bottom:0!important;
+      margin-bottom:12px!important;
+    }
+    .calculatorResultPanel .total-line{
+      border-top:0!important;
+      padding-top:0!important;
+      margin-top:0!important;
+    }
+    .calculatorResultPanel > button[id$="BreakdownBtn"]{
+      margin-top:18px!important;
+    }
+
+    /* Espaciado uniforme: evita que el override móvil pegue campos, botones y bloques */
+    .panel > * + *{margin-top:16px!important;}
+    .card > * + *,
+    .day-card > * + *,
+    .sale-box > * + *,
+    .rate-card > * + *,
+    .doc-card > * + *,
+    .detailSheet > * + *{margin-top:12px!important;}
+    .grid,.row,.cards,.two,.weekList{gap:16px!important;}
+    .actions{gap:12px!important;margin-top:16px!important;}
+    .actions > button{margin:0!important;}
+    #tarifas .catalogControls + #comboRateFields,
+    #tarifas #comboRateFields + #comboRateSummary{margin-top:20px!important;}
+    #tarifas .rateGroupBlock{margin-top:10px!important;margin-bottom:18px!important;}
+    #tarifas .rateGroupBlock > .grid{gap:16px!important;}
+    #calendario .calendarToolbarPanel > .calendarControls{margin-top:20px!important;}
+    #calendario .calendarToolbarPanel > .calendarNav{margin-top:22px!important;gap:14px!important;}
+    #calendario .calendarNav > button{min-width:120px!important;}
+
+    @media(min-width:761px){
+      .panel > * + *{margin-top:18px!important;}
+      .grid,.row,.cards,.two,.weekList{gap:18px!important;}
+      .actions{gap:14px!important;}
+      #tarifas .catalogControls + #comboRateFields,
+      #tarifas #comboRateFields + #comboRateSummary{margin-top:24px!important;}
+      #calendario .calendarToolbarPanel > .calendarControls{margin-top:22px!important;}
+      #calendario .calendarToolbarPanel > .calendarNav{margin-top:26px!important;gap:16px!important;}
+    }
+
   </style>
 </head>
 
@@ -3485,7 +3529,7 @@
 
         </div>
 
-      <div class="panel">
+      <div class="panel calculatorResultPanel">
         <h2>Resultado</h2>
         <div id="calcResult" class="grid">
           <div class="empty">Introduce consumo y potencia para ver el total estimado.</div>
@@ -3539,7 +3583,7 @@
         </div>
         </div>
 
-      <div class="panel">
+      <div class="panel calculatorResultPanel">
         <h2>Resultado 3.0TD</h2>
         <div id="calc30Result" class="grid"><div class="empty">Selecciona tarifa 3.0TD, consumo y potencias.</div></div>
         <button id="calc30BreakdownBtn" type="button" class="btn-main hidden">Desglosar cálculo</button>
