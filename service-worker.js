@@ -1,4 +1,4 @@
-const CACHE_NAME = "ventas-pro-v22-spacing-fix";
+const CACHE_NAME = "ventas-pro-v24-tranquilisima-promo";
 const ASSETS = ["./", "./index.html", "./manifest.json", "./favicon.svg", "./icon-180.png", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", event => {
