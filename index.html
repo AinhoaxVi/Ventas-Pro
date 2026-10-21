@@ -3475,7 +3475,7 @@
           </label>
           <label class="field">Promoción SVA
             <select id="calcSvaPromo">
-              <option value="0">TA24H Plus con coste</option>
+              <option value="0">SVA elegido con coste</option>
               <option value="1">Aplicar 2 primeros meses gratis</option>
             </select>
           </label>
@@ -3506,7 +3506,7 @@
         </div>
 
         <div class="row cols2">
-          <label class="field">Añadir SVA
+          <label class="field">SVA opcional
             <select id="calcService"></select>
           </label>
           <label class="field">Impuestos y cargos
@@ -5672,8 +5672,6 @@
 function updateCalcVisibility(){
     var t = getTariff($("calcTariff").value);
     if(!t) return;
-    if(t.requiredService) $("calcService").value = t.requiredService;
-    $("calcService").disabled = !!t.requiredService;
     var isLight = t.type !== "gas";
     var isSolar = t.group === "Solar" || t.group === "Batería Virtual";
     var isDh = !!t.isDh;
@@ -6752,8 +6750,6 @@ function updateCalcVisibility(){
     if($("calcNormalTab")) $("calcNormalTab").onclick = function(){ setCalcMode("normal"); };
     if($("calc30Tab")) $("calc30Tab").onclick = function(){ setCalcMode("30"); };
     if($("calcTariff")) $("calcTariff").addEventListener("change", function(){
-      var selectedTariff = getTariff($("calcTariff").value);
-      if(selectedTariff && selectedTariff.requiredService) $("calcService").value = selectedTariff.requiredService;
       updateCalcVisibility();
       calculateBill();
     });
